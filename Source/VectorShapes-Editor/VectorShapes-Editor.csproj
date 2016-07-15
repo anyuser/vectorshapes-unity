@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{A7AF9C93-6712-4526-AFC5-A0CD1AB610F2}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>VectorShapesEditor</RootNamespace>
+    <AssemblyName>VectorShapes-Editor</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <ProductVersion>12.0.0</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>True</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>False</Optimize>
+    <OutputPath>..\bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>False</ConsolePause>
+    <CustomCommands>
+      <CustomCommands>
+        <Command type="AfterBuild" command="cp &quot;${TargetFile}&quot; &quot;${TargetFile}.mdb&quot; ../Unity/Assets/VectorShapes/Plugins/Editor/" workingdir="${SolutionDir}" />
+      </CustomCommands>
+    </CustomCommands>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <Optimize>True</Optimize>
+    <OutputPath>..\bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>False</ConsolePause>
+    <CustomCommands>
+      <CustomCommands>
+        <Command type="AfterBuild" command="cp &quot;${TargetFile}&quot; ../Unity/Assets/VectorShapes/Plugins/Editor/" workingdir="${SolutionDir}" />
+      </CustomCommands>
+    </CustomCommands>
+    <DebugType>none</DebugType>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="LibTessDotNet">
+      <HintPath>..\Lib\LibTessDotNet.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.framework">
+      <HintPath>..\..\..\..\..\..\..\..\Applications\Unity 5.3.4f1\Unity.app\Contents\Frameworks\Managed\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor">
+      <HintPath>..\Lib\UnityEditor.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine">
+      <HintPath>..\Lib\UnityEngine.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Sources\ShapeEditor.cs" />
+    <Compile Include="Sources\ShapeAssetEditor.cs" />
+    <Compile Include="Sources\ShapeRendererEditor.cs" />
+    <Compile Include="Sources\ShapeEditor_DrawGizmo.cs" />
+    <Compile Include="Sources\ShapeEditor_SceneGUI.cs" />
+    <Compile Include="Sources\ShapeMenuItems.cs" />
+    <Compile Include="Sources\ShapeEditor_MenuItems.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <ProjectReference Include="..\VectorShapes\VectorShapes.csproj">
+      <Project>{24129D42-29D8-4C67-B6E6-18B4284575B5}</Project>
+      <Name>VectorShapes</Name>
+    </ProjectReference>
+  </ItemGroup>
+</Project>

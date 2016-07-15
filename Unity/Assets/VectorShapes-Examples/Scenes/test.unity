@@ -1,0 +1,2036 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!29 &1
+SceneSettings:
+  m_ObjectHideFlags: 0
+  m_PVSData: 
+  m_PVSObjectsArray: []
+  m_PVSPortalsArray: []
+  m_OcclusionBakeSettings:
+    smallestOccluder: 5
+    smallestHole: 0.25
+    backfaceThreshold: 100
+--- !u!104 &2
+RenderSettings:
+  m_ObjectHideFlags: 0
+  serializedVersion: 7
+  m_Fog: 0
+  m_FogColor: {r: 1, g: 1, b: 1, a: 1}
+  m_FogMode: 3
+  m_FogDensity: 0.1
+  m_LinearFogStart: 0
+  m_LinearFogEnd: 300
+  m_AmbientSkyColor: {r: 0.212, g: 0.227, b: 0.259, a: 1}
+  m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
+  m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
+  m_AmbientIntensity: 1
+  m_AmbientMode: 3
+  m_SkyboxMaterial: {fileID: 0}
+  m_HaloStrength: 0.5
+  m_FlareStrength: 1
+  m_FlareFadeSpeed: 3
+  m_HaloTexture: {fileID: 0}
+  m_SpotCookie: {fileID: 10001, guid: 0000000000000000e000000000000000, type: 0}
+  m_DefaultReflectionMode: 0
+  m_DefaultReflectionResolution: 128
+  m_ReflectionBounces: 1
+  m_ReflectionIntensity: 1
+  m_CustomReflection: {fileID: 0}
+  m_Sun: {fileID: 0}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
+--- !u!157 &3
+LightmapSettings:
+  m_ObjectHideFlags: 0
+  serializedVersion: 7
+  m_GIWorkflowMode: 1
+  m_GISettings:
+    serializedVersion: 2
+    m_BounceScale: 1
+    m_IndirectOutputScale: 1
+    m_AlbedoBoost: 1
+    m_TemporalCoherenceThreshold: 1
+    m_EnvironmentLightingMode: 0
+    m_EnableBakedLightmaps: 0
+    m_EnableRealtimeLightmaps: 0
+  m_LightmapEditorSettings:
+    serializedVersion: 4
+    m_Resolution: 2
+    m_BakeResolution: 40
+    m_TextureWidth: 1024
+    m_TextureHeight: 1024
+    m_AO: 0
+    m_AOMaxDistance: 1
+    m_CompAOExponent: 0
+    m_CompAOExponentDirect: 0
+    m_Padding: 2
+    m_LightmapParameters: {fileID: 0}
+    m_LightmapsBakeMode: 1
+    m_TextureCompression: 1
+    m_DirectLightInLightProbes: 1
+    m_FinalGather: 0
+    m_FinalGatherFiltering: 1
+    m_FinalGatherRayCount: 1024
+    m_ReflectionCompression: 2
+  m_LightingDataAsset: {fileID: 0}
+  m_RuntimeCPUUsage: 25
+--- !u!196 &4
+NavMeshSettings:
+  serializedVersion: 2
+  m_ObjectHideFlags: 0
+  m_BuildSettings:
+    serializedVersion: 2
+    agentRadius: 0.5
+    agentHeight: 2
+    agentSlope: 45
+    agentClimb: 0.4
+    ledgeDropHeight: 0
+    maxJumpAcrossDistance: 0
+    accuratePlacement: 0
+    minRegionArea: 2
+    cellSize: 0.16666667
+    manualCellSize: 0
+  m_NavMeshData: {fileID: 0}
+--- !u!1 &12462045
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 12462046}
+  - 114: {fileID: 12462047}
+  m_Layer: 0
+  m_Name: Shape (7)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &12462046
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 12462045}
+  m_LocalRotation: {x: -0.0412224, y: -0.34743798, z: -0.02939675, w: 0.93633515}
+  m_LocalPosition: {x: 3.43, y: -2.05, z: 0.07}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1207481920}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: -5.6022997, y: -40.6415, z: -1.5203999}
+--- !u!114 &12462047
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 12462045}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1928991051, guid: 4b767388747f34f22aa2403776b900e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shapeAsset: {fileID: 0}
+  localShapeData:
+    shapeType: 2
+    polyDimension: 0
+    isPolygonStrokeClosed: 1
+    polyPointTypes: 00000000000000000000000000000000
+    polyPointPositions:
+    - {x: -2.7385743, y: 1.1276278, z: 0}
+    - {x: -2.0893168, y: -0.48842758, z: 0}
+    - {x: 0.2938751, y: -0.8210088, z: 0}
+    - {x: -0.33741122, y: 0.8943834, z: 0}
+    polyPointInTangents:
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    polyPointOutTangents:
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    polyPointStrokeColors:
+    - {r: 1, g: 1, b: 1, a: 1}
+    - {r: 1, g: 1, b: 1, a: 1}
+    - {r: 1, g: 1, b: 1, a: 1}
+    - {r: 1, g: 1, b: 1, a: 1}
+    polyPointStrokeWidths:
+    - 1
+    - 1
+    - 1
+    - 1
+    shapeOffset: {x: 1, y: 1, z: 0}
+    shapeSize: {x: 1, y: 1}
+    strokeColor: {r: 1, g: 1, b: 1, a: 1}
+    strokeWidth: 1
+    isFillEnabled: 0
+    fillColor: {r: 1, g: 1, b: 1, a: 1}
+    fillNormal: {x: 0, y: 0, z: 1}
+    fillTextureMode: 0
+    fillTextureOffset: {x: 0, y: 0}
+    fillTextureTiling: {x: 1, y: 1}
+    isStrokeEnabled: 1
+    strokeCornerType: 0
+    strokeRenderType: 0
+    strokeTextureType: 0
+    strokeMiterLimit: 3
+    strokeTextureTiling: 2
+    strokeTextureOffset: 0
+    hasVariableStrokeWidth: 0
+    hasVariableStrokeColor: 0
+--- !u!1 &276279401
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 276279406}
+  - 114: {fileID: 276279405}
+  - 114: {fileID: 276279404}
+  - 114: {fileID: 276279402}
+  m_Layer: 0
+  m_Name: Shape stress test multishape
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!114 &276279402
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 276279401}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a1289b4dc88d4d3a8327281ce2509d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shapeCount: 1000
+  alternateShaderStyles: 1
+--- !u!114 &276279404
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 276279401}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6ee6686302ed426a94916fc046b09c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  axis: {x: 0, y: 1, z: 0}
+  speed: 60
+--- !u!114 &276279405
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 276279401}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 214748838, guid: 4b767388747f34f22aa2403776b900e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cam: {fileID: 1621656176}
+  strokeMaterial: {fileID: 2100000, guid: e6181ba8457b54e35bce36d2d18e93d9, type: 2}
+  fillMaterial: {fileID: 2100000, guid: e70ebb3e00e2e40e49b46e8e6e5e7349, type: 2}
+--- !u!4 &276279406
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 276279401}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.07, y: 1.46, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &288845298
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 288845299}
+  - 114: {fileID: 288845300}
+  m_Layer: 0
+  m_Name: Shape (5)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &288845299
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 288845298}
+  m_LocalRotation: {x: 0.5202992, y: -0.4983184, z: -0.4029614, w: 0.56443757}
+  m_LocalPosition: {x: -5.72, y: 4.67, z: 3.22}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1207481920}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 10.649, y: -92.15501, z: -82.383}
+--- !u!114 &288845300
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 288845298}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1928991051, guid: 4b767388747f34f22aa2403776b900e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shapeAsset: {fileID: 0}
+  localShapeData:
+    shapeType: 0
+    polyDimension: 0
+    isPolygonStrokeClosed: 0
+    polyPointTypes: 
+    polyPointPositions: []
+    polyPointInTangents: []
+    polyPointOutTangents: []
+    polyPointStrokeColors: []
+    polyPointStrokeWidths: []
+    shapeOffset: {x: 0, y: 0, z: 0}
+    shapeSize: {x: 2.98, y: 6}
+    strokeColor: {r: 0.07586192, g: 0, b: 1, a: 1}
+    strokeWidth: 0.2
+    isFillEnabled: 1
+    fillColor: {r: 0, g: 0.7931032, b: 1, a: 1}
+    fillNormal: {x: 0, y: 0, z: 1}
+    fillTextureMode: 0
+    fillTextureOffset: {x: 0, y: 0}
+    fillTextureTiling: {x: 1, y: 1}
+    isStrokeEnabled: 1
+    strokeCornerType: 1
+    strokeRenderType: 2
+    strokeTextureType: 1
+    strokeMiterLimit: 3
+    strokeTextureTiling: 30
+    strokeTextureOffset: 0
+    hasVariableStrokeWidth: 0
+    hasVariableStrokeColor: 0
+--- !u!1 &333539927
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 333539928}
+  - 114: {fileID: 333539929}
+  m_Layer: 0
+  m_Name: Shape (10)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &333539928
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 333539927}
+  m_LocalRotation: {x: -0, y: 0.29356924, z: -0, w: 0.95593786}
+  m_LocalPosition: {x: 6.81, y: 1.54, z: 9.76}
+  m_LocalScale: {x: 0.97035694, y: 0.97035694, z: 0.97035694}
+  m_Children: []
+  m_Father: {fileID: 1207481920}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 34.325, z: 0}
+--- !u!114 &333539929
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 333539927}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1928991051, guid: 4b767388747f34f22aa2403776b900e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shapeAsset: {fileID: 11400000, guid: 6161f2cbe89e54b0fbbd164bb071c2df, type: 2}
+  localShapeData:
+    shapeType: 3
+    polyDimension: 0
+    isPolygonStrokeClosed: 0
+    polyPointTypes: 00000000000000000000000000000000
+    polyPointPositions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 0.31457657, y: -4.1344194, z: 0}
+    - {x: 2.628952, y: -5.1904945, z: 0}
+    - {x: 3.752435, y: 0.22469684, z: 0}
+    polyPointInTangents:
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    polyPointOutTangents:
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    polyPointStrokeColors:
+    - {r: 0, g: 0, b: 0, a: 1}
+    - {r: 0, g: 0, b: 0, a: 1}
+    - {r: 0, g: 0, b: 0, a: 1}
+    - {r: 0, g: 0, b: 0, a: 1}
+    polyPointStrokeWidths:
+    - 0.1
+    - 0.1
+    - 0.1
+    - 0.1
+    shapeOffset: {x: 0, y: 0, z: 0}
+    shapeSize: {x: 1, y: 1}
+    strokeColor: {r: 0, g: 0, b: 0, a: 1}
+    strokeWidth: 0.1
+    isFillEnabled: 1
+    fillColor: {r: 1, g: 1, b: 1, a: 1}
+    fillNormal: {x: 0, y: 0, z: 1}
+    fillTextureMode: 0
+    fillTextureOffset: {x: 0, y: 0}
+    fillTextureTiling: {x: 1, y: 1}
+    isStrokeEnabled: 1
+    strokeCornerType: 1
+    strokeRenderType: 1
+    strokeTextureType: 1
+    strokeMiterLimit: 3
+    strokeTextureTiling: 1
+    strokeTextureOffset: 0
+    hasVariableStrokeWidth: 0
+    hasVariableStrokeColor: 0
+--- !u!1 &434501200
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 434501201}
+  - 114: {fileID: 434501202}
+  m_Layer: 0
+  m_Name: Shape (17)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &434501201
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 434501200}
+  m_LocalRotation: {x: -0, y: 0.29356924, z: -0, w: 0.95593786}
+  m_LocalPosition: {x: 5.14, y: -0.66, z: 10.89}
+  m_LocalScale: {x: 0.97035694, y: 0.97035694, z: 0.97035694}
+  m_Children: []
+  m_Father: {fileID: 1207481920}
+  m_RootOrder: 17
+  m_LocalEulerAnglesHint: {x: 0, y: 34.325, z: 0}
+--- !u!114 &434501202
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 434501200}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1928991051, guid: 4b767388747f34f22aa2403776b900e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shapeAsset: {fileID: 11400000, guid: cd9bea0f354c34011bcfcf68da633206, type: 2}
+  localShapeData:
+    shapeType: 3
+    polyDimension: 0
+    isPolygonStrokeClosed: 0
+    polyPointTypes: 00000000000000000000000000000000
+    polyPointPositions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 0.31457657, y: -4.1344194, z: 0}
+    - {x: 2.628952, y: -5.1904945, z: 0}
+    - {x: 3.752435, y: 0.22469684, z: 0}
+    polyPointInTangents:
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    polyPointOutTangents:
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    polyPointStrokeColors:
+    - {r: 0, g: 0, b: 0, a: 1}
+    - {r: 0, g: 0, b: 0, a: 1}
+    - {r: 0, g: 0, b: 0, a: 1}
+    - {r: 0, g: 0, b: 0, a: 1}
+    polyPointStrokeWidths:
+    - 0.1
+    - 0.1
+    - 0.1
+    - 0.1
+    shapeOffset: {x: 0, y: 0, z: 0}
+    shapeSize: {x: 1, y: 1}
+    strokeColor: {r: 0, g: 0, b: 0, a: 1}
+    strokeWidth: 0.1
+    isFillEnabled: 1
+    fillColor: {r: 1, g: 1, b: 1, a: 1}
+    fillNormal: {x: 0, y: 0, z: 1}
+    fillTextureMode: 0
+    fillTextureOffset: {x: 0, y: 0}
+    fillTextureTiling: {x: 1, y: 1}
+    isStrokeEnabled: 1
+    strokeCornerType: 1
+    strokeRenderType: 1
+    strokeTextureType: 1
+    strokeMiterLimit: 3
+    strokeTextureTiling: 1
+    strokeTextureOffset: 0
+    hasVariableStrokeWidth: 0
+    hasVariableStrokeColor: 0
+--- !u!1 &509223961
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 509223962}
+  - 114: {fileID: 509223963}
+  m_Layer: 0
+  m_Name: Shape (4)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &509223962
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 509223961}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -5.96, y: -2.32, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1207481920}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &509223963
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 509223961}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1928991051, guid: 4b767388747f34f22aa2403776b900e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shapeAsset: {fileID: 0}
+  localShapeData:
+    shapeType: 1
+    polyDimension: 0
+    isPolygonStrokeClosed: 0
+    polyPointTypes: 
+    polyPointPositions: []
+    polyPointInTangents: []
+    polyPointOutTangents: []
+    polyPointStrokeColors: []
+    polyPointStrokeWidths: []
+    shapeOffset: {x: 0, y: 0, z: 0}
+    shapeSize: {x: 2, y: 2}
+    strokeColor: {r: 1, g: 1, b: 1, a: 1}
+    strokeWidth: 3
+    isFillEnabled: 0
+    fillColor: {r: 0, g: 0, b: 0, a: 1}
+    fillNormal: {x: 0, y: 0, z: 1}
+    fillTextureMode: 0
+    fillTextureOffset: {x: 0, y: 0}
+    fillTextureTiling: {x: 1, y: 1}
+    isStrokeEnabled: 1
+    strokeCornerType: 2
+    strokeRenderType: 0
+    strokeTextureType: 0
+    strokeMiterLimit: 3
+    strokeTextureTiling: 5
+    strokeTextureOffset: 0
+    hasVariableStrokeWidth: 0
+    hasVariableStrokeColor: 0
+--- !u!1 &514164922
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 514164923}
+  - 114: {fileID: 514164924}
+  m_Layer: 0
+  m_Name: Shape (13)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &514164923
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 514164922}
+  m_LocalRotation: {x: -0.70398027, y: 0.13905194, z: 0.6961632, w: -0.020814814}
+  m_LocalPosition: {x: -5.46, y: 0.79, z: 2.92}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1207481920}
+  m_RootOrder: 13
+  m_LocalEulerAnglesHint: {x: -9.4565, y: 268.26608, z: -166.829}
+--- !u!114 &514164924
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 514164922}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1928991051, guid: 4b767388747f34f22aa2403776b900e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shapeAsset: {fileID: 0}
+  localShapeData:
+    shapeType: 1
+    polyDimension: 0
+    isPolygonStrokeClosed: 0
+    polyPointTypes: 
+    polyPointPositions: []
+    polyPointInTangents: []
+    polyPointOutTangents: []
+    polyPointStrokeColors: []
+    polyPointStrokeWidths: []
+    shapeOffset: {x: 0, y: 0, z: 0}
+    shapeSize: {x: 3.07, y: 3.07}
+    strokeColor: {r: 1, g: 1, b: 0, a: 1}
+    strokeWidth: 2
+    isFillEnabled: 1
+    fillColor: {r: 0, g: 0.6689658, b: 1, a: 1}
+    fillNormal: {x: 0, y: 0, z: 1}
+    fillTextureMode: 0
+    fillTextureOffset: {x: 0, y: 0}
+    fillTextureTiling: {x: 1, y: 1}
+    isStrokeEnabled: 1
+    strokeCornerType: 1
+    strokeRenderType: 0
+    strokeTextureType: 1
+    strokeMiterLimit: 3
+    strokeTextureTiling: 20
+    strokeTextureOffset: 0
+    hasVariableStrokeWidth: 0
+    hasVariableStrokeColor: 0
+--- !u!1 &622006898
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 622006899}
+  - 114: {fileID: 622006900}
+  m_Layer: 0
+  m_Name: Shape (15)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &622006899
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 622006898}
+  m_LocalRotation: {x: -0.19737598, y: 0.27267215, z: -0.017560098, w: 0.94147986}
+  m_LocalPosition: {x: -7.75, y: -4, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1207481920}
+  m_RootOrder: 15
+  m_LocalEulerAnglesHint: {x: -21.2277, y: 33.934097, z: -8.6817}
+--- !u!114 &622006900
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 622006898}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1928991051, guid: 4b767388747f34f22aa2403776b900e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shapeAsset: {fileID: 0}
+  localShapeData:
+    shapeType: 1
+    polyDimension: 0
+    isPolygonStrokeClosed: 0
+    polyPointTypes: 
+    polyPointPositions: []
+    polyPointInTangents: []
+    polyPointOutTangents: []
+    polyPointStrokeColors: []
+    polyPointStrokeWidths: []
+    shapeOffset: {x: 0, y: 0, z: 0}
+    shapeSize: {x: 3, y: 3}
+    strokeColor: {r: 1, g: 1, b: 1, a: 1}
+    strokeWidth: 1
+    isFillEnabled: 0
+    fillColor: {r: 1, g: 1, b: 1, a: 1}
+    fillNormal: {x: 0, y: 0, z: 1}
+    fillTextureMode: 0
+    fillTextureOffset: {x: 0, y: 0}
+    fillTextureTiling: {x: 1, y: 1}
+    isStrokeEnabled: 1
+    strokeCornerType: 1
+    strokeRenderType: 0
+    strokeTextureType: 1
+    strokeMiterLimit: 3
+    strokeTextureTiling: 1
+    strokeTextureOffset: 0
+    hasVariableStrokeWidth: 0
+    hasVariableStrokeColor: 0
+--- !u!1 &697375083
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 697375084}
+  - 114: {fileID: 697375085}
+  m_Layer: 0
+  m_Name: Shape
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &697375084
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 697375083}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.19, y: 1.9, z: 0}
+  m_LocalScale: {x: 0.5278253, y: 0.5278253, z: 0.5278253}
+  m_Children: []
+  m_Father: {fileID: 1207481920}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &697375085
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 697375083}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1928991051, guid: 4b767388747f34f22aa2403776b900e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shapeAsset: {fileID: 0}
+  localShapeData:
+    shapeType: 2
+    polyDimension: 0
+    isPolygonStrokeClosed: 1
+    polyPointTypes: 00000000000000000100000001000000
+    polyPointPositions:
+    - {x: 2.026409, y: 0.09567229, z: 0}
+    - {x: -0.8290145, y: 0.85885394, z: 0}
+    - {x: -1.3517677, y: -2.2929747, z: 0}
+    - {x: 1.6095312, y: -2.8291795, z: 0}
+    polyPointInTangents:
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: -1.0243275, y: 1.8474216, z: 0}
+    - {x: -0.38614666, y: 1.8524871, z: 0}
+    polyPointOutTangents:
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0.6525631, y: 1.3121002, z: 0}
+    - {x: 0.38614666, y: -1.8524871, z: -0}
+    polyPointStrokeColors:
+    - {r: 0, g: 0, b: 0, a: 1}
+    - {r: 0, g: 0, b: 0, a: 1}
+    - {r: 0, g: 0, b: 0, a: 1}
+    - {r: 0, g: 0, b: 0, a: 1}
+    polyPointStrokeWidths:
+    - 0.01
+    - 0.01
+    - 0.01
+    - 0.01
+    shapeOffset: {x: 1, y: 1, z: 0}
+    shapeSize: {x: 1, y: 1}
+    strokeColor: {r: 0, g: 0, b: 0, a: 1}
+    strokeWidth: 0.01
+    isFillEnabled: 1
+    fillColor: {r: 1, g: 1, b: 1, a: 1}
+    fillNormal: {x: 0, y: 0, z: 1}
+    fillTextureMode: 0
+    fillTextureOffset: {x: 0, y: 0}
+    fillTextureTiling: {x: 1, y: 1}
+    isStrokeEnabled: 1
+    strokeCornerType: 1
+    strokeRenderType: 1
+    strokeTextureType: 1
+    strokeMiterLimit: 3
+    strokeTextureTiling: 1
+    strokeTextureOffset: 0
+    hasVariableStrokeWidth: 0
+    hasVariableStrokeColor: 0
+--- !u!1 &807918735
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 807918736}
+  - 114: {fileID: 807918737}
+  m_Layer: 0
+  m_Name: Shape (16)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &807918736
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 807918735}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 2.97, y: 1.38, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1207481920}
+  m_RootOrder: 16
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &807918737
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 807918735}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1928991051, guid: 4b767388747f34f22aa2403776b900e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shapeAsset: {fileID: 0}
+  localShapeData:
+    shapeType: 2
+    polyDimension: 0
+    isPolygonStrokeClosed: 1
+    polyPointTypes: 000000000000000000000000000000000000000000000000
+    polyPointPositions:
+    - {x: 0.33959222, y: 1.9578229, z: 0}
+    - {x: 0.9801097, y: 1.3180197, z: 0}
+    - {x: 0.5798533, y: 0.53718555, z: 0}
+    - {x: 1.7455771, y: 0.4035164, z: 0}
+    - {x: 2.570997, y: 0.89312136, z: 0}
+    - {x: 1.642339, y: 1.9509441, z: 0}
+    polyPointInTangents:
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    polyPointOutTangents:
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    polyPointStrokeColors:
+    - {r: 1, g: 1, b: 1, a: 1}
+    - {r: 1, g: 1, b: 1, a: 1}
+    - {r: 1, g: 1, b: 1, a: 1}
+    - {r: 1, g: 1, b: 1, a: 1}
+    - {r: 1, g: 1, b: 1, a: 1}
+    - {r: 1, g: 1, b: 1, a: 1}
+    polyPointStrokeWidths:
+    - 1
+    - 1
+    - 1
+    - 1
+    - 1
+    - 1
+    shapeOffset: {x: 1, y: 1, z: 0}
+    shapeSize: {x: 1, y: 1}
+    strokeColor: {r: 1, g: 1, b: 1, a: 1}
+    strokeWidth: 1
+    isFillEnabled: 1
+    fillColor: {r: 1, g: 0, b: 0, a: 1}
+    fillNormal: {x: 0, y: 0, z: 1}
+    fillTextureMode: 0
+    fillTextureOffset: {x: 0, y: 0}
+    fillTextureTiling: {x: 1, y: 1}
+    isStrokeEnabled: 1
+    strokeCornerType: 1
+    strokeRenderType: 0
+    strokeTextureType: 1
+    strokeMiterLimit: 3
+    strokeTextureTiling: 40
+    strokeTextureOffset: 0
+    hasVariableStrokeWidth: 0
+    hasVariableStrokeColor: 0
+--- !u!1 &862992905
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 862992906}
+  - 114: {fileID: 862992907}
+  m_Layer: 0
+  m_Name: Shape (2)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &862992906
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 862992905}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 3.84, y: 0.6, z: 1.2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1207481920}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &862992907
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 862992905}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1928991051, guid: 4b767388747f34f22aa2403776b900e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shapeAsset: {fileID: 0}
+  localShapeData:
+    shapeType: 2
+    polyDimension: 0
+    isPolygonStrokeClosed: 1
+    polyPointTypes: 00000000010000000000000000000000
+    polyPointPositions:
+    - {x: -2.252698, y: 0.7225578, z: 0}
+    - {x: -0.854234, y: -0.39995727, z: 0}
+    - {x: 1.305037, y: -0.71639264, z: 0}
+    - {x: -0.709162, y: 1.1251999, z: 0}
+    polyPointInTangents:
+    - {x: 0, y: 0, z: 0}
+    - {x: -1.5238705, y: -0.34049284, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    polyPointOutTangents:
+    - {x: 0, y: 0, z: 0}
+    - {x: 0.8451936, y: -1.0922806, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    polyPointStrokeColors:
+    - {r: 1, g: 0, b: 0, a: 1}
+    - {r: 1, g: 0, b: 0, a: 1}
+    - {r: 1, g: 0, b: 0, a: 1}
+    - {r: 1, g: 0, b: 0, a: 1}
+    polyPointStrokeWidths:
+    - 1
+    - 1
+    - 1
+    - 1
+    shapeOffset: {x: 1, y: 1, z: 0}
+    shapeSize: {x: 1, y: 1}
+    strokeColor: {r: 1, g: 0, b: 0, a: 1}
+    strokeWidth: 1
+    isFillEnabled: 1
+    fillColor: {r: 0.986207, g: 1, b: 0, a: 1}
+    fillNormal: {x: 0, y: 0, z: 1}
+    fillTextureMode: 0
+    fillTextureOffset: {x: 0.39, y: 0}
+    fillTextureTiling: {x: 1, y: 1}
+    isStrokeEnabled: 1
+    strokeCornerType: 1
+    strokeRenderType: 0
+    strokeTextureType: 1
+    strokeMiterLimit: 3
+    strokeTextureTiling: 20
+    strokeTextureOffset: 0
+    hasVariableStrokeWidth: 0
+    hasVariableStrokeColor: 0
+--- !u!1 &1015552775
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 1015552776}
+  - 114: {fileID: 1015552777}
+  m_Layer: 0
+  m_Name: Shape (3)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1015552776
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1015552775}
+  m_LocalRotation: {x: -0.19324565, y: 0.20152971, z: 0.008326983, w: 0.96019405}
+  m_LocalPosition: {x: -7.11, y: -3.76, z: 0.56}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1207481920}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: -21.954, y: 24.264002, z: -3.7170002}
+--- !u!114 &1015552777
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1015552775}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1928991051, guid: 4b767388747f34f22aa2403776b900e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shapeAsset: {fileID: 0}
+  localShapeData:
+    shapeType: 1
+    polyDimension: 0
+    isPolygonStrokeClosed: 0
+    polyPointTypes: 
+    polyPointPositions: []
+    polyPointInTangents: []
+    polyPointOutTangents: []
+    polyPointStrokeColors: []
+    polyPointStrokeWidths: []
+    shapeOffset: {x: 0, y: 0, z: 0}
+    shapeSize: {x: 3, y: 3}
+    strokeColor: {r: 1, g: 1, b: 1, a: 1}
+    strokeWidth: 3.1
+    isFillEnabled: 0
+    fillColor: {r: 1, g: 1, b: 1, a: 1}
+    fillNormal: {x: 0, y: 0, z: 1}
+    fillTextureMode: 0
+    fillTextureOffset: {x: 0, y: 0}
+    fillTextureTiling: {x: 1, y: 1}
+    isStrokeEnabled: 1
+    strokeCornerType: 1
+    strokeRenderType: 0
+    strokeTextureType: 1
+    strokeMiterLimit: 3
+    strokeTextureTiling: 10
+    strokeTextureOffset: 0
+    hasVariableStrokeWidth: 0
+    hasVariableStrokeColor: 0
+--- !u!1 &1207481914
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 1207481920}
+  - 114: {fileID: 1207481917}
+  m_Layer: 0
+  m_Name: Shape Renderer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1207481917
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1207481914}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 214748838, guid: 4b767388747f34f22aa2403776b900e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cam: {fileID: 1621656176}
+  strokeMaterial: {fileID: 2100000, guid: e6181ba8457b54e35bce36d2d18e93d9, type: 2}
+  fillMaterial: {fileID: 2100000, guid: e70ebb3e00e2e40e49b46e8e6e5e7349, type: 2}
+--- !u!4 &1207481920
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1207481914}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 697375084}
+  - {fileID: 1713668955}
+  - {fileID: 862992906}
+  - {fileID: 1015552776}
+  - {fileID: 509223962}
+  - {fileID: 288845299}
+  - {fileID: 1478551208}
+  - {fileID: 12462046}
+  - {fileID: 2080912397}
+  - {fileID: 333539928}
+  - {fileID: 1345609940}
+  - {fileID: 1255652776}
+  - {fileID: 1300487335}
+  - {fileID: 514164923}
+  - {fileID: 1832899706}
+  - {fileID: 622006899}
+  - {fileID: 807918736}
+  - {fileID: 434501201}
+  m_Father: {fileID: 0}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1255652775
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 1255652776}
+  - 114: {fileID: 1255652777}
+  m_Layer: 0
+  m_Name: Shape (9)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1255652776
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1255652775}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.18, y: -3.02, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1207481920}
+  m_RootOrder: 11
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1255652777
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1255652775}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1928991051, guid: 4b767388747f34f22aa2403776b900e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shapeAsset: {fileID: 0}
+  localShapeData:
+    shapeType: 2
+    polyDimension: 0
+    isPolygonStrokeClosed: 0
+    polyPointTypes: 00000000000000000000000001000000000000000000000002000000000000000000000001000000
+    polyPointPositions:
+    - {x: -0.15132695, y: -0.55249476, z: 0}
+    - {x: -0.14179975, y: -1.8617163, z: 0}
+    - {x: 0.792834, y: -0.5323396, z: 0}
+    - {x: 2.3666232, y: -1.7096734, z: 0}
+    - {x: 2.8777056, y: -0.79142904, z: 0}
+    - {x: 3.9437425, y: -1.3887806, z: 0}
+    - {x: 4.742436, y: -0.1562643, z: 0}
+    - {x: 5.3468385, y: -1.8074794, z: 0}
+    - {x: 6.182163, y: -0.43524694, z: 0}
+    - {x: 6.056655, y: -2.075079, z: 0}
+    polyPointInTangents:
+    - {x: -0, y: -0, z: -0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: -0.37670273, y: 1.1335316, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: -0.6136923, y: 0.13742876, z: -0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: -0.0041007996, y: 1.3198326, z: 0}
+    polyPointOutTangents:
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0.37670273, y: -1.1335316, z: -0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0.6136923, y: -0.13742876, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0.0041007996, y: -1.3198326, z: -0}
+    polyPointStrokeColors:
+    - {r: 0, g: 1, b: 0, a: 1}
+    - {r: 0, g: 1, b: 0, a: 1}
+    - {r: 0, g: 1, b: 0, a: 1}
+    - {r: 0, g: 1, b: 0, a: 1}
+    - {r: 0, g: 1, b: 0, a: 1}
+    - {r: 0, g: 1, b: 0, a: 1}
+    - {r: 0, g: 1, b: 0, a: 1}
+    - {r: 0, g: 1, b: 0, a: 1}
+    - {r: 0, g: 1, b: 0, a: 1}
+    - {r: 0, g: 1, b: 0, a: 1}
+    polyPointStrokeWidths:
+    - 2.05
+    - 2
+    - 2
+    - 6.66
+    - 6.66
+    - 10
+    - 7.02
+    - 2
+    - 2
+    - 2
+    shapeOffset: {x: 1, y: 1, z: 0}
+    shapeSize: {x: 1, y: 1}
+    strokeColor: {r: 0, g: 1, b: 0, a: 1}
+    strokeWidth: 10
+    isFillEnabled: 0
+    fillColor: {r: 1, g: 1, b: 1, a: 1}
+    fillNormal: {x: 0, y: 0, z: 1}
+    fillTextureMode: 0
+    fillTextureOffset: {x: 0, y: 0}
+    fillTextureTiling: {x: 1, y: 1}
+    isStrokeEnabled: 1
+    strokeCornerType: 0
+    strokeRenderType: 0
+    strokeTextureType: 0
+    strokeMiterLimit: 3
+    strokeTextureTiling: 2
+    strokeTextureOffset: 0
+    hasVariableStrokeWidth: 0
+    hasVariableStrokeColor: 0
+--- !u!1 &1300487334
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 1300487335}
+  - 114: {fileID: 1300487336}
+  m_Layer: 0
+  m_Name: Shape (11)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1300487335
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1300487334}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -2.81, y: -2.05, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1207481920}
+  m_RootOrder: 12
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1300487336
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1300487334}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1928991051, guid: 4b767388747f34f22aa2403776b900e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shapeAsset: {fileID: 0}
+  localShapeData:
+    shapeType: 2
+    polyDimension: 0
+    isPolygonStrokeClosed: 1
+    polyPointTypes: 000000000100000000000000
+    polyPointPositions:
+    - {x: -0.7909007, y: -2.841364, z: 0}
+    - {x: 1.650811, y: -1.4885685, z: 0}
+    - {x: -1.8149807, y: -1.2020311, z: 0}
+    polyPointInTangents:
+    - {x: 0, y: 0, z: 0}
+    - {x: -0.39287686, y: -2.0328882, z: 0}
+    - {x: 0, y: 0, z: 0}
+    polyPointOutTangents:
+    - {x: 0, y: 0, z: 0}
+    - {x: -1.9481399, y: 1.959037, z: 0}
+    - {x: 0, y: 0, z: 0}
+    polyPointStrokeColors:
+    - {r: 1, g: 0, b: 0, a: 1}
+    - {r: 1, g: 0, b: 0, a: 1}
+    - {r: 1, g: 0, b: 0, a: 1}
+    polyPointStrokeWidths:
+    - 5
+    - 5
+    - 5
+    shapeOffset: {x: 0, y: 0, z: 0}
+    shapeSize: {x: 11.61, y: 6}
+    strokeColor: {r: 1, g: 0, b: 0, a: 1}
+    strokeWidth: 5
+    isFillEnabled: 0
+    fillColor: {r: 0, g: 0, b: 0, a: 1}
+    fillNormal: {x: 0, y: 0, z: 1}
+    fillTextureMode: 0
+    fillTextureOffset: {x: 0, y: 0}
+    fillTextureTiling: {x: 1, y: 1}
+    isStrokeEnabled: 1
+    strokeCornerType: 1
+    strokeRenderType: 0
+    strokeTextureType: 1
+    strokeMiterLimit: 3
+    strokeTextureTiling: 20
+    strokeTextureOffset: 0
+    hasVariableStrokeWidth: 0
+    hasVariableStrokeColor: 0
+--- !u!1 &1345609939
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 1345609940}
+  - 114: {fileID: 1345609941}
+  m_Layer: 0
+  m_Name: Shape (12)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1345609940
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1345609939}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 5.83, y: 3.43, z: 4}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1207481920}
+  m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1345609941
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1345609939}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1928991051, guid: 4b767388747f34f22aa2403776b900e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shapeAsset: {fileID: 11400000, guid: 6161f2cbe89e54b0fbbd164bb071c2df, type: 2}
+  localShapeData:
+    shapeType: 3
+    polyDimension: 0
+    isPolygonStrokeClosed: 0
+    polyPointTypes: 0000000000000000
+    polyPointPositions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    polyPointInTangents:
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    polyPointOutTangents:
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    polyPointStrokeColors:
+    - {r: 0, g: 0, b: 0, a: 1}
+    - {r: 0, g: 0, b: 0, a: 1}
+    polyPointStrokeWidths:
+    - 1
+    - 1
+    shapeOffset: {x: 0, y: 0, z: 0}
+    shapeSize: {x: 1, y: 1}
+    strokeColor: {r: 0, g: 0, b: 0, a: 1}
+    strokeWidth: 1
+    isFillEnabled: 1
+    fillColor: {r: 1, g: 1, b: 1, a: 1}
+    fillNormal: {x: 0, y: 0, z: 1}
+    fillTextureMode: 0
+    fillTextureOffset: {x: 0, y: 0}
+    fillTextureTiling: {x: 1, y: 1}
+    isStrokeEnabled: 1
+    strokeCornerType: 1
+    strokeRenderType: 1
+    strokeTextureType: 1
+    strokeMiterLimit: 3
+    strokeTextureTiling: 1
+    strokeTextureOffset: 0
+    hasVariableStrokeWidth: 0
+    hasVariableStrokeColor: 0
+--- !u!1 &1478551207
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 1478551208}
+  - 114: {fileID: 1478551209}
+  m_Layer: 0
+  m_Name: Shape (6)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1478551208
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1478551207}
+  m_LocalRotation: {x: -0.7168638, y: 0.14618811, z: 0.6813096, w: -0.023508467}
+  m_LocalPosition: {x: -7.46, y: -0.19, z: 2.92}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1207481920}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: -9.5259, y: 265.899, z: -165.8178}
+--- !u!114 &1478551209
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1478551207}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1928991051, guid: 4b767388747f34f22aa2403776b900e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shapeAsset: {fileID: 0}
+  localShapeData:
+    shapeType: 1
+    polyDimension: 0
+    isPolygonStrokeClosed: 0
+    polyPointTypes: 
+    polyPointPositions: []
+    polyPointInTangents: []
+    polyPointOutTangents: []
+    polyPointStrokeColors: []
+    polyPointStrokeWidths: []
+    shapeOffset: {x: 0, y: 0, z: 0}
+    shapeSize: {x: 3.07, y: 3.07}
+    strokeColor: {r: 1, g: 1, b: 0, a: 1}
+    strokeWidth: 0.01
+    isFillEnabled: 1
+    fillColor: {r: 0, g: 0.6689658, b: 1, a: 1}
+    fillNormal: {x: 0, y: 0, z: 1}
+    fillTextureMode: 0
+    fillTextureOffset: {x: 0, y: 0}
+    fillTextureTiling: {x: 1, y: 1}
+    isStrokeEnabled: 1
+    strokeCornerType: 1
+    strokeRenderType: 1
+    strokeTextureType: 1
+    strokeMiterLimit: 3
+    strokeTextureTiling: 20
+    strokeTextureOffset: 0
+    hasVariableStrokeWidth: 0
+    hasVariableStrokeColor: 0
+--- !u!1 &1479652883
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 1479652888}
+  - 114: {fileID: 1479652887}
+  - 114: {fileID: 1479652885}
+  - 114: {fileID: 1479652884}
+  m_Layer: 0
+  m_Name: Shape Drawing
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1479652884
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1479652883}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6ee6686302ed426a94916fc046b09c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  axis: {x: 0, y: 1, z: 0}
+  speed: 60
+--- !u!114 &1479652885
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1479652883}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e93ebeca6540e4d3c8a4af2c3721b5c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defaultDrawFill: 0
+  defaultDrawStroke: 1
+  defaultFillColor: {r: 0, g: 0, b: 1, a: 1}
+  defaultStrokeColor: {r: 1, g: 1, b: 1, a: 1}
+  defaultStrokeWidth: 0.002
+  strokeCornerType: 0
+  strokeRenderType: 1
+  strokeTextureType: 0
+  strokeTextureTiling: 3
+--- !u!114 &1479652887
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1479652883}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 214748838, guid: 4b767388747f34f22aa2403776b900e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cam: {fileID: 1621656176}
+  strokeMaterial: {fileID: 2100000, guid: e6181ba8457b54e35bce36d2d18e93d9, type: 2}
+  fillMaterial: {fileID: 2100000, guid: e70ebb3e00e2e40e49b46e8e6e5e7349, type: 2}
+--- !u!4 &1479652888
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1479652883}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.07, y: 1.46, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1537482148
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 1537482153}
+  - 114: {fileID: 1537482152}
+  - 114: {fileID: 1537482151}
+  - 114: {fileID: 1537482149}
+  - 114: {fileID: 1537482150}
+  m_Layer: 0
+  m_Name: Shape stress test one big
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!114 &1537482149
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1537482148}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1928991051, guid: 4b767388747f34f22aa2403776b900e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shapeAsset: {fileID: 0}
+  localShapeData:
+    shapeType: 2
+    polyDimension: 0
+    isPolygonStrokeClosed: 0
+    polyPointTypes: 0000000000000000
+    polyPointPositions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    polyPointInTangents:
+    - {x: -0, y: -0, z: -0}
+    - {x: 0, y: 0, z: 0}
+    polyPointOutTangents:
+    - {x: 0, y: 0, z: 0}
+    - {x: -0, y: -0, z: -0}
+    polyPointStrokeColors:
+    - {r: 0, g: 0, b: 0, a: 1}
+    - {r: 0, g: 0, b: 0, a: 1}
+    polyPointStrokeWidths:
+    - 0.001
+    - 0.001
+    shapeOffset: {x: 0, y: 0, z: 0}
+    shapeSize: {x: 1, y: 1}
+    strokeColor: {r: 0, g: 0, b: 0, a: 1}
+    strokeWidth: 0.001
+    isFillEnabled: 0
+    fillColor: {r: 1, g: 1, b: 1, a: 1}
+    fillNormal: {x: 0, y: 0, z: 1}
+    fillTextureMode: 0
+    fillTextureOffset: {x: 0, y: 0}
+    fillTextureTiling: {x: 1, y: 1}
+    isStrokeEnabled: 1
+    strokeCornerType: 1
+    strokeRenderType: 1
+    strokeTextureType: 1
+    strokeMiterLimit: 3
+    strokeTextureTiling: 1
+    strokeTextureOffset: 0
+    hasVariableStrokeWidth: 0
+    hasVariableStrokeColor: 0
+--- !u!114 &1537482150
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1537482148}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ad89ccb275a64e3d8aeb027b2acb849, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pointCount: 2000
+--- !u!114 &1537482151
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1537482148}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6ee6686302ed426a94916fc046b09c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  axis: {x: 0, y: 1, z: 0}
+  speed: 60
+--- !u!114 &1537482152
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1537482148}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 214748838, guid: 4b767388747f34f22aa2403776b900e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cam: {fileID: 1621656176}
+  strokeMaterial: {fileID: 2100000, guid: e6181ba8457b54e35bce36d2d18e93d9, type: 2}
+  fillMaterial: {fileID: 2100000, guid: e70ebb3e00e2e40e49b46e8e6e5e7349, type: 2}
+--- !u!4 &1537482153
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1537482148}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.07, y: 1.46, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1621656172
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 1621656177}
+  - 20: {fileID: 1621656176}
+  - 92: {fileID: 1621656175}
+  - 124: {fileID: 1621656174}
+  - 81: {fileID: 1621656173}
+  m_Layer: 0
+  m_Name: Main Camera
+  m_TagString: MainCamera
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!81 &1621656173
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1621656172}
+  m_Enabled: 1
+--- !u!124 &1621656174
+Behaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1621656172}
+  m_Enabled: 1
+--- !u!92 &1621656175
+Behaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1621656172}
+  m_Enabled: 1
+--- !u!20 &1621656176
+Camera:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1621656172}
+  m_Enabled: 1
+  serializedVersion: 2
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0.4044118, g: 0.4044118, b: 0.4044118, a: 0.019607844}
+  m_NormalizedViewPortRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
+  near clip plane: 0.01
+  far clip plane: 1000
+  field of view: 60
+  orthographic: 0
+  orthographic size: 10
+  m_Depth: 11
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RenderingPath: -1
+  m_TargetTexture: {fileID: 0}
+  m_TargetDisplay: 0
+  m_TargetEye: 3
+  m_HDR: 0
+  m_OcclusionCulling: 1
+  m_StereoConvergence: 10
+  m_StereoSeparation: 0.022
+  m_StereoMirrorMode: 0
+--- !u!4 &1621656177
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1621656172}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.22, z: -10}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1713668954
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 1713668955}
+  - 114: {fileID: 1713668956}
+  m_Layer: 0
+  m_Name: Shape (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1713668955
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1713668954}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.41, y: -1.11, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1207481920}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1713668956
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1713668954}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1928991051, guid: 4b767388747f34f22aa2403776b900e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shapeAsset: {fileID: 0}
+  localShapeData:
+    shapeType: 2
+    polyDimension: 0
+    isPolygonStrokeClosed: 1
+    polyPointTypes: 000000000000000000000000000000000000000000000000
+    polyPointPositions:
+    - {x: -3.1009405, y: -0.3084836, z: 0}
+    - {x: -2.4378202, y: 0.9556017, z: 0}
+    - {x: -1.2433693, y: 0.48550022, z: 0}
+    - {x: -0.5491917, y: -0.7572806, z: 0}
+    - {x: -2.0279343, y: -0.903661, z: 0}
+    - {x: -1.9838938, y: -0.04492128, z: 0}
+    polyPointInTangents:
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    polyPointOutTangents:
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    polyPointStrokeColors:
+    - {r: 0, g: 1, b: 0.6689658, a: 1}
+    - {r: 0, g: 1, b: 0.6689658, a: 1}
+    - {r: 0, g: 1, b: 0.6689658, a: 1}
+    - {r: 0, g: 1, b: 0.6689658, a: 1}
+    - {r: 0, g: 1, b: 0.6689658, a: 1}
+    - {r: 0, g: 1, b: 0.6689658, a: 1}
+    polyPointStrokeWidths:
+    - 0.01
+    - 0.01
+    - 0.01
+    - 0.01
+    - 0.01
+    - 0.01
+    shapeOffset: {x: 1, y: 1, z: 0}
+    shapeSize: {x: 1, y: 1}
+    strokeColor: {r: 0, g: 1, b: 0.6689658, a: 1}
+    strokeWidth: 0.01
+    isFillEnabled: 0
+    fillColor: {r: 1, g: 1, b: 1, a: 1}
+    fillNormal: {x: 0, y: 0, z: 1}
+    fillTextureMode: 0
+    fillTextureOffset: {x: 0, y: 0}
+    fillTextureTiling: {x: 1, y: 1}
+    isStrokeEnabled: 1
+    strokeCornerType: 1
+    strokeRenderType: 1
+    strokeTextureType: 1
+    strokeMiterLimit: 3
+    strokeTextureTiling: 20
+    strokeTextureOffset: 0
+    hasVariableStrokeWidth: 0
+    hasVariableStrokeColor: 0
+--- !u!1 &1832899705
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 1832899706}
+  - 114: {fileID: 1832899707}
+  m_Layer: 0
+  m_Name: Shape (14)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1832899706
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1832899705}
+  m_LocalRotation: {x: -0.7195559, y: 0.16544937, z: 0.67245865, w: -0.051625565}
+  m_LocalPosition: {x: -3.68, y: 1.41, z: 2.92}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1207481920}
+  m_RootOrder: 14
+  m_LocalEulerAnglesHint: {x: -8.47, y: 264.911, z: -162.186}
+--- !u!114 &1832899707
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1832899705}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1928991051, guid: 4b767388747f34f22aa2403776b900e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shapeAsset: {fileID: 0}
+  localShapeData:
+    shapeType: 1
+    polyDimension: 0
+    isPolygonStrokeClosed: 0
+    polyPointTypes: 
+    polyPointPositions: []
+    polyPointInTangents: []
+    polyPointOutTangents: []
+    polyPointStrokeColors: []
+    polyPointStrokeWidths: []
+    shapeOffset: {x: 0, y: 0, z: 0}
+    shapeSize: {x: 3.07, y: 3.07}
+    strokeColor: {r: 1, g: 1, b: 0, a: 1}
+    strokeWidth: 0.54
+    isFillEnabled: 1
+    fillColor: {r: 0, g: 0.6689658, b: 1, a: 1}
+    fillNormal: {x: 0, y: 0, z: 1}
+    fillTextureMode: 0
+    fillTextureOffset: {x: 0, y: 0}
+    fillTextureTiling: {x: 1, y: 1}
+    isStrokeEnabled: 1
+    strokeCornerType: 1
+    strokeRenderType: 2
+    strokeTextureType: 1
+    strokeMiterLimit: 3
+    strokeTextureTiling: 10
+    strokeTextureOffset: 0
+    hasVariableStrokeWidth: 0
+    hasVariableStrokeColor: 0
+--- !u!1 &2080912396
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 2080912397}
+  - 114: {fileID: 2080912398}
+  m_Layer: 0
+  m_Name: Shape (8)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2080912397
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2080912396}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 2.98, y: 2.86, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1207481920}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2080912398
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2080912396}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1928991051, guid: 4b767388747f34f22aa2403776b900e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shapeAsset: {fileID: 0}
+  localShapeData:
+    shapeType: 2
+    polyDimension: 0
+    isPolygonStrokeClosed: 1
+    polyPointTypes: 000000000000000000000000000000000000000000000000
+    polyPointPositions:
+    - {x: -3.752843, y: 2.0843375, z: 0}
+    - {x: -4.8556266, y: 1.3783333, z: 0}
+    - {x: -4.1246357, y: -0.67840004, z: 0}
+    - {x: -1.607492, y: -1.1625439, z: 0}
+    - {x: -0.7672782, y: 0.47477698, z: 0}
+    - {x: -1.4245067, y: 2.1362374, z: 0}
+    polyPointInTangents:
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    polyPointOutTangents:
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    polyPointStrokeColors:
+    - {r: 0.44852942, g: 0, b: 0, a: 1}
+    - {r: 0.44852942, g: 0, b: 0, a: 1}
+    - {r: 0.44852942, g: 0, b: 0, a: 1}
+    - {r: 0.44852942, g: 0, b: 0, a: 1}
+    - {r: 0.44852942, g: 0, b: 0, a: 1}
+    - {r: 0.44852942, g: 0, b: 0, a: 1}
+    polyPointStrokeWidths:
+    - 0.01
+    - 0.01
+    - 0.01
+    - 0.01
+    - 0.01
+    - 0.01
+    shapeOffset: {x: 1, y: 1, z: 0}
+    shapeSize: {x: 1, y: 1}
+    strokeColor: {r: 0.44852942, g: 0, b: 0, a: 1}
+    strokeWidth: 0.01
+    isFillEnabled: 1
+    fillColor: {r: 1, g: 0, b: 0, a: 1}
+    fillNormal: {x: 0, y: 0, z: 1}
+    fillTextureMode: 1
+    fillTextureOffset: {x: 0, y: 0}
+    fillTextureTiling: {x: 1, y: 1}
+    isStrokeEnabled: 1
+    strokeCornerType: 2
+    strokeRenderType: 1
+    strokeTextureType: 1
+    strokeMiterLimit: 3
+    strokeTextureTiling: 15
+    strokeTextureOffset: 0
+    hasVariableStrokeWidth: 0
+    hasVariableStrokeColor: 0
