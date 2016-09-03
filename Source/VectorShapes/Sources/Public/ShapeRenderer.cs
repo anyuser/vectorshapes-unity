@@ -63,6 +63,7 @@ namespace VectorShapes
 		const string STROKE_RENDER_SCREEN_SPACE_PIXELS = "STROKE_RENDER_SCREEN_SPACE_PIXELS";
 		const string STROKE_RENDER_SCREEN_SPACE_RELATIVE_TO_SCREEN_HEIGHT = "STROKE_RENDER_SCREEN_SPACE_RELATIVE_TO_SCREEN_HEIGHT";
 		const string STROKE_RENDER_SHAPE_SPACE = "STROKE_RENDER_SHAPE_SPACE";
+		const string STROKE_RENDER_SHAPE_SPACE_FACING_CAMERA = "STROKE_RENDER_SHAPE_SPACE_FACING_CAMERA";
 
 		#endregion
 
@@ -341,6 +342,10 @@ namespace VectorShapes
 				if (renderType == StrokeRenderType.ShapeSpace)
 				{
 					k[cachedOriginalKeywords.Length + 1] = STROKE_RENDER_SHAPE_SPACE;
+				}
+				else if (renderType == StrokeRenderType.ShapeSpaceFacingCamera)
+				{
+					k[cachedOriginalKeywords.Length + 1] = STROKE_RENDER_SHAPE_SPACE_FACING_CAMERA;
 				}
 				else if (renderType == StrokeRenderType.ScreenSpacePixels)
 				{
