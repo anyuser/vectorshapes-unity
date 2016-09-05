@@ -31,8 +31,12 @@ namespace VectorShapesEditor
 		[MenuItem("GameObject/2D Object/Polyline Shape")]
 		static void CreatePolyLineShapeObj(MenuCommand cmd)
 		{
-			Shape s = CreateShapeObj("Polygon Shape", cmd);
+			Shape s = CreateShapeObj("Polyline Shape", cmd);
 			s.ShapeData.ShapeType = ShapeType.Polygon;
+			s.ShapeData.AddPolyPoint(Vector3.zero);
+			s.ShapeData.AddPolyPoint(Vector3.up);
+			s.ShapeData.AddPolyPoint(Vector3.right);
+			s.ShapeData.AddPolyPoint(Vector3.right + Vector3.up);
 			s.ShapeData.IsPolygonStrokeClosed = false;
 			s.ShapeData.IsFillEnabled = false;
 		}
