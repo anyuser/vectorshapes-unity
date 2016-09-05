@@ -11,11 +11,14 @@ namespace VectorShapes
 		int fillShapeHashId;
 
 		ShapeData _shape;
-		public ShapeData shape{
-			get{ 
+		public ShapeData shape
+		{
+			get
+			{
 				return _shape;
 			}
-			set{ 
+			set
+			{
 				if (_shape == value)
 					return;
 				_shape = value;
@@ -24,11 +27,14 @@ namespace VectorShapes
 		}
 
 		Camera _camera;
-		public Camera camera{
-			get{ 
+		public Camera camera
+		{
+			get
+			{
 				return _camera;
 			}
-			set{ 
+			set
+			{
 				if (_camera == value)
 					return;
 				_camera = value;
@@ -37,11 +43,14 @@ namespace VectorShapes
 		}
 
 		bool _useShader;
-		public bool useShader{
-			get{ 
+		public bool useShader
+		{
+			get
+			{
 				return _useShader;
 			}
-			set{ 
+			set
+			{
 				if (_useShader == value)
 					return;
 				_useShader = value;
