@@ -538,14 +538,14 @@ Canvas:
   serializedVersion: 2
   m_RenderMode: 1
   m_Camera: {fileID: 1621656176}
-  m_PlaneDistance: 100
+  m_PlaneDistance: 10
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 10
   m_TargetDisplay: 0
 --- !u!224 &367197268
 RectTransform:
@@ -1198,21 +1198,21 @@ MonoBehaviour:
     shapeType: 2
     polyDimension: 0
     isPolygonStrokeClosed: 0
-    polyPointTypes: 00000000000000000100000000000000
+    polyPointTypes: 00000000000000000000000000000000
     polyPointPositions:
-    - {x: -158.75789, y: -39.823673, z: 0}
-    - {x: -53.129906, y: 174.11649, z: 0}
-    - {x: 143.2645, y: 3.8807688, z: 0}
-    - {x: 195.34534, y: 118.447426, z: 0}
+    - {x: -234.71451, y: -88.5094, z: 0}
+    - {x: -189.13446, y: -16.278524, z: 0}
+    - {x: -119.14052, y: -57.07503, z: 0}
+    - {x: -125.19428, y: -10.135628, z: 0}
     polyPointInTangents:
     - {x: -0, y: -0, z: -0}
     - {x: 0, y: 0, z: 0}
-    - {x: -159.61032, y: -21.111835, z: 0}
+    - {x: 0, y: 0, z: 0}
     - {x: 0, y: 0, z: 0}
     polyPointOutTangents:
     - {x: 0, y: 0, z: 0}
     - {x: 0, y: 0, z: 0}
-    - {x: 17.34292, y: 38.150696, z: 0}
+    - {x: 0, y: 0, z: 0}
     - {x: -0, y: -0, z: -0}
     polyPointStrokeColors:
     - {r: 1, g: 0.61764705, b: 0.87870187, a: 1}
@@ -1220,14 +1220,14 @@ MonoBehaviour:
     - {r: 1, g: 0.61764705, b: 0.87870187, a: 1}
     - {r: 1, g: 0.61764705, b: 0.87870187, a: 1}
     polyPointStrokeWidths:
-    - 1
-    - 1
-    - 1
-    - 1
+    - 2
+    - 2
+    - 2
+    - 2
     shapeOffset: {x: 0, y: 0, z: 0}
     shapeSize: {x: 1, y: 1}
     strokeColor: {r: 1, g: 0.61764705, b: 0.87870187, a: 1}
-    strokeWidth: 1
+    strokeWidth: 2
     isFillEnabled: 0
     fillColor: {r: 1, g: 1, b: 1, a: 1}
     fillNormal: {x: 0, y: 0, z: 1}
@@ -1255,7 +1255,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cam: {fileID: 1621656176}
-  strokeMaterial: {fileID: 2100000, guid: e6181ba8457b54e35bce36d2d18e93d9, type: 2}
+  strokeMaterial: {fileID: 2100000, guid: 55482002f2e114ca7b24e5ec68139ea7, type: 2}
   fillMaterial: {fileID: 2100000, guid: e70ebb3e00e2e40e49b46e8e6e5e7349, type: 2}
 --- !u!222 &965121229
 CanvasRenderer:
@@ -2085,7 +2085,7 @@ MonoBehaviour:
     polyPointPositions:
     - {x: -3.1009405, y: -0.3084836, z: 0}
     - {x: -2.4378202, y: 0.9556017, z: 0}
-    - {x: -1.2433693, y: 0.48550022, z: 0}
+    - {x: -1.2592169, y: 0.4570259, z: 0}
     - {x: -0.5491917, y: -0.7572806, z: 0}
     - {x: -2.504561, y: -1.0803589, z: 0}
     - {x: -1.9142528, y: -0.39858055, z: 0}
