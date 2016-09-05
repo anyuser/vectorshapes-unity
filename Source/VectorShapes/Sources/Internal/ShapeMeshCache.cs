@@ -106,7 +106,22 @@ namespace VectorShapes
 				if (_transform == value)
 					return;
 				_transform = value;
+				_canvasRenderer = null;
 				isDirty = true;
+			}
+		}
+
+		CanvasRenderer _canvasRenderer;
+		public CanvasRenderer canvasRenderer
+		{
+			get
+			{
+				if (transform == null)
+					return null;
+				
+				if (_canvasRenderer == null)
+					_canvasRenderer = transform.GetComponent<CanvasRenderer>();
+				return _canvasRenderer;
 			}
 		}
 
@@ -190,7 +205,13 @@ namespace VectorShapes
 			}
 		}
 
-		public bool RefreshMesh()
+		public void Refresh()
+		{
+			RefreshMesh();
+			RefreshMaterials();
+		}
+
+		internal bool RefreshMesh()
 		{
 			CreateMeshesIfNeeded();
 
@@ -279,6 +300,12 @@ namespace VectorShapes
 					sharedMeshBuilder.AddStream(fillMeshBuilder);
 					sharedMeshBuilder.AddStream(strokeMeshBuilder);
 					sharedMeshBuilder.ApplyToMesh(mesh);
+
+					if (canvasRenderer)
+					{
+						canvasRenderer.SetMesh(mesh);
+						canvasRenderer.DisableRectClipping();
+					}
 				}
 				isDirty = false;
 				Profiler.EndSample();
@@ -308,9 +335,9 @@ namespace VectorShapes
 			if (strokeMaterial)
 			{
 				Profiler.BeginSample("Set stroke shader keywords");
-				strokeMaterial.shaderKeywords = GetCachedKeywords(shape.StrokeCornerType, shape.StrokeRenderType);
+				SetStrokeKeywordsIfNeeded();
 				Profiler.EndSample();
-
+				                       
 				strokeMaterial.SetFloat("_StrokeMiterLimit", shape.StrokeMiterLimit);
 			}
 
@@ -337,6 +364,20 @@ namespace VectorShapes
 				fillMaterial.SetTextureScale("_MainTex", tilingScale);
 
 			}
+
+			if (canvasRenderer)
+			{
+				if (canvasRenderer.materialCount != mesh.subMeshCount)
+					canvasRenderer.materialCount = mesh.subMeshCount;
+
+				if ( canvasRenderer.materialCount > 0 && canvasRenderer.GetMaterial(0) != fillMaterial)
+					canvasRenderer.SetMaterial(fillMaterial, 0);
+
+				if (canvasRenderer.materialCount > 1 && canvasRenderer.GetMaterial(1) != strokeMaterial)
+					canvasRenderer.SetMaterial(strokeMaterial, 1);
+				//canvasRenderer.SetColor(Color.white);
+				//canvasRenderer.SetAlpha(1);
+			}
 			Profiler.EndSample();
 		}
 
@@ -361,7 +402,8 @@ namespace VectorShapes
 				if (sourceStrokeMaterial != null)
 				{
 					strokeMaterial = new Material(sourceStrokeMaterial);
-					SetCachedKeywordsBase(strokeMaterial.shaderKeywords);
+					cachedCornerType = null;
+					cachedRenderType = null;
 				}
 				else
 				{
@@ -376,6 +418,7 @@ namespace VectorShapes
 				return false;
 			return true;
 		}
+
 		#region keywords caching
 		const string STROKE_CORNER_BEVEL = "STROKE_CORNER_BEVEL";
 		const string STROKE_CORNER_EXTEND_OR_CUT = "STROKE_CORNER_EXTEND_OR_CUT";
@@ -385,70 +428,81 @@ namespace VectorShapes
 		const string STROKE_RENDER_SCREEN_SPACE_RELATIVE_TO_SCREEN_HEIGHT = "STROKE_RENDER_SCREEN_SPACE_RELATIVE_TO_SCREEN_HEIGHT";
 		const string STROKE_RENDER_SHAPE_SPACE = "STROKE_RENDER_SHAPE_SPACE";
 
+		StrokeCornerType? cachedCornerType = null;
+		StrokeRenderType? cachedRenderType = null;
+		string[] instanceKeywords = null;
 
-		string[] cachedOriginalKeywords = new string[0];
-		Dictionary<int, string[]> cachedKeywords = new Dictionary<int, string[]>();
-		void SetCachedKeywordsBase(string[] originalKeywords)
+		void SetStrokeKeywordsIfNeeded()
 		{
-			bool clearCache = false;
-			if (cachedOriginalKeywords == null || originalKeywords.Length != cachedOriginalKeywords.Length)
+			string cornerTypeKeyword = null;
+			switch (shape.StrokeCornerType)
 			{
-				cachedOriginalKeywords = new string[originalKeywords.Length];
-				clearCache = true;
+				case StrokeCornerType.Bevel:
+					cornerTypeKeyword = STROKE_CORNER_BEVEL;
+					break;
+
+				case StrokeCornerType.ExtendOrCut:
+					cornerTypeKeyword = STROKE_CORNER_EXTEND_OR_CUT;
+					break;
+
+				case StrokeCornerType.ExtendOrMiter:
+					cornerTypeKeyword = STROKE_CORNER_EXTEND_OR_MITER;
+					break;
+
+				default:
+					break;
 			}
 
-			for (int i = 0; i < originalKeywords.Length; i++)
+			string renderTypeKeyword = null;
+			switch (shape.StrokeRenderType)
 			{
-				if (cachedOriginalKeywords[i] != originalKeywords[i])
+				case StrokeRenderType.ShapeSpace:
+					renderTypeKeyword = STROKE_RENDER_SHAPE_SPACE;
+					break;
+
+				case StrokeRenderType.ScreenSpacePixels:
+					renderTypeKeyword = STROKE_RENDER_SCREEN_SPACE_PIXELS;
+					break;
+
+				case StrokeRenderType.ScreenSpaceRelativeToScreenHeight:
+					renderTypeKeyword = STROKE_RENDER_SCREEN_SPACE_RELATIVE_TO_SCREEN_HEIGHT;
+					break;
+
+				default:
+					break;
+			}
+
+			bool changed = false;
+			string[] sourceKeywords = sourceStrokeMaterial.shaderKeywords;
+			
+			if (instanceKeywords == null || instanceKeywords.Length != sourceKeywords.Length + 2)
+			{
+				instanceKeywords = new string[sourceKeywords.Length + 2];
+				changed = true;
+			}
+
+			for (int i = 0; i < sourceKeywords.Length; i++)
+			{
+				if (instanceKeywords[i] != sourceKeywords[i])
 				{
-					cachedOriginalKeywords[i] = originalKeywords[i];
-					clearCache = true;
+					instanceKeywords[i] = sourceKeywords[i];
+					changed = true;
 				}
 			}
 
-			if (clearCache)
+			if (instanceKeywords[instanceKeywords.Length - 2] != cornerTypeKeyword)
 			{
-				cachedKeywords.Clear();
+				instanceKeywords[instanceKeywords.Length - 2] = cornerTypeKeyword;
+				changed = true;
 			}
-		}
+			if (instanceKeywords[instanceKeywords.Length - 1] != renderTypeKeyword)
+			{
+				instanceKeywords[instanceKeywords.Length - 1] = renderTypeKeyword;
+				changed = true;
+			}
 
-		string[] GetCachedKeywords(StrokeCornerType cornerType, StrokeRenderType renderType)
-		{
-			int hash = (int)cornerType + 1000 * (int)renderType;
-			if (!cachedKeywords.ContainsKey(hash))
-			{
-				string[] k = new string[cachedOriginalKeywords.Length + 2];
-				for (int i = 0; i < cachedOriginalKeywords.Length; i++)
-				{
-					k[i] = cachedOriginalKeywords[i];
-				}
-				if (cornerType == StrokeCornerType.Bevel)
-				{
-					k[cachedOriginalKeywords.Length + 0] = STROKE_CORNER_BEVEL;
-				}
-				else if (cornerType == StrokeCornerType.ExtendOrCut)
-				{
-					k[cachedOriginalKeywords.Length + 0] = STROKE_CORNER_EXTEND_OR_CUT;
-				}
-				else if (cornerType == StrokeCornerType.ExtendOrMiter)
-				{
-					k[cachedOriginalKeywords.Length + 0] = STROKE_CORNER_EXTEND_OR_MITER;
-				}
-				if (renderType == StrokeRenderType.ShapeSpace)
-				{
-					k[cachedOriginalKeywords.Length + 1] = STROKE_RENDER_SHAPE_SPACE;
-				}
-				else if (renderType == StrokeRenderType.ScreenSpacePixels)
-				{
-					k[cachedOriginalKeywords.Length + 1] = STROKE_RENDER_SCREEN_SPACE_PIXELS;
-				}
-				else if (renderType == StrokeRenderType.ScreenSpaceRelativeToScreenHeight)
-				{
-					k[cachedOriginalKeywords.Length + 1] = STROKE_RENDER_SCREEN_SPACE_RELATIVE_TO_SCREEN_HEIGHT;
-				}
-				cachedKeywords.Add(hash, k);
-			}
-			return cachedKeywords[hash];
+			if (changed)
+				strokeMaterial.shaderKeywords = instanceKeywords;
 		}
 		#endregion
 	}
