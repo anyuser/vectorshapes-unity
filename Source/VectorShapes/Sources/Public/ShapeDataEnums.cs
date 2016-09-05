@@ -58,6 +58,7 @@ namespace VectorShapes
 		ScreenSpacePixels,
 		ScreenSpaceRelativeToScreenHeight,
 		ShapeSpace,
+		ShapeSpaceFacingCamera
 	}
 
 	/// <summary>
