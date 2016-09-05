@@ -58,6 +58,42 @@ namespace VectorShapes
 			}
 		}
 
+		internal Material fillMaterial { get; private set; }
+		internal Material strokeMaterial { get; private set; }
+
+		Material _sourceStrokeMaterial;
+		public Material sourceStrokeMaterial
+		{
+			get
+			{
+				return _sourceStrokeMaterial;
+			}
+			set
+			{
+				if (_sourceStrokeMaterial == value)
+					return;
+				
+				_sourceStrokeMaterial = value;
+				strokeMaterial = null;
+			}
+		}
+
+		Material _sourceFillMaterial;
+		public Material sourceFillMaterial
+		{
+			get
+			{
+				return _sourceFillMaterial;
+			}
+			set
+			{
+				if (_sourceFillMaterial == value)
+					return;
+				_sourceFillMaterial = value;
+				fillMaterial = null;
+			}
+		}
+
 		Transform _transform;
 		public Transform transform
 		{
@@ -94,18 +130,28 @@ namespace VectorShapes
 		Matrix4x4 lastCameraProjectionMatrix;
 		Matrix4x4 lastTransformMatrix;
 
+		MeshBuilder sharedMeshBuilder = new MeshBuilder();
 		MeshBuilder fillMeshBuilder = new MeshBuilder();
 		MeshBuilder strokeMeshBuilder = new MeshBuilder();
 
-		public Mesh fillMesh { get; private set; }
-		public Mesh strokeMesh { get; private set; }
+		//public Mesh fillMesh { get; private set; }
+		//public Mesh strokeMesh { get; private set; }
+		public Mesh mesh { get; private set; }
 
 		public void Release()
 		{
-			if (strokeMesh)
+			/*if (strokeMesh)
 				Object.DestroyImmediate(strokeMesh);
 			if (fillMesh)
-				Object.DestroyImmediate(fillMesh);
+				Object.DestroyImmediate(fillMesh);*/
+			if (mesh)
+				Object.DestroyImmediate(mesh);
+
+			if (strokeMaterial != null)
+				Object.DestroyImmediate(strokeMaterial);
+			
+			if (fillMaterial != null )
+				Object.DestroyImmediate(fillMaterial);
 		}
 
 		public ShapeMeshCache()
@@ -115,7 +161,7 @@ namespace VectorShapes
 
 		void CreateMeshesIfNeeded()
 		{
-			if (!strokeMesh)
+			/*if (!strokeMesh)
 			{
 				strokeMesh = new Mesh();
 				strokeMesh.hideFlags = HideFlags.DontSave;
@@ -132,10 +178,19 @@ namespace VectorShapes
 				fillMesh.name = "Generated Mesh";
 				//meshFilter.sharedMesh = mesh;
 				isDirty = true;
+			}*/
+			if (!mesh)
+			{
+				mesh = new Mesh();
+				mesh.hideFlags = HideFlags.DontSave;
+				mesh.MarkDynamic();
+				mesh.name = "Generated Mesh";
+				//meshFilter.sharedMesh = mesh;
+				isDirty = true;
 			}
 		}
 
-		public bool Refresh()
+		public bool RefreshMesh()
 		{
 			CreateMeshesIfNeeded();
 
@@ -170,55 +225,149 @@ namespace VectorShapes
 				fillMeshBuilder.Clear(false);
 			}
 
-			if (shape != null) {
 
-				Profiler.BeginSample ("Update Shape Mesh Cache");
+			if (shape != null)
+			{
 
-				if (regenerateFill) {
-					Profiler.BeginSample ("Generate Fill Mesh");
-					if (shape.IsFillEnabled) {
-						ShapeMeshGenerator.GenerateFillMesh (shape, fillMeshBuilder);
+				Profiler.BeginSample("Update Shape Mesh Cache");
+
+				if (regenerateFill)
+				{
+					Profiler.BeginSample("Generate Fill Mesh");
+					if (shape.IsFillEnabled)
+					{
+						ShapeMeshGenerator.GenerateFillMesh(shape, fillMeshBuilder);
 						if (doubleSided)
-							fillMeshBuilder.GenerateFlippedTriangles ();
+						{
+							fillMeshBuilder.GenerateFlippedTriangles();
+						}
 					}
-					fillMeshBuilder.ApplyToMesh (fillMesh);
+					//fillMeshBuilder.ApplyToMesh (fillMesh);
 					fillShapeHashId = shape.HashId;
-					Profiler.EndSample ();
+					Profiler.EndSample();
 				}
 
-				if (regenerateStroke) {
-					Profiler.BeginSample ("Regenerate Stroke Mesh");
-					if (shape.IsStrokeEnabled) {
+				if (regenerateStroke)
+				{
+					Profiler.BeginSample("Regenerate Stroke Mesh");
+					if (shape.IsStrokeEnabled)
+					{
+
 						if (useShader)
-							ShapeMeshGenerator.GenerateGPUStrokeMesh (shape, strokeMeshBuilder);
+						{
+							ShapeMeshGenerator.GenerateGPUStrokeMesh(shape, strokeMeshBuilder);
+						}
 						else
-							ShapeMeshGenerator.GenerateCPUStrokeMesh (shape, strokeMeshBuilder, transform, camera);
+						{
+							ShapeMeshGenerator.GenerateCPUStrokeMesh(shape, strokeMeshBuilder, transform, camera);
+						}
 
 						if (doubleSided)
-							strokeMeshBuilder.GenerateFlippedTriangles ();
+						{
+							strokeMeshBuilder.GenerateFlippedTriangles();
+						}
 					}
-					strokeMeshBuilder.ApplyToMesh (strokeMesh);
+					//strokeMeshBuilder.ApplyToMesh(strokeMesh);
 					strokeShapeHashId = shape.HashId;
-					Profiler.EndSample ();
+					Profiler.EndSample();
 
+				}
+
+				if (regenerateFill || regenerateStroke)
+				{
+					sharedMeshBuilder.Clear(false);
+					sharedMeshBuilder.AddStream(fillMeshBuilder);
+					sharedMeshBuilder.AddStream(strokeMeshBuilder);
+					sharedMeshBuilder.ApplyToMesh(mesh);
 				}
 				isDirty = false;
-			} 
+				Profiler.EndSample();
+			}
 			else {
 				fillShapeHashId = -1;
 				strokeShapeHashId = -1;
 			}
 
-			if (!useShader) 
+			if (!useShader)
 			{
 				lastCameraMatrix = camera.worldToCameraMatrix;
 				lastCameraProjectionMatrix = camera.projectionMatrix;
 				lastTransformMatrix = transform.localToWorldMatrix;
 			}
 
-			Profiler.EndSample ();
-
 			return true;
+		}
+
+		public void RefreshMaterials()
+		{
+			Profiler.BeginSample("RefreshMaterials");
+
+			CreateMaterialsIfNeeded();
+			//SetCachedKeywordsBase(originalStrokeKeywords);
+
+			if (strokeMaterial)
+			{
+				Profiler.BeginSample("Set stroke shader keywords");
+				strokeMaterial.shaderKeywords = GetCachedKeywords(shape.StrokeCornerType, shape.StrokeRenderType);
+				Profiler.EndSample();
+
+				strokeMaterial.SetFloat("_StrokeMiterLimit", shape.StrokeMiterLimit);
+			}
+
+			if (fillMaterial)
+			{
+				Vector2 tilingScale = shape.FillTextureTiling;
+				Vector2 tilingOffset = shape.FillTextureOffset;
+
+				if (shape.FillTextureMode == FillTextureMode.Normalized)
+				{
+					Vector2 fullSize = (Vector2)mesh.bounds.size;
+					if (fullSize.x > 0 && fullSize.y > 0)
+					{
+						tilingScale = new Vector2(tilingScale.x / fullSize.x, tilingScale.y / fullSize.y);
+
+						tilingOffset.Scale(fullSize);
+						tilingOffset += (Vector2)mesh.bounds.center;
+						tilingOffset.Scale(tilingScale);
+						tilingOffset += Vector2.one * 0.5f;
+					}
+				}
+
+				fillMaterial.SetTextureOffset("_MainTex", -tilingOffset);
+				fillMaterial.SetTextureScale("_MainTex", tilingScale);
+
+			}
+			Profiler.EndSample();
+		}
+
+		void CreateMaterialsIfNeeded()
+		{
+			if (fillMaterial == null || fillMaterial.shader != sourceFillMaterial.shader)
+			{
+				if (fillMaterial != null)
+					Object.DestroyImmediate(fillMaterial);
+				
+				if (sourceFillMaterial != null)
+					fillMaterial = new Material(sourceFillMaterial);
+				else
+					fillMaterial = null;
+			}
+
+			if (strokeMaterial == null || strokeMaterial.shader != sourceStrokeMaterial.shader)
+			{
+				if (strokeMaterial != null)
+					Object.DestroyImmediate(strokeMaterial);
+				
+				if (sourceStrokeMaterial != null)
+				{
+					strokeMaterial = new Material(sourceStrokeMaterial);
+					SetCachedKeywordsBase(strokeMaterial.shaderKeywords);
+				}
+				else
+				{
+					strokeMaterial = null;
+				}
+			}
 		}
 
 		bool IsStrokeRenderTypeCameraDependent(StrokeRenderType strokeRenderType)
@@ -227,6 +376,81 @@ namespace VectorShapes
 				return false;
 			return true;
 		}
-}
+		#region keywords caching
+		const string STROKE_CORNER_BEVEL = "STROKE_CORNER_BEVEL";
+		const string STROKE_CORNER_EXTEND_OR_CUT = "STROKE_CORNER_EXTEND_OR_CUT";
+		const string STROKE_CORNER_EXTEND_OR_MITER = "STROKE_CORNER_EXTEND_OR_MITER";
+
+		const string STROKE_RENDER_SCREEN_SPACE_PIXELS = "STROKE_RENDER_SCREEN_SPACE_PIXELS";
+		const string STROKE_RENDER_SCREEN_SPACE_RELATIVE_TO_SCREEN_HEIGHT = "STROKE_RENDER_SCREEN_SPACE_RELATIVE_TO_SCREEN_HEIGHT";
+		const string STROKE_RENDER_SHAPE_SPACE = "STROKE_RENDER_SHAPE_SPACE";
+
+
+		string[] cachedOriginalKeywords = new string[0];
+		Dictionary<int, string[]> cachedKeywords = new Dictionary<int, string[]>();
+		void SetCachedKeywordsBase(string[] originalKeywords)
+		{
+			bool clearCache = false;
+			if (cachedOriginalKeywords == null || originalKeywords.Length != cachedOriginalKeywords.Length)
+			{
+				cachedOriginalKeywords = new string[originalKeywords.Length];
+				clearCache = true;
+			}
+
+			for (int i = 0; i < originalKeywords.Length; i++)
+			{
+				if (cachedOriginalKeywords[i] != originalKeywords[i])
+				{
+					cachedOriginalKeywords[i] = originalKeywords[i];
+					clearCache = true;
+				}
+			}
+
+			if (clearCache)
+			{
+				cachedKeywords.Clear();
+			}
+		}
+
+		string[] GetCachedKeywords(StrokeCornerType cornerType, StrokeRenderType renderType)
+		{
+			int hash = (int)cornerType + 1000 * (int)renderType;
+			if (!cachedKeywords.ContainsKey(hash))
+			{
+				string[] k = new string[cachedOriginalKeywords.Length + 2];
+				for (int i = 0; i < cachedOriginalKeywords.Length; i++)
+				{
+					k[i] = cachedOriginalKeywords[i];
+				}
+				if (cornerType == StrokeCornerType.Bevel)
+				{
+					k[cachedOriginalKeywords.Length + 0] = STROKE_CORNER_BEVEL;
+				}
+				else if (cornerType == StrokeCornerType.ExtendOrCut)
+				{
+					k[cachedOriginalKeywords.Length + 0] = STROKE_CORNER_EXTEND_OR_CUT;
+				}
+				else if (cornerType == StrokeCornerType.ExtendOrMiter)
+				{
+					k[cachedOriginalKeywords.Length + 0] = STROKE_CORNER_EXTEND_OR_MITER;
+				}
+				if (renderType == StrokeRenderType.ShapeSpace)
+				{
+					k[cachedOriginalKeywords.Length + 1] = STROKE_RENDER_SHAPE_SPACE;
+				}
+				else if (renderType == StrokeRenderType.ScreenSpacePixels)
+				{
+					k[cachedOriginalKeywords.Length + 1] = STROKE_RENDER_SCREEN_SPACE_PIXELS;
+				}
+				else if (renderType == StrokeRenderType.ScreenSpaceRelativeToScreenHeight)
+				{
+					k[cachedOriginalKeywords.Length + 1] = STROKE_RENDER_SCREEN_SPACE_RELATIVE_TO_SCREEN_HEIGHT;
+				}
+				cachedKeywords.Add(hash, k);
+			}
+			return cachedKeywords[hash];
+		}
+		#endregion
+	}
 }
 
