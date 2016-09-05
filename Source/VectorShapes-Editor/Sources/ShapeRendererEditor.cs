@@ -47,8 +47,6 @@ namespace VectorShapesEditor
 
 				if (editor)
 					DestroyImmediate(editor);
-				
-				editor.target = prop.objectReferenceValue;
 
 				if( prop.objectReferenceValue )
 					editor = CreateEditor(prop.objectReferenceValue);
@@ -59,14 +57,14 @@ namespace VectorShapesEditor
 		{
 			//base.OnInspectorGUI();
 
-			bool useStrokeShader = VectorShapesUtils.IsStrokeShader(shapeRenderer.StrokeMaterial.shader);
+			bool useStrokeShader = shapeRenderer.StrokeMaterial ? VectorShapesUtils.IsStrokeShader(shapeRenderer.StrokeMaterial.shader) : false;
 			if(!useStrokeShader)
 				EditorGUILayout.PropertyField(serializedObject.FindProperty("cam"));
 
-			if( shapeRenderer.FillMaterial )
+			///if( shapeRenderer.FillMaterial )
 				MaterialField("fillMaterial", ref fillMaterialEditor);
 			
-			if (shapeRenderer.StrokeMaterial)
+			//if (shapeRenderer.StrokeMaterial)
 				MaterialField("strokeMaterial", ref strokeMaterialEditor);
 
 
