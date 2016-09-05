@@ -161,7 +161,7 @@ namespace VectorShapes
 		{
 			mesh.Clear ();
 			if (this.positions.Count >= 65000) {
-				throw new ArgumentException ("Mesh can not have more than 65000 verticies");
+				throw new ArgumentException ("Mesh can not have more than 65000 vertices");
 			}
 			mesh.SetVertices (this.positions);
 			mesh.SetColors (this.m_Colors);
