@@ -26,9 +26,9 @@ namespace VectorShapesEditor
 
 			ShapeMeshCache cache = src.GizmoCache;
 			cache.camera = SceneView.currentDrawingSceneView.camera;
-			cache.Refresh();
+			cache.RefreshMesh();
 
-			if (cache.strokeMesh.subMeshCount > 0 && cache.strokeMesh.vertexCount > 0)
+			/*if (cache.strokeMesh.subMeshCount > 0 && cache.strokeMesh.vertexCount > 0)
 			{
 				Gizmos.color = surfaceColor;
 				Gizmos.DrawMesh(cache.strokeMesh);
@@ -48,6 +48,17 @@ namespace VectorShapesEditor
 				{
 					Gizmos.color = wireframeColor;
 					Gizmos.DrawWireMesh(cache.fillMesh);
+				}
+			}*/
+			if (cache.mesh.subMeshCount > 0 && cache.mesh.vertexCount > 0)
+			{
+				Gizmos.color = surfaceColor;
+				Gizmos.DrawMesh(cache.mesh);
+
+				if (drawWireframe)
+				{
+					Gizmos.color = wireframeColor;
+					Gizmos.DrawWireMesh(cache.mesh);
 				}
 			}
 		}

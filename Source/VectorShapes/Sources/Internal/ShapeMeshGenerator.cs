@@ -16,6 +16,7 @@ namespace VectorShapes
 			if (shape.GetVertexInfoList().Count < 2)
 				return;
 
+			meshBuilder.currentSubmesh = 1;
 			System.Action<VertexInputData> addVertDelegate = delegate (VertexInputData vertexData)
 			{
 				var encodedData = VertexShaderDataHelper.EncodeData(vertexData);

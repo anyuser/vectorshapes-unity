@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using LibTessDotNet;
@@ -56,15 +56,6 @@ namespace VectorShapes
 		bool useShader = false;
 		Shader checkedShader;
 
-		const string STROKE_CORNER_BEVEL = "STROKE_CORNER_BEVEL";
-		const string STROKE_CORNER_EXTEND_OR_CUT = "STROKE_CORNER_EXTEND_OR_CUT";
-		const string STROKE_CORNER_EXTEND_OR_MITER = "STROKE_CORNER_EXTEND_OR_MITER";
-
-		const string STROKE_RENDER_SCREEN_SPACE_PIXELS = "STROKE_RENDER_SCREEN_SPACE_PIXELS";
-		const string STROKE_RENDER_SCREEN_SPACE_RELATIVE_TO_SCREEN_HEIGHT = "STROKE_RENDER_SCREEN_SPACE_RELATIVE_TO_SCREEN_HEIGHT";
-		const string STROKE_RENDER_SHAPE_SPACE = "STROKE_RENDER_SHAPE_SPACE";
-		const string STROKE_RENDER_SHAPE_SPACE_FACING_CAMERA = "STROKE_RENDER_SHAPE_SPACE_FACING_CAMERA";
-
 		#endregion
 
 		#region MonoBehaviour callbacks
@@ -83,7 +74,6 @@ namespace VectorShapes
 				foundShapes[i].UpdateShapeRenderer();
 			}
 
-			//UpdateMaterials ();
 			RefreshMesh();
 		}
 
@@ -97,7 +87,6 @@ namespace VectorShapes
 
 				shapeMeshCaches [i].Release ();
 			}
-			cachedKeywords.Clear();
 		}
 
 		void Start()
@@ -108,24 +97,20 @@ namespace VectorShapes
 		{
 		}
 
-		/*	// Update is called once per frame
 		void LateUpdate ()
 		{
-
-			Draw ();
+			RefreshMesh ();
+			Draw();
 		}
-		*/
 
 		void OnRenderObject()
 		{
-			RefreshMesh ();
-			DrawNow ();
+			//DrawNow ();
 		}
 
 		#endregion
 
 		#region internal functions
-
 
 		internal void AddShape(Shape shape)
 		{
@@ -145,87 +130,6 @@ namespace VectorShapes
 
 		#region private functions
 
-		/*void Draw()
-		{
-			Matrix4x4 fw = Matrix4x4.TRS(Vector3.back * 0.01f, Quaternion.identity, Vector3.one);
-			Matrix4x4 m = transform.localToWorldMatrix;
-
-			for (int i = 0; i < shapeMeshCaches.Count; i++)
-			{
-				m *= fw;
-
-				Graphics.DrawMesh(shapeMeshCaches[i].fillMesh, m, fillMaterial, gameObject.layer, null, 0);
-				Graphics.DrawMesh(shapeMeshCaches[i].strokeMesh, m, strokeMaterial, gameObject.layer, null, 0);
-			}
-		}*/
-
-		void DrawNow()
-		{
-			Profiler.BeginSample("DrawNow");
-			if ((1 << gameObject.layer & Camera.current.cullingMask) == 0)
-				return;
-			
-			Vector2 originalTilingScale = fillMaterial.GetTextureScale("_MainTex");
-			Vector2 originalTilingOffset = fillMaterial.GetTextureOffset("_MainTex");
-			float? originalStrokeMiterLimit = strokeMaterial.HasProperty("_StrokeMiterLimit") ? (float?)strokeMaterial.GetFloat("_StrokeMiterLimit") : null;
-			string[] originalStrokeKeywords = strokeMaterial.shaderKeywords;
-
-			SetCachedKeywordsBase(originalStrokeKeywords);
-
-			for (int i = 0; i < shapeMeshCaches.Count; i++)
-			{
-
-				Profiler.BeginSample("Draw FillMaterial");
-				if (fillMaterial)
-				{
-					Vector2 tilingScale = shapes[i].ShapeData.FillTextureTiling;
-					Vector2 tilingOffset = shapes[i].ShapeData.FillTextureOffset;
-
-					if (shapes[i].ShapeData.FillTextureMode == FillTextureMode.Normalized)
-					{
-						Vector2 fullSize = (Vector2)shapeMeshCaches[i].fillMesh.bounds.size;
-						if (fullSize.x > 0 && fullSize.y > 0)
-						{
-							tilingScale = new Vector2(tilingScale.x / fullSize.x, tilingScale.y / fullSize.y);
-
-							tilingOffset.Scale(fullSize);
-							tilingOffset += (Vector2)shapeMeshCaches[i].fillMesh.bounds.center;
-							tilingOffset.Scale(tilingScale);
-							tilingOffset += Vector2.one * 0.5f;
-						}
-					}
-
-					fillMaterial.SetTextureOffset("_MainTex", -tilingOffset);
-					fillMaterial.SetTextureScale("_MainTex",tilingScale);
-					fillMaterial.SetPass(0);
-					Graphics.DrawMeshNow(shapeMeshCaches[i].fillMesh, shapes[i].transform.localToWorldMatrix, 0);
-				}
-				Profiler.EndSample();
-
-				Profiler.BeginSample("Draw StrokeMaterial");
-				if (strokeMaterial)
-				{
-					Profiler.BeginSample("Set stroke shader keywords");
-					strokeMaterial.shaderKeywords = GetCachedKeywords(shapes[i].ShapeData.StrokeCornerType, shapes[i].ShapeData.StrokeRenderType);
-					Profiler.EndSample();
-
-					strokeMaterial.SetFloat("_StrokeMiterLimit", shapes[i].ShapeData.StrokeMiterLimit);
-					strokeMaterial.SetPass(0);
-					Graphics.DrawMeshNow(shapeMeshCaches[i].strokeMesh, shapes[i].transform.localToWorldMatrix, 1);
-				}
-				Profiler.EndSample();
-			}
-
-			// reset material values
-			fillMaterial.SetTextureOffset("_MainTex", originalTilingOffset);
-			fillMaterial.SetTextureScale("_MainTex", originalTilingScale);
-			if( originalStrokeMiterLimit.HasValue)
-				strokeMaterial.SetFloat("_StrokeMiterLimit", originalStrokeMiterLimit.Value);
-
-			strokeMaterial.shaderKeywords = originalStrokeKeywords;
-
-			Profiler.EndSample();
-		}
 
 		void RefreshMesh ()
 		{
@@ -233,132 +137,104 @@ namespace VectorShapes
 				Camera = Camera.main;
 			}
 
-			if (checkedShader == null || checkedShader != strokeMaterial.shader) {
+			if (strokeMaterial == null)
+			{
+				useShader = false;
+				checkedShader = null;
+			}
+			else if (checkedShader == null || checkedShader != strokeMaterial.shader) 
+			{
 				useShader = strokeMaterial && VectorShapesUtils.IsStrokeShader(strokeMaterial.shader);
 				checkedShader = strokeMaterial ? strokeMaterial.shader : null;
 			}
 
-			UpdateMeshCaches ();
-		}
-
-		bool UpdateMeshCaches ()
-		{
-
-			if (shapes.Count == 0) {
-
-				if (shapeMeshCaches.Count > 0) {
-				
-					for (int i = 0; i < shapeMeshCaches.Count; i++) {
-						shapeMeshCaches [i].Release ();
-					}
-					shapeMeshCaches.Clear ();
-					return true;
-				}
-				return false;
+			// init mesh cache if necessary
+			while (shapeMeshCaches.Count < shapes.Count) {
+				shapeMeshCaches.Add (new ShapeMeshCache ());
 			}
 
-			bool wasMeshUpdated = false;
-			if (shapes.Count != shapeMeshCaches.Count) 
-			{
-				// init mesh cache if necessary
-				while (shapeMeshCaches.Count < shapes.Count) {
-					shapeMeshCaches.Add (new ShapeMeshCache ());
-				}
+			while (shapeMeshCaches.Count > shapes.Count) {
 
-				while (shapeMeshCaches.Count > shapes.Count) {
-
-					shapeMeshCaches [shapeMeshCaches.Count - 1].Release();
-					shapeMeshCaches.RemoveAt (shapeMeshCaches.Count - 1);
-				}
-
-				wasMeshUpdated = true;
+				shapeMeshCaches [shapeMeshCaches.Count - 1].Release();
+				shapeMeshCaches.RemoveAt (shapeMeshCaches.Count - 1);
 			}
 
 			// update data if necessary
-			for (int i = 0; i < shapes.Count; i++) {
+			for (int i = 0; i < shapeMeshCaches.Count; i++) {
 
-				shapeMeshCaches [i].shape = shapes[i].ShapeData;
+				shapeMeshCaches[i].shape = shapes[i].ShapeData;
 				shapeMeshCaches[i].transform = shapes[i].transform;
-				shapeMeshCaches [i].camera = Camera;
-				shapeMeshCaches [i].useShader = useShader;
+				shapeMeshCaches[i].camera = Camera;
+				shapeMeshCaches[i].useShader = useShader;
+				shapeMeshCaches[i].sourceFillMaterial = fillMaterial;
+				shapeMeshCaches[i].sourceStrokeMaterial = strokeMaterial;
 
-				wasMeshUpdated |= shapeMeshCaches [i].Refresh ();
+				shapeMeshCaches[i].Refresh();
+			}
+		}
+		void Draw()
+		{
+			Profiler.BeginSample("Draw");
+			for (int i = 0; i < shapeMeshCaches.Count; i++)
+			{
+				DrawShape(shapeMeshCaches[i]);
+			}
+			Profiler.EndSample();
+		}
+
+		void DrawNow()
+		{
+			Profiler.BeginSample("DrawNow");
+			if ((1 << gameObject.layer & Camera.current.cullingMask) == 0)
+				return;
+
+			for (int i = 0; i < shapeMeshCaches.Count; i++)
+			{
+				DrawShapeNow(shapeMeshCaches[i]);
 			}
 
-			return wasMeshUpdated;
+			Profiler.EndSample();
+		}
+
+		void DrawShape(ShapeMeshCache shapeCache) 
+		{
+			if (shapeCache.canvasRenderer != null )
+				return;
+			
+			if (shapeCache.fillMaterial != null && shapeCache.mesh.subMeshCount > 0)
+			{
+				Graphics.DrawMesh(shapeCache.mesh, shapeCache.transform.localToWorldMatrix, shapeCache.fillMaterial, gameObject.layer, null, 0);
+			}
+			if (shapeCache.strokeMaterial != null && shapeCache.mesh.subMeshCount > 1)
+			{
+				Graphics.DrawMesh(shapeCache.mesh, shapeCache.transform.localToWorldMatrix, shapeCache.strokeMaterial, gameObject.layer, null, 1);
+			}
+		}
+
+		void DrawShapeNow(ShapeMeshCache shapeCache)
+		{
+			if (shapeCache.canvasRenderer != null && Camera.current.cameraType != CameraType.SceneView)
+				return;
+			
+			Profiler.BeginSample("Draw FillMaterial");
+			if (shapeCache.fillMaterial != null)
+			{
+				shapeCache.fillMaterial.SetPass(0);
+				Graphics.DrawMeshNow(shapeCache.mesh, shapeCache.transform.localToWorldMatrix, 0);
+			}
+			Profiler.EndSample();
+
+			Profiler.BeginSample("Draw StrokeMaterial");
+			if (shapeCache.strokeMaterial != null)
+			{
+				shapeCache.strokeMaterial.SetPass(0);
+				Graphics.DrawMeshNow(shapeCache.mesh, shapeCache.transform.localToWorldMatrix, 1);
+			}
+
+			Profiler.EndSample();
 		}
 
 		#endregion
 
-		#region keywords caching
-		string[] cachedOriginalKeywords;
-		Dictionary<int, string[]> cachedKeywords = new Dictionary<int, string[]>();
-		void SetCachedKeywordsBase(string[] originalKeywords)
-		{
-			bool clearCache = false;
-			if (cachedOriginalKeywords == null || originalKeywords.Length != cachedOriginalKeywords.Length)
-			{
-				cachedOriginalKeywords = new string[originalKeywords.Length];
-				clearCache = true;
-			}
-
-			for (int i = 0; i < originalKeywords.Length; i++)
-			{
-				if (cachedOriginalKeywords[i] != originalKeywords[i])
-				{
-					cachedOriginalKeywords[i] = originalKeywords[i];
-					clearCache = true;
-				}
-			}
-
-			if (clearCache)
-			{
-				cachedKeywords.Clear();
-			}
-		}
-
-		string[] GetCachedKeywords( StrokeCornerType cornerType, StrokeRenderType renderType)
-		{
-			int hash = (int)cornerType + 1000 * (int)renderType;
-			if (!cachedKeywords.ContainsKey(hash))
-			{
-				string[] k = new string[cachedOriginalKeywords.Length+2];
-				for (int i = 0; i < cachedOriginalKeywords.Length; i++)
-				{
-					k[i] = cachedOriginalKeywords[i];
-				}
-				if (cornerType == StrokeCornerType.Bevel)
-				{
-					k[cachedOriginalKeywords.Length+0] = STROKE_CORNER_BEVEL;
-				}
-				else if (cornerType == StrokeCornerType.ExtendOrCut)
-				{
-					k[cachedOriginalKeywords.Length + 0] = STROKE_CORNER_EXTEND_OR_CUT;
-				}
-				else if (cornerType == StrokeCornerType.ExtendOrMiter)
-				{
-					k[cachedOriginalKeywords.Length + 0] = STROKE_CORNER_EXTEND_OR_MITER;
-				}
-				if (renderType == StrokeRenderType.ShapeSpace)
-				{
-					k[cachedOriginalKeywords.Length + 1] = STROKE_RENDER_SHAPE_SPACE;
-				}
-				else if (renderType == StrokeRenderType.ShapeSpaceFacingCamera)
-				{
-					k[cachedOriginalKeywords.Length + 1] = STROKE_RENDER_SHAPE_SPACE_FACING_CAMERA;
-				}
-				else if (renderType == StrokeRenderType.ScreenSpacePixels)
-				{
-					k[cachedOriginalKeywords.Length + 1] = STROKE_RENDER_SCREEN_SPACE_PIXELS;
-				}
-				else if (renderType == StrokeRenderType.ScreenSpaceRelativeToScreenHeight)
-				{
-					k[cachedOriginalKeywords.Length + 1] = STROKE_RENDER_SCREEN_SPACE_RELATIVE_TO_SCREEN_HEIGHT;
-				}
-				cachedKeywords.Add(hash, k);
-			}
-			return cachedKeywords[hash];
-		}
-		#endregion
 	}
 }

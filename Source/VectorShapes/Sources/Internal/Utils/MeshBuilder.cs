@@ -23,7 +23,7 @@ namespace VectorShapes
 
 		public List<Vector3> positions = new List<Vector3>();
 		public List<Vector4> m_Tangents = new List<Vector4> ();
-		public List<Color> m_Colors = new List<Color> ();
+		public List<Color32> m_Colors = new List<Color32> ();
 		public List<Vector4> m_Uv0S = new List<Vector4> ();
 		public List<Vector4> m_Uv1S = new List<Vector4> ();
 		public List<Vector3> m_Normals = new List<Vector3> ();
@@ -100,7 +100,7 @@ namespace VectorShapes
 		public void AddVert ()
 		{
 			this.positions.Add (Vector3.zero);
-			this.m_Colors.Add (MeshBuilder.s_DefaultColor);
+			this.m_Colors.Add ((Color32)MeshBuilder.s_DefaultColor);
 			this.m_Uv0S.Add (MeshBuilder.s_DefaultUV0);
 			this.m_Uv1S.Add (MeshBuilder.s_DefaultUV0);
 			this.m_Normals.Add ( MeshBuilder.s_DefaultNormal);
@@ -114,7 +114,8 @@ namespace VectorShapes
 
 		public void SetCurrentColor(Color color)
 		{
-			m_Colors [lastAddedVertId] = color;
+			// HACK use color32 for canvas renderer...?
+			m_Colors[lastAddedVertId] = (Color32)color;
 		}
 
 		public void SetCurrentUV0(Vector4 uv0)
@@ -160,7 +161,7 @@ namespace VectorShapes
 		{
 			mesh.Clear ();
 			if (this.positions.Count >= 65000) {
-				throw new ArgumentException ("Mesh can not have more than 65000 verticies");
+				throw new ArgumentException ("Mesh can not have more than 65000 vertices");
 			}
 			mesh.SetVertices (this.positions);
 			mesh.SetColors (this.m_Colors);
