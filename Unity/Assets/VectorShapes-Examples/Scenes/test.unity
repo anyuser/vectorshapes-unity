@@ -1079,7 +1079,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 862992905}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.84, y: 0.6, z: 1.2}
+  m_LocalPosition: {x: 2.7, y: 1.14, z: 0.88}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
@@ -1123,14 +1123,14 @@ MonoBehaviour:
     - {r: 1, g: 0, b: 0, a: 1}
     - {r: 1, g: 0, b: 0, a: 1}
     polyPointStrokeWidths:
-    - 1
-    - 1
-    - 1
-    - 1
+    - 0.1
+    - 0.1
+    - 0.1
+    - 0.1
     shapeOffset: {x: 1, y: 1, z: 0}
     shapeSize: {x: 1, y: 1}
     strokeColor: {r: 1, g: 0, b: 0, a: 1}
-    strokeWidth: 1
+    strokeWidth: 0.1
     isFillEnabled: 1
     fillColor: {r: 0.986207, g: 1, b: 0, a: 1}
     fillNormal: {x: 0, y: 0, z: 1}
@@ -1138,8 +1138,8 @@ MonoBehaviour:
     fillTextureOffset: {x: 0.39, y: 0}
     fillTextureTiling: {x: 1, y: 1}
     isStrokeEnabled: 1
-    strokeCornerType: 1
-    strokeRenderType: 0
+    strokeCornerType: 0
+    strokeRenderType: 2
     strokeTextureType: 1
     strokeMiterLimit: 3
     strokeTextureTiling: 20
@@ -1198,27 +1198,27 @@ MonoBehaviour:
     shapeType: 2
     polyDimension: 0
     isPolygonStrokeClosed: 0
-    polyPointTypes: 00000000000000000000000000000000
+    polyPointTypes: 00000000000000000100000000000000
     polyPointPositions:
-    - {x: -224.28998, y: -69.649055, z: 0}
-    - {x: -155.94984, y: 141.10638, z: 0}
-    - {x: 75.705284, y: 17.250248, z: 0}
-    - {x: 55.518414, y: 95.108154, z: 0}
+    - {x: -158.75789, y: -39.823673, z: 0}
+    - {x: -53.129906, y: 174.11649, z: 0}
+    - {x: 143.2645, y: 3.8807688, z: 0}
+    - {x: 195.34534, y: 118.447426, z: 0}
     polyPointInTangents:
     - {x: -0, y: -0, z: -0}
     - {x: 0, y: 0, z: 0}
-    - {x: 0, y: 0, z: 0}
+    - {x: -159.61032, y: -21.111835, z: 0}
     - {x: 0, y: 0, z: 0}
     polyPointOutTangents:
     - {x: 0, y: 0, z: 0}
     - {x: 0, y: 0, z: 0}
-    - {x: 0, y: 0, z: 0}
+    - {x: 17.34292, y: 38.150696, z: 0}
     - {x: -0, y: -0, z: -0}
     polyPointStrokeColors:
-    - {r: 1, g: 1, b: 1, a: 1}
-    - {r: 1, g: 1, b: 1, a: 1}
-    - {r: 1, g: 1, b: 1, a: 1}
-    - {r: 1, g: 1, b: 1, a: 1}
+    - {r: 1, g: 0.61764705, b: 0.87870187, a: 1}
+    - {r: 1, g: 0.61764705, b: 0.87870187, a: 1}
+    - {r: 1, g: 0.61764705, b: 0.87870187, a: 1}
+    - {r: 1, g: 0.61764705, b: 0.87870187, a: 1}
     polyPointStrokeWidths:
     - 1
     - 1
@@ -1226,7 +1226,7 @@ MonoBehaviour:
     - 1
     shapeOffset: {x: 0, y: 0, z: 0}
     shapeSize: {x: 1, y: 1}
-    strokeColor: {r: 1, g: 1, b: 1, a: 1}
+    strokeColor: {r: 1, g: 0.61764705, b: 0.87870187, a: 1}
     strokeWidth: 1
     isFillEnabled: 0
     fillColor: {r: 1, g: 1, b: 1, a: 1}
@@ -1348,7 +1348,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1207481917
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2087,7 +2087,7 @@ MonoBehaviour:
     - {x: -2.4378202, y: 0.9556017, z: 0}
     - {x: -1.2433693, y: 0.48550022, z: 0}
     - {x: -0.5491917, y: -0.7572806, z: 0}
-    - {x: -2.9341908, y: -0.7366556, z: 0}
+    - {x: -2.504561, y: -1.0803589, z: 0}
     - {x: -1.9142528, y: -0.39858055, z: 0}
     polyPointInTangents:
     - {x: 0, y: 0, z: 0}
@@ -2229,7 +2229,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2080912396}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.98, y: 2.86, z: 0}
+  m_LocalPosition: {x: 3.38, y: 3.72, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
@@ -2255,7 +2255,7 @@ MonoBehaviour:
     polyPointPositions:
     - {x: -3.752843, y: 2.0843375, z: 0}
     - {x: -4.8556266, y: 1.3783333, z: 0}
-    - {x: -4.1246357, y: -0.67840004, z: 0}
+    - {x: -4.0067925, y: -1.1442013, z: 0}
     - {x: -1.607492, y: -1.1625439, z: 0}
     - {x: -0.7672782, y: 0.47477698, z: 0}
     - {x: -1.4245067, y: 2.1362374, z: 0}
