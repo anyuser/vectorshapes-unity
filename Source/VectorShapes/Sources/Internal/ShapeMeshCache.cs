@@ -1,5 +1,8 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+#if UNITY_5_5_OR_NEWER
+using UnityEngine.Profiling;
+#endif
 
 namespace VectorShapes
 {

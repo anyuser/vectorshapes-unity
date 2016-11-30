@@ -92,7 +92,7 @@ namespace VectorShapesEditor
 						Event.current.Use();
 						break;
 				}
-				HandleUtility.AddDefaultControl(GUIUtility.GetControlID(FocusType.Native, windowRect));
+				HandleUtility.AddDefaultControl(GUIUtility.GetControlID(FocusType.Passive, windowRect));
 			}
 		}
 
