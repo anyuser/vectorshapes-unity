@@ -93,6 +93,8 @@ namespace VectorShapes
 			Matrix4x4 V = camera.cameraToWorldMatrix;
 			Matrix4x4 P = camera.projectionMatrix;
 			lineShaderCpu.MVP = P * V * M;
+			lineShaderCpu.MV = V * M;
+			lineShaderCpu.P = P;
 
 			for (int i = startVertId; i < meshBuilder.positions.Count; i++)
 			{

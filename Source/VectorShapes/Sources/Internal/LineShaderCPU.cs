@@ -12,6 +12,8 @@ namespace VectorShapes
 		public StrokeRenderType renderType;
 		public float _StrokeMiterLimit;
 		public Matrix4x4 MVP;
+		public Matrix4x4 MV;
+		public Matrix4x4 P;
 
 		const float PI = 3.1415926536f;
 		const float MIN_ANGLE_THRESHOLD = 0.01745329252f; //1 * Mathf.Deg2Rad;
@@ -295,48 +297,72 @@ namespace VectorShapes
 		{
 			Profiler.BeginSample("GetCornerVertexOutput");
 
-			if (renderType == StrokeRenderType.ScreenSpacePixels ||
-				renderType == StrokeRenderType.ScreenSpaceRelativeToScreenHeight)
+			VertexOutputData output;
+			if (renderType == StrokeRenderType.ShapeSpace)
 			{
+				output = GetCornerVertexOutputLocalSpace(vertexInputData);
+			}
+			else if (
+				renderType == StrokeRenderType.ScreenSpacePixels ||
+				renderType == StrokeRenderType.ScreenSpaceRelativeToScreenHeight ||
+				renderType == StrokeRenderType.ShapeSpaceFacingCamera)
+			{
+				if (renderType == StrokeRenderType.ScreenSpacePixels)
+				{
+					float strokeWidthMulti = 1f / camera.pixelHeight;
+					vertexInputData.strokeWidth1 *= strokeWidthMulti;
+					vertexInputData.strokeWidth2 *= strokeWidthMulti;
+					vertexInputData.strokeWidth3 *= strokeWidthMulti;
+				}
+
 				// clip space -1 to 1
 				vertexInputData.strokeWidth1 *= 2;
 				vertexInputData.strokeWidth2 *= 2;
 				vertexInputData.strokeWidth3 *= 2;
 
-				vertexInputData.position1 = MVP.MultiplyPoint(vertexInputData.position1);
-				vertexInputData.position2 = MVP.MultiplyPoint(vertexInputData.position2);
-				vertexInputData.position3 = MVP.MultiplyPoint(vertexInputData.position3);
+
+				if (renderType == StrokeRenderType.ScreenSpacePixels ||
+					renderType == StrokeRenderType.ScreenSpaceRelativeToScreenHeight)
+				{
+
+					vertexInputData.position1 = MVP.MultiplyPoint(vertexInputData.position1);
+					vertexInputData.position2 = MVP.MultiplyPoint(vertexInputData.position2);
+					vertexInputData.position3 = MVP.MultiplyPoint(vertexInputData.position3);
+				}
+				if (renderType == StrokeRenderType.ShapeSpaceFacingCamera)
+				{
+					vertexInputData.position1 = MV.MultiplyPoint(vertexInputData.position1);
+					vertexInputData.position2 = MV.MultiplyPoint(vertexInputData.position2);
+					vertexInputData.position3 = MV.MultiplyPoint(vertexInputData.position3);
+					vertexInputData.strokeWidth1 /= -(vertexInputData.position1.z) + 1;
+					vertexInputData.strokeWidth2 /= -(vertexInputData.position2.z) + 1;
+					vertexInputData.strokeWidth3 /= -(vertexInputData.position3.z) + 1;
+					vertexInputData.position1 = P.MultiplyPoint(vertexInputData.position1);
+					vertexInputData.position2 = P.MultiplyPoint(vertexInputData.position2);
+					vertexInputData.position3 = P.MultiplyPoint(vertexInputData.position3);
+				}
+
+
+				float z = vertexInputData.position2.z;
 
 				vertexInputData.position1.x *= camera.aspect;
 				vertexInputData.position2.x *= camera.aspect;
 				vertexInputData.position3.x *= camera.aspect;
-			}
+				//vertexInputData.position1.z = 0;
+				//vertexInputData.position2.z = 0;
+				//vertexInputData.position3.z = 0;
 
-			if (renderType == StrokeRenderType.ScreenSpacePixels)
-			{
-				float strokeWidthMulti = 1f / camera.pixelHeight;
-				vertexInputData.strokeWidth1 *= strokeWidthMulti;
-				vertexInputData.strokeWidth2 *= strokeWidthMulti;
-				vertexInputData.strokeWidth3 *= strokeWidthMulti;
-			}
+				output = GetCornerVertexOutputLocalSpace(vertexInputData);
 
-			float z = vertexInputData.position2.z;
-
-			vertexInputData.position1.z = 0;
-			vertexInputData.position2.z = 0;
-			vertexInputData.position3.z = 0;
-
-			var output = GetCornerVertexOutputLocalSpace(vertexInputData);
-
-			output.position.z = z;
-
-			if (renderType == StrokeRenderType.ScreenSpacePixels ||
-				renderType == StrokeRenderType.ScreenSpaceRelativeToScreenHeight)
-			{
+				output.position.z = z;
 				output.position.x /= camera.aspect;
-				output.position = MVP.inverse.MultiplyPoint(output.position);
-			}
 
+				output.position = MVP.inverse.MultiplyPoint(output.position);
+
+			}
+			else {
+				output = new VertexOutputData();
+			}
 			Profiler.EndSample();
 
 			return output;

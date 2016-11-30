@@ -130,7 +130,7 @@ namespace VectorShapes
 
 		#region private functions
 
-
+		string[] lastStrokeKeywords;
 		void RefreshMesh ()
 		{
 			if (Camera == null) {
@@ -159,6 +159,25 @@ namespace VectorShapes
 				shapeMeshCaches.RemoveAt (shapeMeshCaches.Count - 1);
 			}
 
+			bool strokeMaterialHasChanged = false;
+			var strokeKeywords = strokeMaterial.shaderKeywords;
+			if (lastStrokeKeywords == null || strokeKeywords.Length != lastStrokeKeywords.Length)
+			{
+				strokeMaterialHasChanged = true;
+			}
+			else
+			{
+				for (int i = 0; i < strokeKeywords.Length; i++)
+				{
+					if (strokeKeywords[i] != lastStrokeKeywords[i])
+					{
+						strokeMaterialHasChanged = true;
+						break;
+					}
+				}
+			}
+			lastStrokeKeywords = strokeKeywords;
+
 			// update data if necessary
 			for (int i = 0; i < shapeMeshCaches.Count; i++) {
 
@@ -167,6 +186,10 @@ namespace VectorShapes
 				shapeMeshCaches[i].camera = Camera;
 				shapeMeshCaches[i].useShader = useShader;
 				shapeMeshCaches[i].sourceFillMaterial = fillMaterial;
+
+				if(strokeMaterialHasChanged)
+					shapeMeshCaches[i].sourceStrokeMaterial = null;
+				
 				shapeMeshCaches[i].sourceStrokeMaterial = strokeMaterial;
 
 				shapeMeshCaches[i].Refresh();

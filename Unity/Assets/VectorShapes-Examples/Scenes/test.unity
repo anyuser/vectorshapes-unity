@@ -490,7 +490,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &367197265
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -916,12 +916,12 @@ MonoBehaviour:
     - {x: 2.026409, y: 0.09567229, z: 0}
     - {x: -0.8290145, y: 0.85885394, z: 0}
     - {x: -1.3517677, y: -2.2929747, z: 0}
-    - {x: 1.6095312, y: -2.8291795, z: 0}
+    - {x: 1.7515992, y: -2.626226, z: 0}
     polyPointInTangents:
     - {x: 0, y: 0, z: 0}
     - {x: 0, y: 0, z: 0}
     - {x: -1.0243275, y: 1.8474216, z: 0}
-    - {x: -0.38614666, y: 1.8524871, z: 0}
+    - {x: -1.1979611, y: 2.5019393, z: 0}
     polyPointOutTangents:
     - {x: 0, y: 0, z: 0}
     - {x: 0, y: 0, z: 0}
@@ -1006,7 +1006,7 @@ MonoBehaviour:
     - {x: 0.33959222, y: 1.9578229, z: 0}
     - {x: 0.9801097, y: 1.3180197, z: 0}
     - {x: 0.5798533, y: 0.53718555, z: 0}
-    - {x: 1.7455771, y: 0.4035164, z: 0}
+    - {x: 1.7047627, y: 0.45793545, z: 0}
     - {x: 2.570997, y: 0.89312136, z: 0}
     - {x: 1.642339, y: 1.9509441, z: 0}
     polyPointInTangents:
@@ -1078,10 +1078,10 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 862992905}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.7, y: 1.14, z: 0.88}
+  m_LocalRotation: {x: 0, y: 0.5735764, z: 0, w: 0.8191521}
+  m_LocalPosition: {x: 0.16, y: 0.78, z: 0.24}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 70, z: 0}
   m_Children: []
   m_Father: {fileID: 1207481920}
   m_RootOrder: 2
@@ -1101,36 +1101,36 @@ MonoBehaviour:
     shapeType: 2
     polyDimension: 0
     isPolygonStrokeClosed: 1
-    polyPointTypes: 00000000010000000000000000000000
+    polyPointTypes: 00000000000000000000000000000000
     polyPointPositions:
-    - {x: -2.252698, y: 0.7225578, z: 0}
-    - {x: -0.854234, y: -0.39995727, z: 0}
-    - {x: 1.305037, y: -0.71639264, z: 0}
-    - {x: -0.709162, y: 1.1251999, z: 0}
+    - {x: -2.9534657, y: 0.8302425, z: 0}
+    - {x: -2.1915765, y: -0.7533506, z: 0}
+    - {x: 5.2317495, y: 0.36619067, z: 0}
+    - {x: -0.29685256, y: 1.807043, z: 0}
     polyPointInTangents:
     - {x: 0, y: 0, z: 0}
-    - {x: -1.5238705, y: -0.34049284, z: 0}
+    - {x: 0, y: 0, z: 0}
     - {x: 0, y: 0, z: 0}
     - {x: 0, y: 0, z: 0}
     polyPointOutTangents:
     - {x: 0, y: 0, z: 0}
-    - {x: 0.8451936, y: -1.0922806, z: 0}
+    - {x: 0, y: 0, z: 0}
     - {x: 0, y: 0, z: 0}
     - {x: 0, y: 0, z: 0}
     polyPointStrokeColors:
-    - {r: 1, g: 0, b: 0, a: 1}
-    - {r: 1, g: 0, b: 0, a: 1}
-    - {r: 1, g: 0, b: 0, a: 1}
-    - {r: 1, g: 0, b: 0, a: 1}
+    - {r: 0, g: 0, b: 0, a: 1}
+    - {r: 0, g: 0, b: 0, a: 1}
+    - {r: 0, g: 0, b: 0, a: 1}
+    - {r: 0, g: 0, b: 0, a: 1}
     polyPointStrokeWidths:
-    - 0.1
-    - 0.1
-    - 0.1
-    - 0.1
+    - 0.2
+    - 0.2
+    - 0.2
+    - 0.2
     shapeOffset: {x: 1, y: 1, z: 0}
     shapeSize: {x: 1, y: 1}
-    strokeColor: {r: 1, g: 0, b: 0, a: 1}
-    strokeWidth: 0.1
+    strokeColor: {r: 0, g: 0, b: 0, a: 1}
+    strokeWidth: 0.2
     isFillEnabled: 1
     fillColor: {r: 0.986207, g: 1, b: 0, a: 1}
     fillNormal: {x: 0, y: 0, z: 1}
@@ -1138,8 +1138,8 @@ MonoBehaviour:
     fillTextureOffset: {x: 0.39, y: 0}
     fillTextureTiling: {x: 1, y: 1}
     isStrokeEnabled: 1
-    strokeCornerType: 0
-    strokeRenderType: 2
+    strokeCornerType: 1
+    strokeRenderType: 3
     strokeTextureType: 1
     strokeMiterLimit: 3
     strokeTextureTiling: 20
@@ -1201,7 +1201,7 @@ MonoBehaviour:
     polyPointTypes: 00000000000000000000000000000000
     polyPointPositions:
     - {x: -234.71451, y: -88.5094, z: 0}
-    - {x: -189.13446, y: -16.278524, z: 0}
+    - {x: -183.4376, y: -7.284764, z: 0}
     - {x: -119.14052, y: -57.07503, z: 0}
     - {x: -125.19428, y: -10.135628, z: 0}
     polyPointInTangents:
@@ -1333,6 +1333,96 @@ MonoBehaviour:
     strokeTextureOffset: 0
     hasVariableStrokeWidth: 0
     hasVariableStrokeColor: 0
+--- !u!1 &1069235940
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 1069235941}
+  - 114: {fileID: 1069235942}
+  m_Layer: 0
+  m_Name: Shape (18)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1069235941
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1069235940}
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 6.63, y: -3.5, z: -0}
+  m_LocalScale: {x: 0.5278253, y: 0.5278253, z: 0.5278253}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+  m_Children: []
+  m_Father: {fileID: 1207481920}
+  m_RootOrder: 18
+--- !u!114 &1069235942
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1069235940}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1928991051, guid: 4b767388747f34f22aa2403776b900e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shapeAsset: {fileID: 0}
+  localShapeData:
+    shapeType: 2
+    polyDimension: 0
+    isPolygonStrokeClosed: 0
+    polyPointTypes: 00000000000000000100000001000000
+    polyPointPositions:
+    - {x: -38.326893, y: -3.0929675, z: 0}
+    - {x: -1.9498303, y: 2.3233287, z: 0}
+    - {x: -1.3517677, y: -2.2929747, z: 0}
+    - {x: 3.7348187, y: 4.313539, z: 0}
+    polyPointInTangents:
+    - {x: -0, y: -0, z: -0}
+    - {x: 0, y: 0, z: 0}
+    - {x: -1.0243275, y: 1.8474216, z: 0}
+    - {x: -4.646862, y: 4.391143, z: 0}
+    polyPointOutTangents:
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0.6525631, y: 1.3121002, z: 0}
+    - {x: 4.646862, y: -4.391143, z: -0}
+    polyPointStrokeColors:
+    - {r: 0, g: 0, b: 0, a: 1}
+    - {r: 0, g: 0, b: 0, a: 1}
+    - {r: 0, g: 0, b: 0, a: 1}
+    - {r: 0, g: 0, b: 0, a: 1}
+    polyPointStrokeWidths:
+    - 0.1
+    - 0.1
+    - 0.1
+    - 0.1
+    shapeOffset: {x: 1, y: 1, z: 0}
+    shapeSize: {x: 1, y: 1}
+    strokeColor: {r: 0, g: 0, b: 0, a: 1}
+    strokeWidth: 0.1
+    isFillEnabled: 0
+    fillColor: {r: 1, g: 1, b: 1, a: 1}
+    fillNormal: {x: 0, y: 0, z: 1}
+    fillTextureMode: 0
+    fillTextureOffset: {x: 0, y: 0}
+    fillTextureTiling: {x: 1, y: 1}
+    isStrokeEnabled: 1
+    strokeCornerType: 1
+    strokeRenderType: 3
+    strokeTextureType: 1
+    strokeMiterLimit: 3
+    strokeTextureTiling: 1
+    strokeTextureOffset: 0
+    hasVariableStrokeWidth: 0
+    hasVariableStrokeColor: 0
 --- !u!1 &1207481914
 GameObject:
   m_ObjectHideFlags: 0
@@ -1392,6 +1482,7 @@ Transform:
   - {fileID: 622006899}
   - {fileID: 807918736}
   - {fileID: 434501201}
+  - {fileID: 1069235941}
   m_Father: {fileID: 0}
   m_RootOrder: 1
 --- !u!1 &1255652775
@@ -1622,7 +1713,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1345609939}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.83, y: 3.43, z: 4}
+  m_LocalPosition: {x: 6.04, y: 2.88, z: 4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []

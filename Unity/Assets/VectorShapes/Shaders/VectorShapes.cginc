@@ -342,40 +342,7 @@ VertexOutputData GetCornerVertexLocalSpace(VertexInputData vertexInputData)
 
 VertexOutputData GetCornerVertex(VertexInputData vertexInputData)
 {
-
 	#if STROKE_RENDER_SCREEN_SPACE_PIXELS || STROKE_RENDER_SCREEN_SPACE_RELATIVE_TO_SCREEN_HEIGHT || STROKE_RENDER_SHAPE_SPACE_FACING_CAMERA
-
-	vertexInputData.strokeWidth1 *= 2;
-	vertexInputData.strokeWidth2 *= 2;
-	vertexInputData.strokeWidth3 *= 2;
-
-	#if STROKE_RENDER_SHAPE_SPACE_FACING_CAMERA
-	float4x4 mat = UNITY_MATRIX_MV;
-	#else
-	float4x4 mat = UNITY_MATRIX_MVP;
-	#endif
-
-	vertexInputData.position1 = mul(mat,vertexInputData.position1);
-	vertexInputData.position1 /= vertexInputData.position1.w;
-
-	vertexInputData.position2 = mul(mat,vertexInputData.position2);
-	vertexInputData.position2 /= vertexInputData.position2.w;
-
-	vertexInputData.position3 = mul(mat,vertexInputData.position3);
-	vertexInputData.position3 /= vertexInputData.position3.w;
-
-	#if !STROKE_RENDER_SHAPE_SPACE_FACING_CAMERA
-	float4 aspectRatioCorrection = float4 (_ScreenParams.x/_ScreenParams.y,1,1,1);
-	vertexInputData.position1 *= aspectRatioCorrection;
-	vertexInputData.position2 *= aspectRatioCorrection;
-	vertexInputData.position3 *= aspectRatioCorrection;
-
-	vertexInputData.position1.z = 0;
-	vertexInputData.position2.z = 0;
-	vertexInputData.position3.z = 0;
-	#endif
-
-	#endif
 
 	#if STROKE_RENDER_SCREEN_SPACE_PIXELS
 	float strokeWidthMulti = 1 / _ScreenParams.y;
@@ -384,18 +351,50 @@ VertexOutputData GetCornerVertex(VertexInputData vertexInputData)
 	vertexInputData.strokeWidth3 *= strokeWidthMulti;
 	#endif
 
-	VertexOutputData output = GetCornerVertexLocalSpace(vertexInputData);
+	vertexInputData.strokeWidth1 *= 2;
+	vertexInputData.strokeWidth2 *= 2;
+	vertexInputData.strokeWidth3 *= 2;
 
 	#if STROKE_RENDER_SCREEN_SPACE_PIXELS || STROKE_RENDER_SCREEN_SPACE_RELATIVE_TO_SCREEN_HEIGHT
+	vertexInputData.position1 = mul(UNITY_MATRIX_MVP,vertexInputData.position1);
+	vertexInputData.position2 = mul(UNITY_MATRIX_MVP,vertexInputData.position2);
+	vertexInputData.position3 = mul(UNITY_MATRIX_MVP,vertexInputData.position3);
+	vertexInputData.position1 /= vertexInputData.position1.w;
+	vertexInputData.position2 /= vertexInputData.position2.w;
+	vertexInputData.position3 /= vertexInputData.position3.w;
+	#endif
+			
+	#if STROKE_RENDER_SHAPE_SPACE_FACING_CAMERA
+	vertexInputData.position1 = mul(UNITY_MATRIX_MV,vertexInputData.position1);
+	vertexInputData.position2 = mul(UNITY_MATRIX_MV,vertexInputData.position2);
+	vertexInputData.position3 = mul(UNITY_MATRIX_MV,vertexInputData.position3);
+	vertexInputData.strokeWidth1 /= 1-(vertexInputData.position1.z / vertexInputData.position1.w);
+	vertexInputData.strokeWidth2 /= 1-(vertexInputData.position2.z / vertexInputData.position2.w);
+	vertexInputData.strokeWidth3 /= 1-(vertexInputData.position3.z / vertexInputData.position3.w);
+	vertexInputData.position1 = mul(UNITY_MATRIX_P,vertexInputData.position1);
+	vertexInputData.position2 = mul(UNITY_MATRIX_P,vertexInputData.position2);
+	vertexInputData.position3 = mul(UNITY_MATRIX_P,vertexInputData.position3);
+	vertexInputData.position1 /= vertexInputData.position1.w;
+	vertexInputData.position2 /= vertexInputData.position2.w;
+	vertexInputData.position3 /= vertexInputData.position3.w;
+	#endif
+
+	float4 aspectRatioCorrection = float4 (_ScreenParams.x/_ScreenParams.y,1,1,1);
+	vertexInputData.position1 *= aspectRatioCorrection;
+	vertexInputData.position2 *= aspectRatioCorrection;
+	vertexInputData.position3 *= aspectRatioCorrection;
+	//vertexInputData.position1.z = 0;
+	//vertexInputData.position2.z = 0;
+	//vertexInputData.position3.z = 0;
+
+	VertexOutputData output = GetCornerVertexLocalSpace(vertexInputData);
+
 	output.position /= aspectRatioCorrection;
 	#endif
 
 	#if STROKE_RENDER_SHAPE_SPACE
+	VertexOutputData output = GetCornerVertexLocalSpace(vertexInputData);
 	output.position = mul(UNITY_MATRIX_MVP,output.position);
-	#endif
-
-	#if STROKE_RENDER_SHAPE_SPACE_FACING_CAMERA
-	output.position = mul(UNITY_MATRIX_P,output.position);
 	#endif
 
 	return output;

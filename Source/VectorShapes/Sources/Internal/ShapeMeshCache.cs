@@ -325,7 +325,12 @@ namespace VectorShapes
 			return true;
 		}
 
-		public void RefreshMaterials()
+		public void ClearKeywords()
+		{
+			instanceKeywords = null;
+		}
+
+		void RefreshMaterials()
 		{
 			Profiler.BeginSample("RefreshMaterials");
 
@@ -335,7 +340,20 @@ namespace VectorShapes
 			if (strokeMaterial)
 			{
 				Profiler.BeginSample("Set stroke shader keywords");
-				SetStrokeKeywordsIfNeeded();
+				bool keywordsChanged = false;
+
+				if (instanceKeywords == null)
+				{
+					SetBaseInstanceKeywords();
+					keywordsChanged = true;
+				}
+
+				if (UpdateInstanceKeywords())
+					keywordsChanged = true;
+
+				if (keywordsChanged)
+					strokeMaterial.shaderKeywords = instanceKeywords;
+
 				Profiler.EndSample();
 				                       
 				strokeMaterial.SetFloat("_StrokeMiterLimit", shape.StrokeMiterLimit);
@@ -402,8 +420,8 @@ namespace VectorShapes
 				if (sourceStrokeMaterial != null)
 				{
 					strokeMaterial = new Material(sourceStrokeMaterial);
-					cachedCornerType = null;
-					cachedRenderType = null;
+					ResetAllKeywords(sourceStrokeMaterial);
+					instanceKeywords = null;
 				}
 				else
 				{
@@ -429,57 +447,24 @@ namespace VectorShapes
 		const string STROKE_RENDER_SHAPE_SPACE = "STROKE_RENDER_SHAPE_SPACE";
 		const string STROKE_RENDER_SHAPE_SPACE_FACING_CAMERA = "STROKE_RENDER_SHAPE_SPACE_FACING_CAMERA";
 
-		StrokeCornerType? cachedCornerType = null;
-		StrokeRenderType? cachedRenderType = null;
 		string[] instanceKeywords = null;
 
-		void SetStrokeKeywordsIfNeeded()
+		void ResetAllKeywords(Material m)
 		{
-			string cornerTypeKeyword = null;
-			switch (shape.StrokeCornerType)
-			{
-				case StrokeCornerType.Bevel:
-					cornerTypeKeyword = STROKE_CORNER_BEVEL;
-					break;
+			m.DisableKeyword(STROKE_CORNER_BEVEL);
+			m.DisableKeyword(STROKE_CORNER_EXTEND_OR_CUT);
+			m.DisableKeyword(STROKE_CORNER_EXTEND_OR_MITER);
+			m.DisableKeyword(STROKE_RENDER_SCREEN_SPACE_PIXELS);
+			m.DisableKeyword(STROKE_RENDER_SCREEN_SPACE_RELATIVE_TO_SCREEN_HEIGHT);
+			m.DisableKeyword(STROKE_RENDER_SHAPE_SPACE);
+			m.DisableKeyword(STROKE_RENDER_SHAPE_SPACE_FACING_CAMERA);
+		}
 
-				case StrokeCornerType.ExtendOrCut:
-					cornerTypeKeyword = STROKE_CORNER_EXTEND_OR_CUT;
-					break;
-
-				case StrokeCornerType.ExtendOrMiter:
-					cornerTypeKeyword = STROKE_CORNER_EXTEND_OR_MITER;
-					break;
-
-				default:
-					break;
-			}
-
-			string renderTypeKeyword = null;
-			switch (shape.StrokeRenderType)
-			{
-				case StrokeRenderType.ShapeSpace:
-					renderTypeKeyword = STROKE_RENDER_SHAPE_SPACE;
-					break;
-
-				case StrokeRenderType.ScreenSpacePixels:
-					renderTypeKeyword = STROKE_RENDER_SCREEN_SPACE_PIXELS;
-					break;
-
-				case StrokeRenderType.ScreenSpaceRelativeToScreenHeight:
-					renderTypeKeyword = STROKE_RENDER_SCREEN_SPACE_RELATIVE_TO_SCREEN_HEIGHT;
-					break;
-
-				case StrokeRenderType.ShapeSpaceFacingCamera:
-					renderTypeKeyword = STROKE_RENDER_SHAPE_SPACE_FACING_CAMERA;
-					break;
-
-				default:
-					break;
-			}
-
+		bool SetBaseInstanceKeywords()
+		{
 			bool changed = false;
 			string[] sourceKeywords = sourceStrokeMaterial.shaderKeywords;
-			
+
 			if (instanceKeywords == null || instanceKeywords.Length != sourceKeywords.Length + 2)
 			{
 				instanceKeywords = new string[sourceKeywords.Length + 2];
@@ -495,21 +480,67 @@ namespace VectorShapes
 				}
 			}
 
+			return changed;
+		}
+
+		bool UpdateInstanceKeywords()
+		{
+			bool changed = false;
+
+			string cornerTypeKeyword = GetCornerTypeKeyword();
 			if (instanceKeywords[instanceKeywords.Length - 2] != cornerTypeKeyword)
 			{
 				instanceKeywords[instanceKeywords.Length - 2] = cornerTypeKeyword;
 				changed = true;
 			}
+
+			string renderTypeKeyword = GetRenderTypeKeyword();
 			if (instanceKeywords[instanceKeywords.Length - 1] != renderTypeKeyword)
 			{
 				instanceKeywords[instanceKeywords.Length - 1] = renderTypeKeyword;
 				changed = true;
 			}
 
-			if (changed)
-				strokeMaterial.shaderKeywords = instanceKeywords;
+			return changed;
 		}
+
 		#endregion
+
+		string GetCornerTypeKeyword()
+		{
+			switch (shape.StrokeCornerType)
+			{
+				case StrokeCornerType.Bevel:
+					return STROKE_CORNER_BEVEL;
+
+				case StrokeCornerType.ExtendOrCut:
+					return STROKE_CORNER_EXTEND_OR_CUT;
+
+				case StrokeCornerType.ExtendOrMiter:
+					return STROKE_CORNER_EXTEND_OR_MITER;
+			}
+
+			return null;
+		}
+
+		string GetRenderTypeKeyword()
+		{
+			switch (shape.StrokeRenderType)
+			{
+				case StrokeRenderType.ShapeSpace:
+					return STROKE_RENDER_SHAPE_SPACE;
+
+				case StrokeRenderType.ScreenSpacePixels:
+					return STROKE_RENDER_SCREEN_SPACE_PIXELS;
+
+				case StrokeRenderType.ScreenSpaceRelativeToScreenHeight:
+					return STROKE_RENDER_SCREEN_SPACE_RELATIVE_TO_SCREEN_HEIGHT;
+
+				case StrokeRenderType.ShapeSpaceFacingCamera:
+					return STROKE_RENDER_SHAPE_SPACE_FACING_CAMERA;
+			}
+			return null;
+		}
 	}
 }
 

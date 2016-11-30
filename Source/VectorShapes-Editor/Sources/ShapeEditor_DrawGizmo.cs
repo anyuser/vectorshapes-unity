@@ -10,6 +10,10 @@ namespace VectorShapesEditor
 		[DrawGizmo(GizmoType.Active | GizmoType.Selected | GizmoType.NotInSelectionHierarchy | GizmoType.Pickable | GizmoType.InSelectionHierarchy | GizmoType.NonSelected)]
 		static void DrawGizmo(Shape src, GizmoType gizmoType)
 		{
+			
+			if (SceneView.currentDrawingSceneView == null)
+				return;
+			
 			bool drawWireframe = false;
 			if (SceneView.currentDrawingSceneView.renderMode == DrawCameraMode.Wireframe ||
 				SceneView.currentDrawingSceneView.renderMode == DrawCameraMode.TexturedWire)
