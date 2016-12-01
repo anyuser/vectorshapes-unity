@@ -322,15 +322,6 @@ namespace VectorShapes
 				vertexInputData.strokeWidth2 *= 2;
 				vertexInputData.strokeWidth3 *= 2;
 
-
-				if (renderType == StrokeRenderType.ScreenSpacePixels ||
-					renderType == StrokeRenderType.ScreenSpaceRelativeToScreenHeight)
-				{
-
-					vertexInputData.position1 = MVP.MultiplyPoint(vertexInputData.position1);
-					vertexInputData.position2 = MVP.MultiplyPoint(vertexInputData.position2);
-					vertexInputData.position3 = MVP.MultiplyPoint(vertexInputData.position3);
-				}
 				if (renderType == StrokeRenderType.ShapeSpaceFacingCamera)
 				{
 					vertexInputData.position1 = MV.MultiplyPoint(vertexInputData.position1);
@@ -342,6 +333,12 @@ namespace VectorShapes
 					vertexInputData.position1 = P.MultiplyPoint(vertexInputData.position1);
 					vertexInputData.position2 = P.MultiplyPoint(vertexInputData.position2);
 					vertexInputData.position3 = P.MultiplyPoint(vertexInputData.position3);
+				}
+				else
+				{ 
+					vertexInputData.position1 = MVP.MultiplyPoint(vertexInputData.position1);
+					vertexInputData.position2 = MVP.MultiplyPoint(vertexInputData.position2);
+					vertexInputData.position3 = MVP.MultiplyPoint(vertexInputData.position3);
 				}
 
 

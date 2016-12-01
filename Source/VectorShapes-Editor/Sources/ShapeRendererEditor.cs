@@ -17,8 +17,10 @@ namespace VectorShapesEditor
 		{
 			shapeRenderer = (ShapeRenderer)target;
 
+
 			fillMaterialEditor = CreateEditor(shapeRenderer.FillMaterial);
 			strokeMaterialEditor = CreateEditor(shapeRenderer.StrokeMaterial);
+
 		}
 
 		void OnDisable()

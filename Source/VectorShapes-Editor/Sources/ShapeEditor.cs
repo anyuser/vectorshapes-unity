@@ -5,6 +5,7 @@ using VectorShapes;
 
 namespace VectorShapesEditor
 {
+	//[CanEditMultipleObjects]
 	[CustomEditor(typeof(Shape))]
 	internal partial class ShapeEditor : Editor
 	{

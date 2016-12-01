@@ -14,25 +14,34 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>..\bin\Debug</OutputPath>
-    <DefineConstants>DEBUG;ENABLE_PROFILER;</DefineConstants>
+    <DefineConstants>DEBUG;ENABLE_PROFILER;UNITY_5_5_OR_NEWER;</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
     <CustomCommands>
       <CustomCommands>
-        <Command type="AfterBuild" command="cp &quot;${TargetFile}&quot; &quot;${TargetFile}.mdb&quot; ../Unity/Assets/VectorShapes/Plugins" workingdir="${SolutionDir}" />
+        <Command>
+          <type>AfterBuild</type>
+          <command>cp "${TargetFile}" "${TargetFile}.mdb" ../Unity/Assets/VectorShapes/Plugins</command>
+          <workingdir>${SolutionDir}</workingdir>
+        </Command>
       </CustomCommands>
     </CustomCommands>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <Optimize>true</Optimize>
     <OutputPath>..\bin\Release</OutputPath>
+    <DefineConstants>UNITY_5_5_OR_NEWER;</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
     <CustomCommands>
       <CustomCommands>
-        <Command type="AfterBuild" command="cp &quot;${TargetFile}&quot; ../Unity/Assets/VectorShapes/Plugins" workingdir="${SolutionDir}" />
+        <Command>
+          <type>AfterBuild</type>
+          <command>cp "${TargetFile}" ../Unity/Assets/VectorShapes/Plugins</command>
+          <workingdir>${SolutionDir}</workingdir>
+        </Command>
       </CustomCommands>
     </CustomCommands>
   </PropertyGroup>
