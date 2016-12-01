@@ -9,7 +9,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: -594633887, guid: 4b767388747f34f22aa2403776b900e4, type: 3}
-  m_Name: TestShape
+  m_Name: test-sharedshape
   m_EditorClassIdentifier: 
   shapeData:
     shapeType: 2
@@ -17,10 +17,10 @@ MonoBehaviour:
     isPolygonStrokeClosed: 1
     polyPointTypes: 00000000000000000000000000000000
     polyPointPositions:
-    - {x: 5.0749364, y: -1.8699828, z: 0}
-    - {x: 2.9819927, y: -2.8400044, z: 0}
-    - {x: -0.17885554, y: -1.8786421, z: 0}
-    - {x: 2.5486546, y: 0.22266054, z: 0}
+    - {x: 2.482975, y: -2.7308164, z: 0}
+    - {x: -0.5042529, y: -2.6407905, z: 0}
+    - {x: -1.872174, y: 0.34591424, z: 0}
+    - {x: 1.2637676, y: 1.7828809, z: 0}
     polyPointInTangents:
     - {x: 0, y: 0, z: 0}
     - {x: 0, y: 0, z: 0}
