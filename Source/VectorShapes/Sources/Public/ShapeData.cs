@@ -906,6 +906,20 @@ namespace VectorShapes
 			}
 		}
 
+        public Vector3 GetPoint(float t)
+        {
+            var vertexInfos = GetVertexInfoList();
+
+            // length calculation is not accurate
+            float idFloat = Mathf.Lerp(0, vertexInfos.Count - 1, t);
+            int nextId = Mathf.CeilToInt(idFloat);
+            int baseId = Mathf.FloorToInt(idFloat);
+            float lerp = t - baseId;
+
+            var v = Vector3.Lerp( vertexInfos[baseId].position,vertexInfos[nextId].position,lerp);
+            return v;
+        }
+
 
 		internal List<ShapeVertexInfo> GetVertexInfoList()
 		{
