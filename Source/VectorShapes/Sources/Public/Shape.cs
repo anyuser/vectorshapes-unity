@@ -48,6 +48,8 @@ namespace VectorShapes
 			}
 		}
 
+		public bool CreatePolyCollider = false;
+
 		#endregion
 
 		#region internal properties
@@ -75,7 +77,7 @@ namespace VectorShapes
 			}
 		}
 
-		internal ShapeRenderer ShapeRenderer
+		public ShapeRenderer ShapeRenderer
 		{
 			get
 			{

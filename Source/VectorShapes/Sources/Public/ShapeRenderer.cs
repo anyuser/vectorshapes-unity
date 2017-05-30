@@ -188,6 +188,7 @@ namespace VectorShapes
 				shapeMeshCaches[i].transform = shapes[i].transform;
 				shapeMeshCaches[i].camera = Camera;
 				shapeMeshCaches[i].useShader = useShader;
+				shapeMeshCaches[i].CreatePolyCollider = shapes[i].CreatePolyCollider;
 				shapeMeshCaches[i].sourceFillMaterial = fillMaterial;
 
 				if(strokeMaterialHasChanged)
@@ -262,5 +263,9 @@ namespace VectorShapes
 
 		#endregion
 
+		internal ShapeMeshCache GetMeshCache(Shape shape)
+		{
+			return shapeMeshCaches[shapes.IndexOf(shape)];
+		}
 	}
 }

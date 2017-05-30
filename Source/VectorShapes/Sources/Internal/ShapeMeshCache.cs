@@ -45,6 +45,8 @@ namespace VectorShapes
 			}
 		}
 
+		public bool CreatePolyCollider = false;
+
 		bool _useShader;
 		public bool useShader
 		{
@@ -211,6 +213,7 @@ namespace VectorShapes
 		public void Refresh()
 		{
 			RefreshMesh();
+			RefreshPolyCollider();
 			RefreshMaterials();
 		}
 
@@ -326,6 +329,26 @@ namespace VectorShapes
 			}
 
 			return true;
+		}
+
+		void RefreshPolyCollider()
+		{
+
+			if (!CreatePolyCollider)
+				return;
+
+			var pc = transform.GetComponent<PolygonCollider2D>();
+			if (!pc)
+				pc = transform.gameObject.AddComponent<PolygonCollider2D>();
+
+			var points = shape.GetPolyPointPositions();
+
+			Vector2[] vecArray = new Vector2[points.Count];
+			for (int i = 0; i < points.Count; i++)
+			{
+				vecArray[i] = points[i];
+			}
+			pc.SetPath(0, vecArray);
 		}
 
 		public void ClearKeywords()

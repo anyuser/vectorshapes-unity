@@ -230,6 +230,24 @@ namespace VectorShapes
 		List<ShapeVertexInfo> vertexInfoListSubdivided = new List<ShapeVertexInfo>();
 		List<ShapeVertexInfo> vertexInfoList = new List<ShapeVertexInfo>();
 
+		public Bounds bounds
+		{
+			get
+			{
+				// TODO cache
+				var list = GetVertexInfoList();
+				if (list.Count == 0)
+					return new Bounds();
+
+				Bounds b = new Bounds(list[0].position, Vector3.zero);
+				for (int i = 1; i < list.Count; i++)
+				{
+					b.Encapsulate(list[i].position);
+				}
+				return b;
+			}
+		}
+
 		#endregion
 
 		#region constructor & serialization
@@ -563,6 +581,15 @@ namespace VectorShapes
 		public int GetPolyPointCount()
 		{
 			return polyPointPositions.Count;
+		}
+
+		/// <summary>
+		/// Gets the polygon point positions.
+		/// </summary>
+		/// <returns>The polygon point count.</returns>
+		public List<Vector3> GetPolyPointPositions()
+		{
+			return polyPointPositions;
 		}
 
 		/// <summary>

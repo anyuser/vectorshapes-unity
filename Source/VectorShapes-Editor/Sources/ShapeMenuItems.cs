@@ -26,6 +26,17 @@ namespace VectorShapesEditor
 
 		void DrawShapeEditor()
 		{
+			bool newIsPolyColliderGenerated = targetShape.CreatePolyCollider;
+			EditorGUI.BeginChangeCheck();
+			newIsPolyColliderGenerated = EditorGUILayout.Toggle("Create Poly Collider", newIsPolyColliderGenerated);
+			if (EditorGUI.EndChangeCheck())
+			{
+				Undo.RecordObject(dataContainerObject, "Edit Shape");
+
+				targetShape.CreatePolyCollider = newIsPolyColliderGenerated;
+				SetDataDirty();
+
+			}
 
 			ShapePolyDimension newPolyDimension = shapeData.PolyDimension;
 			ShapeType newType = shapeData.ShapeType;
@@ -40,12 +51,12 @@ namespace VectorShapesEditor
 			if (targetShape.ShapeRenderer)
 			{
 				EditorGUI.BeginDisabledGroup(true);
-				EditorGUILayout.ObjectField("Rendered by", targetShape.ShapeRenderer, typeof(ShapeRenderer),true);
+				EditorGUILayout.ObjectField("Rendered by", targetShape.ShapeRenderer, typeof(ShapeRenderer), true);
 				EditorGUI.EndDisabledGroup();
 			}
 			else
 			{
-				EditorGUILayout.HelpBox("No shape renderer found. This shape will not be rendered until it is parented under a GameObject with a ShapeRenderer component attached, or a ShapeRenderer component is attached to this object",MessageType.Warning);
+				EditorGUILayout.HelpBox("No shape renderer found. This shape will not be rendered until it is parented under a GameObject with a ShapeRenderer component attached, or a ShapeRenderer component is attached to this object", MessageType.Warning);
 			}
 			shapeAsset = (ShapeAsset)EditorGUILayout.ObjectField("Shape Asset", shapeAsset, typeof(ShapeAsset), false);
 
