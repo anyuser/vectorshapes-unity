@@ -1,3 +1,5 @@
+﻿// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+
 #define PI 3.1415926536f
 #define MIN_ANGLE_THRESHOLD 0.01745329252f //1 degree
 #define MAX_VALUE 999999999999999.0f
@@ -356,9 +358,9 @@ VertexOutputData GetCornerVertex(VertexInputData vertexInputData)
 	vertexInputData.strokeWidth3 *= 2;
 
 	#if STROKE_RENDER_SCREEN_SPACE_PIXELS || STROKE_RENDER_SCREEN_SPACE_RELATIVE_TO_SCREEN_HEIGHT
-	vertexInputData.position1 = mul(UNITY_MATRIX_MVP,vertexInputData.position1);
-	vertexInputData.position2 = mul(UNITY_MATRIX_MVP,vertexInputData.position2);
-	vertexInputData.position3 = mul(UNITY_MATRIX_MVP,vertexInputData.position3);
+	vertexInputData.position1 = UnityObjectToClipPos(vertexInputData.position1);
+	vertexInputData.position2 = UnityObjectToClipPos(vertexInputData.position2);
+	vertexInputData.position3 = UnityObjectToClipPos(vertexInputData.position3);
 	vertexInputData.position1 /= vertexInputData.position1.w;
 	vertexInputData.position2 /= vertexInputData.position2.w;
 	vertexInputData.position3 /= vertexInputData.position3.w;
@@ -394,7 +396,7 @@ VertexOutputData GetCornerVertex(VertexInputData vertexInputData)
 
 	#if STROKE_RENDER_SHAPE_SPACE
 	VertexOutputData output = GetCornerVertexLocalSpace(vertexInputData);
-	output.position = mul(UNITY_MATRIX_MVP,output.position);
+	output.position = UnityObjectToClipPos(output.position);
 	#endif
 
 	return output;

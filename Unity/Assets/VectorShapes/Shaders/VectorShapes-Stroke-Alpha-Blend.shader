@@ -1,3 +1,5 @@
+﻿// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+
 Shader "Vector Shapes/Stroke Alpha Blend"
 {
 	Properties
@@ -92,7 +94,7 @@ Shader "Vector Shapes/Stroke Alpha Blend"
 
 				#else
 				// a bit of a hack, could probably be done in a nicer way..
-				float4 normalPos = mul(UNITY_MATRIX_MVP,IN.vertex);
+				float4 normalPos = UnityObjectToClipPos(IN.vertex);
 				float2 clipSpaceNormalVector = normalPos.xy/normalPos.w-vertexOutputData.position.xy/vertexOutputData.position.w;
 				float2 screenSpaceNormalVector = clipSpaceNormalVector * _ScreenParams.xy / 2;
 				float strokeWidthInPixels = length(screenSpaceNormalVector);
