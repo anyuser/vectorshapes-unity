@@ -22,7 +22,11 @@
     <ConsolePause>False</ConsolePause>
     <CustomCommands>
       <CustomCommands>
-        <Command type="AfterBuild" command="cp &quot;${TargetFile}&quot; &quot;${TargetFile}.mdb&quot; ../Unity/Assets/VectorShapes/Plugins/Editor/" workingdir="${SolutionDir}" />
+        <Command>
+          <type>AfterBuild</type>
+          <command>cp "${TargetFile}" "${TargetFile}.mdb" ../Unity/Assets/VectorShapes/Plugins/Editor/</command>
+          <workingdir>${SolutionDir}</workingdir>
+        </Command>
       </CustomCommands>
     </CustomCommands>
   </PropertyGroup>
@@ -34,7 +38,11 @@
     <ConsolePause>False</ConsolePause>
     <CustomCommands>
       <CustomCommands>
-        <Command type="AfterBuild" command="cp &quot;${TargetFile}&quot; ../Unity/Assets/VectorShapes/Plugins/Editor/" workingdir="${SolutionDir}" />
+        <Command>
+          <type>AfterBuild</type>
+          <command>cp "${TargetFile}" ../Unity/Assets/VectorShapes/Plugins/Editor/</command>
+          <workingdir>${SolutionDir}</workingdir>
+        </Command>
       </CustomCommands>
     </CustomCommands>
     <DebugType>none</DebugType>
@@ -43,9 +51,6 @@
     <Reference Include="System" />
     <Reference Include="LibTessDotNet">
       <HintPath>..\Lib\LibTessDotNet.dll</HintPath>
-    </Reference>
-    <Reference Include="nunit.framework">
-      <HintPath>..\..\..\..\..\..\..\..\Applications\Unity 5.3.4f1\Unity.app\Contents\Frameworks\Managed\nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor">
       <HintPath>..\Lib\UnityEditor.dll</HintPath>
