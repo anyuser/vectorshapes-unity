@@ -6,7 +6,7 @@ Material:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: Stroke
+  m_Name: VectorShapes-Stroke-Default
   m_Shader: {fileID: 4800000, guid: dad07db27da17460ab460b8e22a689ef, type: 3}
   m_ShaderKeywords: ANTIALIASING_ON
   m_LightmapFlags: 5
