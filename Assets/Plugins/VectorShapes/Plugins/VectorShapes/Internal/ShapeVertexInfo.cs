@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
+using VectorShapes;
 
-namespace VectorShapes
+namespace VectorShapesInternal
 {
-	struct ShapeVertexInfo
+	public struct ShapeVertexInfo
 	{
 		public Vector3 position;
 		public Vector3 inTangent;

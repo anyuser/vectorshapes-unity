@@ -1,9 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using VectorShapes;
 
-namespace VectorShapes
+namespace VectorShapesInternal
 {
-	static class ShapeVertexInfoUtils
+	public static class ShapeVertexInfoUtils
 	{
 
 		delegate ShapeVertexInfo ShapeVertexInfoDelegate(ShapeData shape, int pointId);

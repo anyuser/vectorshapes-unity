@@ -2,6 +2,7 @@
 using UnityEditor;
 using System.Collections.Generic;
 using VectorShapes;
+using VectorShapesInternal;
 
 namespace VectorShapesEditor
 {

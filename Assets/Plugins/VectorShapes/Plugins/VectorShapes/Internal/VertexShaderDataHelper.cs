@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
+using VectorShapes;
 
-namespace VectorShapes
+namespace VectorShapesInternal
 {
 	class VertexShaderDataHelper
 	{

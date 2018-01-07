@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
-namespace VectorShapes
+namespace VectorShapesInternal
 {
-	static class VectorShapesUtils
+	public static class VectorShapesUtils
 	{
 		public static bool IsStrokeShader(Shader shader)
 		{

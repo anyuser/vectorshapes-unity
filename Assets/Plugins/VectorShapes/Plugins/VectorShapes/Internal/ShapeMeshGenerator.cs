@@ -4,8 +4,9 @@ using UnityEngine.Profiling;
 #endif
 using System.Collections.Generic;
 using LibTessDotNet;
+using VectorShapes;
 
-namespace VectorShapes
+namespace VectorShapesInternal
 {
 	static class ShapeMeshGenerator
 	{

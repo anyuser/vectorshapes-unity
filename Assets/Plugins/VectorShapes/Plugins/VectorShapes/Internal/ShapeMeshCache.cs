@@ -3,11 +3,12 @@ using UnityEngine;
 #if UNITY_5_5_OR_NEWER
 using UnityEngine.Profiling;
 #endif
+using VectorShapes;
 
-namespace VectorShapes
+namespace VectorShapesInternal
 {
 	[System.Serializable]
-	class ShapeMeshCache
+	public class ShapeMeshCache
 	{
 		bool isDirty;
 		int strokeShapeHashId;
@@ -217,7 +218,7 @@ namespace VectorShapes
 			RefreshMaterials();
 		}
 
-		internal bool RefreshMesh()
+		public bool RefreshMesh()
 		{
 			CreateMeshesIfNeeded();
 

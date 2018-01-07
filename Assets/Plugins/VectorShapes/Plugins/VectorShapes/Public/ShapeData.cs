@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System;
+using VectorShapesInternal;
 
 namespace VectorShapes
 {
@@ -920,8 +921,7 @@ namespace VectorShapes
             return v;
         }
 
-
-		internal List<ShapeVertexInfo> GetVertexInfoList()
+		public List<ShapeVertexInfo> GetVertexInfoList()
 		{
 			if (IsDirty)
 			{
@@ -940,7 +940,7 @@ namespace VectorShapes
 
 		}
 
-		internal void AddFromVertexInfoList(List<ShapeVertexInfo> vertexList)
+		public void AddFromVertexInfoList(List<ShapeVertexInfo> vertexList)
 		{
 			for (int i = 0; i < vertexList.Count; i++)
 			{

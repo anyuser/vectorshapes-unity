@@ -2,6 +2,8 @@
 using UnityEditor;
 using System.Collections.Generic;
 using VectorShapes;
+using VectorShapesInternal;
+using MathUtils = VectorShapesInternal.MathUtils;
 
 namespace VectorShapesEditor
 {
@@ -81,7 +83,7 @@ namespace VectorShapesEditor
 
 			if (shape.IsStrokeClosed || pointId > 0)
 			{
-				int otherId = VectorShapes.MathUtils.CircularModulo(pointId - 1, shape.GetPolyPointCount());
+				int otherId = MathUtils.CircularModulo(pointId - 1, shape.GetPolyPointCount());
 
 				if (shape.GetPolyPointType(otherId) == ShapePointType.Corner)
 					return (shape.GetPolyPosition(otherId) - shape.GetPolyPosition(pointId)) * .333f;
@@ -103,7 +105,7 @@ namespace VectorShapesEditor
 
 			if (shape.IsStrokeClosed || pointId < shape.GetPolyPointCount() - 1)
 			{
-				int otherId = VectorShapes.MathUtils.CircularModulo(pointId + 1, shape.GetPolyPointCount());
+				int otherId = MathUtils.CircularModulo(pointId + 1, shape.GetPolyPointCount());
 
 				if (shape.GetPolyPointType(otherId) == ShapePointType.Corner)
 					return (shape.GetPolyPosition(otherId) - shape.GetPolyPosition(pointId)) * .333f;

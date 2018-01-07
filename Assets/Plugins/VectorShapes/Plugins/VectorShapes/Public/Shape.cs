@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using VectorShapesInternal;
 
 namespace VectorShapes
 {
@@ -54,7 +55,7 @@ namespace VectorShapes
 
 		#region internal properties
 
-		internal ShapeMeshCache GizmoCache
+		public ShapeMeshCache GizmoCache
 		{
 			get
 			{

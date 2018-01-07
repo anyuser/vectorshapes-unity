@@ -1,9 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
+using VectorShapes;
 
-namespace VectorShapes
+namespace VectorShapesInternal
 {
-	static class MathUtils
+	public static class MathUtils
 	{
 
 		// always returns a positive value
