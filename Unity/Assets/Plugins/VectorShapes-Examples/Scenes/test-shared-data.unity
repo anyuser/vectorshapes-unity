@@ -13,7 +13,7 @@ OcclusionCullingSettings:
 --- !u!104 &2
 RenderSettings:
   m_ObjectHideFlags: 0
-  serializedVersion: 7
+  serializedVersion: 8
   m_Fog: 0
   m_FogColor: {r: 1, g: 1, b: 1, a: 1}
   m_FogMode: 3
@@ -25,6 +25,7 @@ RenderSettings:
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
   m_AmbientIntensity: 1
   m_AmbientMode: 3
+  m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
   m_SkyboxMaterial: {fileID: 0}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
@@ -41,7 +42,7 @@ RenderSettings:
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
-  serializedVersion: 7
+  serializedVersion: 11
   m_GIWorkflowMode: 1
   m_GISettings:
     serializedVersion: 2
@@ -53,7 +54,7 @@ LightmapSettings:
     m_EnableBakedLightmaps: 0
     m_EnableRealtimeLightmaps: 0
   m_LightmapEditorSettings:
-    serializedVersion: 4
+    serializedVersion: 9
     m_Resolution: 2
     m_BakeResolution: 40
     m_TextureWidth: 1024
@@ -66,13 +67,30 @@ LightmapSettings:
     m_LightmapParameters: {fileID: 0}
     m_LightmapsBakeMode: 1
     m_TextureCompression: 1
-    m_DirectLightInLightProbes: 1
     m_FinalGather: 0
     m_FinalGatherFiltering: 1
     m_FinalGatherRayCount: 1024
     m_ReflectionCompression: 2
+    m_MixedBakeMode: 1
+    m_BakeBackend: 0
+    m_PVRSampling: 1
+    m_PVRDirectSampleCount: 32
+    m_PVRSampleCount: 500
+    m_PVRBounces: 2
+    m_PVRFilterTypeDirect: 0
+    m_PVRFilterTypeIndirect: 0
+    m_PVRFilterTypeAO: 0
+    m_PVRFilteringMode: 0
+    m_PVRCulling: 1
+    m_PVRFilteringGaussRadiusDirect: 1
+    m_PVRFilteringGaussRadiusIndirect: 5
+    m_PVRFilteringGaussRadiusAO: 2
+    m_PVRFilteringAtrousPositionSigmaDirect: 0.5
+    m_PVRFilteringAtrousPositionSigmaIndirect: 2
+    m_PVRFilteringAtrousPositionSigmaAO: 1
+    m_ShowResolutionOverlay: 1
   m_LightingDataAsset: {fileID: 0}
-  m_RuntimeCPUUsage: 25
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -89,7 +107,11 @@ NavMeshSettings:
     minRegionArea: 2
     manualCellSize: 0
     cellSize: 0.16666667
+    manualTileSize: 0
+    tileSize: 256
     accuratePlacement: 0
+    debug:
+      m_Flags: 0
   m_NavMeshData: {fileID: 0}
 --- !u!1 &333539927
 GameObject:
@@ -128,40 +150,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 333539927}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: -1928991051, guid: 4b767388747f34f22aa2403776b900e4, type: 3}
+  m_Script: {fileID: 11500000, guid: 2b093fd50a0ef4da9a602caffb1efd88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CreatePolyCollider: 0
   shapeAsset: {fileID: 11400000, guid: 6161f2cbe89e54b0fbbd164bb071c2df, type: 2}
   localShapeData:
     shapeType: 3
     polyDimension: 0
     isPolygonStrokeClosed: 0
-    polyPointTypes: 00000000000000000000000000000000
-    polyPointPositions:
-    - {x: 0, y: 0, z: 0}
-    - {x: 0.31457657, y: -4.1344194, z: 0}
-    - {x: 2.628952, y: -5.1904945, z: 0}
-    - {x: 3.752435, y: 0.22469684, z: 0}
-    polyPointInTangents:
-    - {x: 0, y: 0, z: 0}
-    - {x: 0, y: 0, z: 0}
-    - {x: 0, y: 0, z: 0}
-    - {x: 0, y: 0, z: 0}
-    polyPointOutTangents:
-    - {x: 0, y: 0, z: 0}
-    - {x: 0, y: 0, z: 0}
-    - {x: 0, y: 0, z: 0}
-    - {x: 0, y: 0, z: 0}
-    polyPointStrokeColors:
-    - {r: 0, g: 0, b: 0, a: 1}
-    - {r: 0, g: 0, b: 0, a: 1}
-    - {r: 0, g: 0, b: 0, a: 1}
-    - {r: 0, g: 0, b: 0, a: 1}
-    polyPointStrokeWidths:
-    - 0.1
-    - 0.1
-    - 0.1
-    - 0.1
+    polyPointTypes: 
+    polyPointPositions: []
+    polyPointInTangents: []
+    polyPointOutTangents: []
+    polyPointStrokeColors: []
+    polyPointStrokeWidths: []
     shapeOffset: {x: 0, y: 0, z: 0}
     shapeSize: {x: 1, y: 1}
     strokeColor: {r: 0, g: 0, b: 0, a: 1}
@@ -218,30 +221,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 985532825}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: -1928991051, guid: 4b767388747f34f22aa2403776b900e4, type: 3}
+  m_Script: {fileID: 11500000, guid: 2b093fd50a0ef4da9a602caffb1efd88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CreatePolyCollider: 0
   shapeAsset: {fileID: 11400000, guid: 6161f2cbe89e54b0fbbd164bb071c2df, type: 2}
   localShapeData:
     shapeType: 3
     polyDimension: 0
     isPolygonStrokeClosed: 0
-    polyPointTypes: 0000000000000000
-    polyPointPositions:
-    - {x: 0, y: 0, z: 0}
-    - {x: 0, y: 0, z: 0}
-    polyPointInTangents:
-    - {x: 0, y: 0, z: 0}
-    - {x: 0, y: 0, z: 0}
-    polyPointOutTangents:
-    - {x: 0, y: 0, z: 0}
-    - {x: 0, y: 0, z: 0}
-    polyPointStrokeColors:
-    - {r: 0, g: 0, b: 0, a: 1}
-    - {r: 0, g: 0, b: 0, a: 1}
-    polyPointStrokeWidths:
-    - 1
-    - 1
+    polyPointTypes: 
+    polyPointPositions: []
+    polyPointInTangents: []
+    polyPointOutTangents: []
+    polyPointStrokeColors: []
+    polyPointStrokeWidths: []
     shapeOffset: {x: 0, y: 0, z: 0}
     shapeSize: {x: 1, y: 1}
     strokeColor: {r: 0, g: 0, b: 0, a: 1}
@@ -285,7 +279,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1207481914}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 214748838, guid: 4b767388747f34f22aa2403776b900e4, type: 3}
+  m_Script: {fileID: 11500000, guid: 079254905bd2243f788ef766a728ef80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   cam: {fileID: 1621656176}
@@ -344,30 +338,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 1345609939}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: -1928991051, guid: 4b767388747f34f22aa2403776b900e4, type: 3}
+  m_Script: {fileID: 11500000, guid: 2b093fd50a0ef4da9a602caffb1efd88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CreatePolyCollider: 0
   shapeAsset: {fileID: 11400000, guid: 6161f2cbe89e54b0fbbd164bb071c2df, type: 2}
   localShapeData:
     shapeType: 3
     polyDimension: 0
     isPolygonStrokeClosed: 0
-    polyPointTypes: 0000000000000000
-    polyPointPositions:
-    - {x: 0, y: 0, z: 0}
-    - {x: 0, y: 0, z: 0}
-    polyPointInTangents:
-    - {x: 0, y: 0, z: 0}
-    - {x: 0, y: 0, z: 0}
-    polyPointOutTangents:
-    - {x: 0, y: 0, z: 0}
-    - {x: 0, y: 0, z: 0}
-    polyPointStrokeColors:
-    - {r: 0, g: 0, b: 0, a: 1}
-    - {r: 0, g: 0, b: 0, a: 1}
-    polyPointStrokeWidths:
-    - 1
-    - 1
+    polyPointTypes: 
+    polyPointPositions: []
+    polyPointInTangents: []
+    polyPointOutTangents: []
+    polyPointStrokeColors: []
+    polyPointStrokeWidths: []
     shapeOffset: {x: 0, y: 0, z: 0}
     shapeSize: {x: 1, y: 1}
     strokeColor: {r: 0, g: 0, b: 0, a: 1}
@@ -457,10 +442,12 @@ Camera:
   m_TargetDisplay: 0
   m_TargetEye: 3
   m_HDR: 0
+  m_AllowMSAA: 1
+  m_AllowDynamicResolution: 0
+  m_ForceIntoRT: 0
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
-  m_StereoMirrorMode: 0
 --- !u!4 &1621656177
 Transform:
   m_ObjectHideFlags: 0
