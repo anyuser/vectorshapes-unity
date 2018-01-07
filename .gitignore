@@ -11,21 +11,22 @@ Thumbs.db
 *.userprefs
 *.sln.cache
 
-Unity/[Ll]ibrary/
-Unity/[Tt]emp/
-Unity/[Oo]bj/
-Unity/[Bb]uild/
-Unity/[Bb]uilds/
-Unity/Assets/AssetStoreTools*
-Unity/*.sln
-Unity/*.csproj
+/[Ll]ibrary/
+/[Tt]emp/
+/[Oo]bj/
+/[Bb]uild/
+/[Bb]uilds/
+/Assets/AssetStoreTools*
+/*.sln
+/*.csproj
 
 Source**/[Oo]bj/
 Source**/[Bb]in/
 Source**/packages/
 Source**/TestResults/
 
-/Unity/Assets/VectorShapes/Plugins/VectorShapes.dll.mdb
-/Unity/Assets/VectorShapes/Plugins/VectorShapes.dll.mdb.meta
-/Unity/Assets/VectorShapes/Plugins/Editor/VectorShapes-Editor.dll.mdb
-/Unity/Assets/VectorShapes/Plugins/Editor/VectorShapes-Editor.dll.mdb.meta
+/Assets/VectorShapes/Plugins/VectorShapes.dll.mdb
+/Assets/VectorShapes/Plugins/VectorShapes.dll.mdb.meta
+/Assets/VectorShapes/Plugins/Editor/VectorShapes-Editor.dll.mdb
+/Assets/VectorShapes/Plugins/Editor/VectorShapes-Editor.dll.mdb.meta
+/Library/metadata/69/6971825b654c24f629d5658cb781bdc1
