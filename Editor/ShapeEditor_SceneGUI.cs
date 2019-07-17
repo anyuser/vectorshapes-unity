@@ -1,6 +1,7 @@
-﻿using UnityEngine;
+﻿using System;
+using Unity.Collections;
+using UnityEngine;
 using UnityEditor;
-using System.Collections.Generic;
 using VectorShapes;
 
 namespace VectorShapesEditor
@@ -25,6 +26,13 @@ namespace VectorShapesEditor
 			}
 		}
 
+		void Awake()
+		{
+			
+			
+		}
+
+		int lastSelectedId;
 		protected void OnSceneGUI()
 		{
 			if (targetShape == null || shapeData == null)
@@ -40,14 +48,58 @@ namespace VectorShapesEditor
 			Handles.color = Color.blue;
 			Handles.matrix = targetShape.transform.localToWorldMatrix;
 
+			var inTangentControlIds = new NativeArray<int>(shapeData.GetPolyPointCount(),Allocator.Temp);
+			var outTangentControlIds = new NativeArray<int>(shapeData.GetPolyPointCount(),Allocator.Temp);
+			var pointControlIds = new NativeArray<int>(shapeData.GetPolyPointCount(),Allocator.Temp);
+			Fill(inTangentControlIds, -1);
+			Fill(outTangentControlIds, -1);
+			Fill(pointControlIds, -1);
+
 			DrawLines(shapeData);
 			DrawTangentLines(shapeData);
-			DrawPositionHandles(shapeData);
-			DrawTangentHandles(shapeData);
+			DrawPositionHandles(shapeData,pointControlIds);
+			DrawTangentHandles(shapeData,inTangentControlIds,outTangentControlIds);
+			
+			var newPoint = GetCurrentSelectedPoint(pointControlIds,inTangentControlIds,outTangentControlIds);
+			if (newPoint != -1)
+				currentPointId = newPoint;
+			
+			inTangentControlIds.Dispose();
+			outTangentControlIds.Dispose();
+			pointControlIds.Dispose();
+		}
 
-			int newPointId = ControlNameToPointId(GUI.GetNameOfFocusedControl());
+		static NativeArray<T> Fill<T>(NativeArray<T> inTangentControlIds,T value) where T: struct
+		{
+			for (int i = 0; i < inTangentControlIds.Length; i++)
+			{
+				inTangentControlIds[i] = value;
+			}
+
+			return inTangentControlIds;
+		}
+
+		int GetCurrentSelectedPoint(NativeArray<int> pointControlIds, NativeArray<int> inTangentControlIds, NativeArray<int> outTangentControlIds)
+		{
+			var hotControl = GUIUtility.hotControl;
+			int newPointId = pointControlIds.IndexOf<int>(hotControl);
 			if (newPointId != -1)
-				currentPointId = newPointId;
+			{
+				return newPointId;
+			}
+
+
+			newPointId = outTangentControlIds.IndexOf<int>(hotControl);
+			if (newPointId != -1)
+			{
+				return newPointId;
+			}
+
+			newPointId = inTangentControlIds.IndexOf<int>(hotControl);
+			if (newPointId != -1)
+				return newPointId;
+
+			return -1;
 		}
 
 		#region window
@@ -230,7 +282,7 @@ namespace VectorShapesEditor
 			}
 		}
 
-		void DrawTangentHandles(ShapeData shape)
+		void DrawTangentHandles(ShapeData shape, NativeArray<int> outTangentControlIds, NativeArray<int> inTangentControlIds)
 		{
 			if (shape != shapeData)
 				return;
@@ -255,7 +307,12 @@ namespace VectorShapesEditor
 				{
 					float handleSize = GetHandleSize(t1);
 					GUI.SetNextControlName(PointIdToControlName(i, "inTangent"));
-					t1 = Handles.FreeMoveHandle(t1, Quaternion.identity, handleSize * handleSizeMulti, Vector3.zero, Handles.SphereHandleCap);
+					t1 = Handles.FreeMoveHandle(t1, Quaternion.identity, handleSize * handleSizeMulti, Vector3.zero,
+						(id, vector3, rotation, f, type) =>
+						{
+							inTangentControlIds[i] = id;
+							Handles.SphereHandleCap(id, vector3, rotation, f, type);
+						});
 				}
 
 				var origT2 = pos + shape.GetPolyOutTangent(i);
@@ -264,7 +321,12 @@ namespace VectorShapesEditor
 				{
 					float handleSize = GetHandleSize(t2);
 					GUI.SetNextControlName(PointIdToControlName(i, "outTangent"));
-					t2 = Handles.FreeMoveHandle(t2, Quaternion.identity, handleSize * handleSizeMulti, Vector3.zero, Handles.SphereHandleCap);
+					t2 = Handles.FreeMoveHandle(t2, Quaternion.identity, handleSize * handleSizeMulti, Vector3.zero,
+						(id, vector3, rotation, f, type) =>
+						{
+							outTangentControlIds[i] = id;
+							Handles.SphereHandleCap(id, vector3, rotation, f, type);
+						});
 				}
 
 				if (EditorGUI.EndChangeCheck())
@@ -295,7 +357,7 @@ namespace VectorShapesEditor
 		}
 
 
-		void DrawPositionHandles(ShapeData shape)
+		void DrawPositionHandles(ShapeData shape, NativeArray<int> pointControlIds)
 		{
 			for (int i = 0; i < shape.GetPolyPointCount(); i++)
 			{
@@ -319,7 +381,11 @@ namespace VectorShapesEditor
 				float handleSize = GetHandleSize(pos) * (shapeData == shape ? 0.5f : 0.3f);
 
 				GUI.SetNextControlName(PointIdToControlName(i, "point"));
-				var p = Handles.FreeMoveHandle(pos, Quaternion.identity, handleSize, Vector3.zero, Handles.DotHandleCap);
+				var p = Handles.FreeMoveHandle(pos, Quaternion.identity, handleSize, Vector3.zero, (id, vector3, rotation, f, type) =>
+				{
+					pointControlIds[i] = (id);
+					Handles.DotHandleCap(id, vector3, rotation, f, type);
+				});
 
 				if (EditorGUI.EndChangeCheck())
 				{

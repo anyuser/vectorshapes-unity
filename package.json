@@ -12,5 +12,8 @@
       "description": "Basic Sample",
       "path": "Samples~/Basics"
     }
-  ]
+  ],
+  "dependencies": {
+    "com.unity.collections": "0.0.9-preview.20"
+  }
 }
