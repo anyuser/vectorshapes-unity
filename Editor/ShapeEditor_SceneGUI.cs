@@ -255,7 +255,7 @@ namespace VectorShapesEditor
 				{
 					float handleSize = GetHandleSize(t1);
 					GUI.SetNextControlName(PointIdToControlName(i, "inTangent"));
-					t1 = Handles.FreeMoveHandle(t1, Quaternion.identity, handleSize * handleSizeMulti, Vector3.zero, Handles.SphereCap);
+					t1 = Handles.FreeMoveHandle(t1, Quaternion.identity, handleSize * handleSizeMulti, Vector3.zero, Handles.SphereHandleCap);
 				}
 
 				var origT2 = pos + shape.GetPolyOutTangent(i);
@@ -264,7 +264,7 @@ namespace VectorShapesEditor
 				{
 					float handleSize = GetHandleSize(t2);
 					GUI.SetNextControlName(PointIdToControlName(i, "outTangent"));
-					t2 = Handles.FreeMoveHandle(t2, Quaternion.identity, handleSize * handleSizeMulti, Vector3.zero, Handles.SphereCap);
+					t2 = Handles.FreeMoveHandle(t2, Quaternion.identity, handleSize * handleSizeMulti, Vector3.zero, Handles.SphereHandleCap);
 				}
 
 				if (EditorGUI.EndChangeCheck())
@@ -319,12 +319,7 @@ namespace VectorShapesEditor
 				float handleSize = GetHandleSize(pos) * (shapeData == shape ? 0.5f : 0.3f);
 
 				GUI.SetNextControlName(PointIdToControlName(i, "point"));
-				var p = Handles.FreeMoveHandle(pos, Quaternion.identity, handleSize, Vector3.zero, delegate (int controlID, Vector3 position, Quaternion rotation, float size)
-				{
-
-					Handles.DotCap(controlID, position, rotation, size);
-
-				});
+				var p = Handles.FreeMoveHandle(pos, Quaternion.identity, handleSize, Vector3.zero, Handles.DotHandleCap);
 
 				if (EditorGUI.EndChangeCheck())
 				{

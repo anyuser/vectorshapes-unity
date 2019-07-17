@@ -15,15 +15,11 @@ namespace VectorShapesEditor
 			if (SceneView.currentDrawingSceneView == null)
 				return;
 			
-			bool drawWireframe = false;
-			if (SceneView.currentDrawingSceneView.renderMode == DrawCameraMode.Wireframe ||
-				SceneView.currentDrawingSceneView.renderMode == DrawCameraMode.TexturedWire)
-			{
-				drawWireframe = true;
-			}
+			bool drawWireframe = SceneView.currentDrawingSceneView.cameraMode == SceneView.GetBuiltinCameraMode(DrawCameraMode.Wireframe) ||
+			                     SceneView.currentDrawingSceneView.cameraMode == SceneView.GetBuiltinCameraMode(DrawCameraMode.TexturedWire);
 			Color wireframeColor = Color.white;
 			Color surfaceColor = Color.clear;
-			if (SceneView.currentDrawingSceneView.renderMode == DrawCameraMode.TexturedWire)
+			if (SceneView.currentDrawingSceneView.cameraMode == SceneView.GetBuiltinCameraMode(DrawCameraMode.TexturedWire))
 			{
 				surfaceColor = new Color(1, 1, 1, 0.5f);
 			}
