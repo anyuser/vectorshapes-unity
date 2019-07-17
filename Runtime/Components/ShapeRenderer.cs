@@ -62,12 +62,14 @@ namespace VectorShapes
 
 		#region MonoBehaviour callbacks
 
+		#if UNITY_EDITOR
 		void Reset()
 		{
-			fillMaterial = Resources.Load<Material>("Default Shape Materials/Fill");
-			strokeMaterial = Resources.Load<Material>("Default Shape Materials/Stroke");
+			fillMaterial = UnityEditor.AssetDatabase.LoadAssetAtPath<Material>("Packages/ch.mariov.vectorshapes/Materials/VectorShapes-Fill-Default.mat");
+			strokeMaterial = UnityEditor.AssetDatabase.LoadAssetAtPath<Material>("Packages/ch.mariov.vectorshapes/Materials/VectorShapes-Stroke-Default.mat");
 		}
-
+		#endif
+		
 		void OnEnable()
 		{
 			var foundShapes = GetComponentsInChildren<Shape>();
@@ -162,8 +164,8 @@ namespace VectorShapes
 			}
 
 			bool strokeMaterialHasChanged = false;
-			var strokeKeywords = strokeMaterial.shaderKeywords;
-			if (lastStrokeKeywords == null || strokeKeywords.Length != lastStrokeKeywords.Length)
+			var strokeKeywords = strokeMaterial ? strokeMaterial.shaderKeywords : null;
+			if (lastStrokeKeywords == null || (strokeKeywords != null ? strokeKeywords.Length : 0) != lastStrokeKeywords.Length)
 			{
 				strokeMaterialHasChanged = true;
 			}

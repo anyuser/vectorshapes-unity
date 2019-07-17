@@ -1,33 +1,5 @@
 
-#Autosave files
-*~
+!Samples~
 
 *.DS_Store
 Thumbs.db
-*.suo
-*.user
-*.userosscache
-*.sln.docstates
-*.userprefs
-*.sln.cache
-
-/[Ll]ibrary/
-/[Tt]emp/
-/[Oo]bj/
-/[Bb]uild/
-/[Bb]uilds/
-/Assets/AssetStoreTools*
-/*.sln
-/*.csproj
-
-Source**/[Oo]bj/
-Source**/[Bb]in/
-Source**/packages/
-Source**/TestResults/
-
-/Assets/VectorShapes/Plugins/VectorShapes.dll.mdb
-/Assets/VectorShapes/Plugins/VectorShapes.dll.mdb.meta
-/Assets/VectorShapes/Plugins/Editor/VectorShapes-Editor.dll.mdb
-/Assets/VectorShapes/Plugins/Editor/VectorShapes-Editor.dll.mdb.meta
-/Library/metadata/69/6971825b654c24f629d5658cb781bdc1
-/.idea
