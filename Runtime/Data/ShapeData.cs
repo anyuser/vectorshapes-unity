@@ -473,6 +473,31 @@ namespace VectorShapes
 		}
 
 		/// <summary>
+		/// Inserts a polygon point.
+		/// </summary>
+		/// <returns>The polygon point.</returns>
+		public void InsertPolyPoint(int id)
+		{
+			if (ShapeType != ShapeType.Polygon)
+				throw new UnityException("Can't add point to non-polygon shape");
+			
+			if(id < 0 || id > GetPolyPointCount())
+				throw new IndexOutOfRangeException();
+
+			if (id == GetPolyPointCount())
+				AddPolyPoint();
+
+			polyPointPositions.Insert(id,polyPointPositions[id]);
+			polyPointInTangents.Insert(id,polyPointInTangents[id]);
+			polyPointOutTangents.Insert(id,polyPointOutTangents[id]);
+			polyPointTypes.Insert(id,polyPointTypes[id]);
+			polyPointStrokeColors.Insert(id,polyPointStrokeColors[id]);
+			polyPointStrokeWidths.Insert(id,polyPointStrokeWidths[id]);
+
+			MarkDirty();
+		}
+
+		/// <summary>
 		/// Adds a polygon point.
 		/// </summary>
 		/// <returns>The polygon point.</returns>
@@ -907,19 +932,19 @@ namespace VectorShapes
 			}
 		}
 
-        public Vector3 GetPoint(float t)
-        {
-            var vertexInfos = GetVertexInfoList();
+		public InterpInfo GetInterpInfo(float t)
+		{
+			var vertexInfos = GetVertexInfoList();
 
-            // length calculation is not accurate
-            float idFloat = Mathf.Lerp(0, vertexInfos.Count - 1, t);
-            int nextId = Mathf.CeilToInt(idFloat);
-            int baseId = Mathf.FloorToInt(idFloat);
-            float lerp = t - baseId;
+			// length calculation is not accurate
+			float idFloat = Mathf.Lerp(0, vertexInfos.Count - 1, t);
+			var info = new InterpInfo();
+			info.startId = Mathf.FloorToInt(idFloat);
+			info.endId = info.startId + 1;
+			info.lerp = t - info.startId;
+			return info;
+		}
 
-            var v = Vector3.Lerp( vertexInfos[baseId].position,vertexInfos[nextId].position,lerp);
-            return v;
-        }
 
 		public List<ShapeVertexInfo> GetVertexInfoList()
 		{
@@ -961,5 +986,12 @@ namespace VectorShapes
 		}
 
 		#endregion
+	}
+
+	public struct InterpInfo
+	{
+		public int startId;
+		public int endId;
+		public float lerp;
 	}
 }

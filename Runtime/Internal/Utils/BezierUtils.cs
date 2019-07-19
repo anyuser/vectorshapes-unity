@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace VectorShapes
 {
-	static class BezierUtils
+	public static class BezierUtils
 	{
 
 

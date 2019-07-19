@@ -9,10 +9,10 @@ namespace VectorShapesEditor
 	[CustomEditor(typeof(ShapeRenderer))]
 	internal class ShapeRendererEditor : Editor
 	{
-		private ShapeRenderer shapeRenderer;
+		ShapeRenderer shapeRenderer;
 
-		private Editor fillMaterialEditor;
-		private Editor strokeMaterialEditor;
+		Editor fillMaterialEditor;
+		Editor strokeMaterialEditor;
 
 		void OnEnable()
 		{

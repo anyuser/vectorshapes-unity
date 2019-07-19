@@ -1,123 +1,83 @@
 ﻿using UnityEngine;
 using UnityEditor;
-using System.Collections.Generic;
+using Unity.Collections;
 using VectorShapes;
-using VectorShapesInternal;
-using MathUtils = VectorShapesInternal.MathUtils;
 
 namespace VectorShapesEditor
 {
-	//[CanEditMultipleObjects]
+	[CanEditMultipleObjects]
 	[CustomEditor(typeof(Shape))]
-	internal partial class ShapeEditor : Editor
+	internal class ShapeEditor : Editor
 	{
+		int currentPointId;
 
-		Shape targetShape
+		public override void OnInspectorGUI()
 		{
-			get
+			for (int i = 0; i < targets.Length; i++)
 			{
-				return target as Shape;
-			}
-		}
-
-		ShapeData shapeData
-		{
-			get
-			{
-				return targetShape.ShapeData;
-			}
-		}
-
-		public Object dataContainerObject
-		{
-			get
-			{
-				if (targetShape.ShapeAsset != null)
+				var shape = targets[i] as Shape;
+				if (shape.ShapeData == null)
 				{
-					return targetShape.ShapeAsset;
+					EditorGUILayout.HelpBox("No shape data", MessageType.Info);
+					return;
 				}
 
-				return targetShape;
+				ShapeEditorUtils.DrawShapeEditor(shape);
+				EditorGUILayout.Space();
+				ShapeEditorUtils.DrawStrokeEditor(shape);
+				EditorGUILayout.Space();
+				ShapeEditorUtils.DrawFillEditor(shape);
 			}
-
-		}
-
-		void OnEnable()
-		{
-		}
-
-		void OnDisable()
-		{
 		}
 
 
-		void SetDataDirty()
+		protected void OnSceneGUI()
 		{
-			EditorUtility.SetDirty(targetShape);
-			EditorUtility.SetDirty(dataContainerObject);
-			SceneView.RepaintAll();
-		}
+			var shape = target as Shape;
+			if (shape == null || shape.ShapeData == null)
+				return;
 
-		#region utils
-		void ConvertPoint(ShapeData shape, int i)
-		{
-			Undo.RecordObject(dataContainerObject, "Convert point type");
-			if (shape.GetPolyPointType(i) == ShapePointType.Corner)
+			if (shape.ShapeData == null || shape.ShapeData.GetPolyPointCount() == 0)
 			{
-				shape.SetPolyPointType(ShapePointType.Bezier);
-				shape.SetPolyInTangent(currentPointId, GetDefaultInTangent(shape, currentPointId));
-				shape.SetPolyOutTangent(currentPointId, GetDefaultOutTangent(shape, currentPointId));
+				currentPointId = -1;
+				ShapeEditorUtils.SetDataDirty(shape);
 			}
-			else if (shape.GetPolyPointType(i) == ShapePointType.Bezier ||
-					   shape.GetPolyPointType(i) == ShapePointType.BezierContinous)
+			else if (currentPointId > shape.ShapeData.GetPolyPointCount() - 1)
 			{
-				shape.SetPolyPointType(i, ShapePointType.Corner);
+				currentPointId = shape.ShapeData.GetPolyPointCount() - 1;
+				ShapeEditorUtils.SetDataDirty(shape);
 			}
-		}
 
-		Vector3 GetDefaultInTangent(ShapeData shape, int pointId)
-		{
-			//TODO: fix all this
-			if (shape.GetPolyPointCount() < 2)
-				return Vector3.left;
-
-			if (shape.IsStrokeClosed || pointId > 0)
+			if (currentPointId >= 0 && currentPointId < shape.ShapeData.GetPolyPointCount())
 			{
-				int otherId = MathUtils.CircularModulo(pointId - 1, shape.GetPolyPointCount());
-
-				if (shape.GetPolyPointType(otherId) == ShapePointType.Corner)
-					return (shape.GetPolyPosition(otherId) - shape.GetPolyPosition(pointId)) * .333f;
-				else
-					return (shape.GetPolyPosition(otherId) + shape.GetPolyOutTangent(otherId) - shape.GetPolyPosition(pointId)) * .333f;
-
+				ShapeEditorUtils.DrawPointEditWindow(shape, currentPointId);
 			}
-			else {
 
-				return -(shape.GetPolyPosition(pointId + 1) - shape.GetPolyPosition(pointId)) * .333f;
-			}
-		}
+			Handles.color = Color.blue;
+			Handles.matrix = shape.transform.localToWorldMatrix;
 
-		Vector3 GetDefaultOutTangent(ShapeData shape, int pointId)
-		{
-			//TODO: fix all this
-			if (shape.GetPolyPointCount() < 2)
-				return Vector3.left;
+			var inTangentControlIds = new NativeArray<int>(shape.ShapeData.GetPolyPointCount(), Allocator.Temp);
+			var outTangentControlIds = new NativeArray<int>(shape.ShapeData.GetPolyPointCount(), Allocator.Temp);
+			var pointControlIds = new NativeArray<int>(shape.ShapeData.GetPolyPointCount(), Allocator.Temp);
+			ShapeEditorUtils.Fill(inTangentControlIds, -1);
+			ShapeEditorUtils.Fill(outTangentControlIds, -1);
+			ShapeEditorUtils.Fill(pointControlIds, -1);
 
-			if (shape.IsStrokeClosed || pointId < shape.GetPolyPointCount() - 1)
+			ShapeEditorUtils.DrawLines(shape);
+			ShapeEditorUtils.DrawTangentLines(shape);
+			ShapeEditorUtils.DrawPositionHandles(shape, pointControlIds);
+			ShapeEditorUtils.DrawTangentHandles(shape, inTangentControlIds, outTangentControlIds);
+
+			var newPoint = ShapeEditorUtils.GetCurrentSelectedPoint(pointControlIds, inTangentControlIds, outTangentControlIds);
+			if (newPoint != -1)
 			{
-				int otherId = MathUtils.CircularModulo(pointId + 1, shape.GetPolyPointCount());
-
-				if (shape.GetPolyPointType(otherId) == ShapePointType.Corner)
-					return (shape.GetPolyPosition(otherId) - shape.GetPolyPosition(pointId)) * .333f;
-				else
-					return (shape.GetPolyPosition(otherId) + shape.GetPolyOutTangent(otherId) - shape.GetPolyPosition(pointId)) * .333f;
-
+				currentPointId = newPoint;
+				ShapeEditorUtils.SetDataDirty(shape);
 			}
-			else {
 
-				return -(shape.GetPolyPosition(pointId - 1) - shape.GetPolyPosition(pointId)) * .333f;
-			}
+			inTangentControlIds.Dispose();
+			outTangentControlIds.Dispose();
+			pointControlIds.Dispose();
 		}
-		#endregion
 	}
 }

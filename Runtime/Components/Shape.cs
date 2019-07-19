@@ -1,6 +1,7 @@
 ﻿using System;
 using UnityEngine;
 using VectorShapesInternal;
+using Object = UnityEngine.Object;
 
 namespace VectorShapes
 {
@@ -20,6 +21,20 @@ namespace VectorShapes
 		{
 			get { return shapeAsset; }
 			set { shapeAsset = value; }
+		}
+
+		public Object dataContainerObject
+		{
+			get
+			{
+				if (ShapeAsset != null)
+				{
+					return ShapeAsset;
+				}
+
+				return this;
+			}
+
 		}
 
 		/// <summary>

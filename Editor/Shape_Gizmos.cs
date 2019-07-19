@@ -6,7 +6,7 @@ using VectorShapesInternal;
 
 namespace VectorShapesEditor
 {
-	internal partial class ShapeEditor
+	internal class Shape_Gizmos
 	{
 		[DrawGizmo(GizmoType.Active | GizmoType.Selected | GizmoType.NotInSelectionHierarchy | GizmoType.Pickable | GizmoType.InSelectionHierarchy | GizmoType.NonSelected)]
 		static void DrawGizmo(Shape src, GizmoType gizmoType)
