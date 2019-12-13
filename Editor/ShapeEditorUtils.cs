@@ -47,11 +47,11 @@ static internal class ShapeEditorUtils
 		return -1;
 	}
 
-	public static void DrawPointEditWindow(Shape shape,int currentPointId)
+	public static void DrawPointEditWindow(EditorWindow editorWindow, Shape shape,int currentPointId)
 	{
 		var shapeData = shape.ShapeData;
 			
-		float paddingRight = 10;
+		float paddingLeft = 10;
 		float paddingBottom = 15;
 		float width = 300;
 		float height = 80;
@@ -60,8 +60,8 @@ static internal class ShapeEditorUtils
 		if (shapeData.HasVariableStrokeWidth)
 			height += 18;
 
-		var sceneViewRect = SceneView.currentDrawingSceneView.position;
-		var windowRect = new Rect(sceneViewRect.width - width - paddingRight, sceneViewRect.height - height - paddingBottom, width, height);
+		var sceneViewRect = editorWindow.position;
+		var windowRect = new Rect(paddingLeft, sceneViewRect.height - height - paddingBottom, width, height);
 		
 		Handles.BeginGUI();
 		GUILayout.Window(0, windowRect, windowId => DrawPointEditWindowContentForShape(shape,currentPointId), $"Selected point ({currentPointId})");
@@ -175,15 +175,32 @@ static internal class ShapeEditorUtils
 
 	static int previewLineCount = 0;
 	static Vector3[] previewLine;
+	static Texture2D tex;
 
 	public static void DrawLines(Shape shape)
 	{
+		if (tex == null)
+		{
+			var width = 6;
+			tex = new Texture2D(1,width);
+			tex.filterMode = FilterMode.Trilinear;
+			Color[] colors = new Color[width];
+			for (int i = 0; i < colors.Length; i++)
+			{
+				colors[i] = Color.white;
+			}
+
+			colors[0] = new Color(1, 1, 1, 0);
+			colors[colors.Length-1] = new Color(1, 1, 1, 0);
+			tex.SetPixels(colors);
+			tex.Apply(true);
+		}
 		var shapeData = shape.ShapeData;
 		//	if (shape != source.shapeData)
 		//		return;
 
 		var vertInfoList = shapeData.GetVertexInfoList();
-		EnsureArraySize(ref previewLine, vertInfoList.Count);
+		EnsureExactArraySize(ref previewLine, vertInfoList.Count-2);
 
 		previewLineCount = 0;
 		for (int i = 1; i < vertInfoList.Count - 1; i++)
@@ -191,8 +208,8 @@ static internal class ShapeEditorUtils
 			previewLine[previewLineCount] = vertInfoList[i].position;
 			previewLineCount++;
 		}
-
-		Handles.DrawAAPolyLine(3, previewLineCount, previewLine);
+		
+		Handles.DrawAAPolyLine(tex, previewLine);
 	}
 
 	public static void DrawTangentLines(Shape shape)
@@ -209,7 +226,7 @@ static internal class ShapeEditorUtils
 
 			if (shapeData.IsStrokeClosed || i > 0)
 			{
-				EnsureArraySize(ref previewLine, 2);
+				EnsureMinArraySize(ref previewLine, 2);
 				previewLineCount = 0;
 				previewLine[previewLineCount] = pos;
 				previewLineCount++;
@@ -221,7 +238,7 @@ static internal class ShapeEditorUtils
 
 			if (shapeData.IsStrokeClosed || i < shapeData.GetPolyPointCount() - 1)
 			{
-				EnsureArraySize(ref previewLine, 2);
+				EnsureMinArraySize(ref previewLine, 2);
 				previewLineCount = 0;
 				previewLine[previewLineCount] = pos;
 				previewLineCount++;
@@ -374,7 +391,14 @@ static internal class ShapeEditorUtils
 	}
 
 
-	static void EnsureArraySize<T>(ref T[] array, int count)
+	static void EnsureExactArraySize<T>(ref T[] array, int count)
+	{
+		if (array == null ||array.Length != count)
+		{
+			array = new T[count];
+		}
+	}
+	static void EnsureMinArraySize<T>(ref T[] array, int count)
 	{
 		if (array == null)
 			array = new T[0];

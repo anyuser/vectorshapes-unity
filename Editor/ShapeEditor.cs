@@ -1,6 +1,8 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEditor;
 using Unity.Collections;
+using UnityEditor.EditorTools;
 using VectorShapes;
 
 namespace VectorShapesEditor
@@ -10,6 +12,17 @@ namespace VectorShapesEditor
 	internal class ShapeEditor : Editor
 	{
 		int currentPointId;
+
+		void OnEnable()
+		{
+			
+			Selection.selectionChanged += OnSelectionChanged;
+		}
+
+		void OnDisable()
+		{
+			Selection.selectionChanged -= OnSelectionChanged;
+		}
 
 		public override void OnInspectorGUI()
 		{
@@ -31,53 +44,21 @@ namespace VectorShapesEditor
 		}
 
 
+		void OnSelectionChanged()
+		{
+		//	if(EditorTools.activeToolType != typeof(ShapeEditorTool))
+		//		EditorTools.SetActiveTool<ShapeEditorTool>();
+		}
+
 		protected void OnSceneGUI()
 		{
 			var shape = target as Shape;
 			if (shape == null || shape.ShapeData == null)
 				return;
-
-			if (shape.ShapeData == null || shape.ShapeData.GetPolyPointCount() == 0)
-			{
-				currentPointId = -1;
-				ShapeEditorUtils.SetDataDirty(shape);
-			}
-			else if (currentPointId > shape.ShapeData.GetPolyPointCount() - 1)
-			{
-				currentPointId = shape.ShapeData.GetPolyPointCount() - 1;
-				ShapeEditorUtils.SetDataDirty(shape);
-			}
-
-			if (currentPointId >= 0 && currentPointId < shape.ShapeData.GetPolyPointCount())
-			{
-				ShapeEditorUtils.DrawPointEditWindow(shape, currentPointId);
-			}
-
+			
 			Handles.color = Color.blue;
 			Handles.matrix = shape.transform.localToWorldMatrix;
-
-			var inTangentControlIds = new NativeArray<int>(shape.ShapeData.GetPolyPointCount(), Allocator.Temp);
-			var outTangentControlIds = new NativeArray<int>(shape.ShapeData.GetPolyPointCount(), Allocator.Temp);
-			var pointControlIds = new NativeArray<int>(shape.ShapeData.GetPolyPointCount(), Allocator.Temp);
-			ShapeEditorUtils.Fill(inTangentControlIds, -1);
-			ShapeEditorUtils.Fill(outTangentControlIds, -1);
-			ShapeEditorUtils.Fill(pointControlIds, -1);
-
 			ShapeEditorUtils.DrawLines(shape);
-			ShapeEditorUtils.DrawTangentLines(shape);
-			ShapeEditorUtils.DrawPositionHandles(shape, pointControlIds);
-			ShapeEditorUtils.DrawTangentHandles(shape, inTangentControlIds, outTangentControlIds);
-
-			var newPoint = ShapeEditorUtils.GetCurrentSelectedPoint(pointControlIds, inTangentControlIds, outTangentControlIds);
-			if (newPoint != -1)
-			{
-				currentPointId = newPoint;
-				ShapeEditorUtils.SetDataDirty(shape);
-			}
-
-			inTangentControlIds.Dispose();
-			outTangentControlIds.Dispose();
-			pointControlIds.Dispose();
 		}
 	}
 }
