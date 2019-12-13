@@ -51,20 +51,20 @@ static internal class ShapeEditorUtils
 	{
 		var shapeData = shape.ShapeData;
 			
-		float paddingRight = 20;
-		float paddingBottom = 0;
-		float width = 340;
+		float paddingRight = 10;
+		float paddingBottom = 15;
+		float width = 300;
 		float height = 80;
 		if (shapeData.HasVariableStrokeColor)
 			height += 18;
 		if (shapeData.HasVariableStrokeWidth)
 			height += 18;
 
-		var windowRect = new Rect(SceneView.currentDrawingSceneView.camera.pixelWidth - width - paddingRight, SceneView.currentDrawingSceneView.camera.pixelHeight - height - paddingBottom, width, height);
-
-			
+		var sceneViewRect = SceneView.currentDrawingSceneView.position;
+		var windowRect = new Rect(sceneViewRect.width - width - paddingRight, sceneViewRect.height - height - paddingBottom, width, height);
+		
 		Handles.BeginGUI();
-		GUILayout.Window(999, windowRect, windowId => DrawPointEditWindowContentForShape(shape,currentPointId), String.Format((string) "Selected point ({0})", (object) currentPointId));
+		GUILayout.Window(0, windowRect, windowId => DrawPointEditWindowContentForShape(shape,currentPointId), $"Selected point ({currentPointId})");
 		Handles.EndGUI();
 
 		if (windowRect.Contains(Event.current.mousePosition))
