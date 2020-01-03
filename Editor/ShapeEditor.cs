@@ -13,16 +13,6 @@ namespace VectorShapesEditor
 	{
 		int currentPointId;
 
-		void OnEnable()
-		{
-			
-			Selection.selectionChanged += OnSelectionChanged;
-		}
-
-		void OnDisable()
-		{
-			Selection.selectionChanged -= OnSelectionChanged;
-		}
 
 		public override void OnInspectorGUI()
 		{
@@ -43,12 +33,6 @@ namespace VectorShapesEditor
 			}
 		}
 
-
-		void OnSelectionChanged()
-		{
-		//	if(EditorTools.activeToolType != typeof(ShapeEditorTool))
-		//		EditorTools.SetActiveTool<ShapeEditorTool>();
-		}
 
 		protected void OnSceneGUI()
 		{

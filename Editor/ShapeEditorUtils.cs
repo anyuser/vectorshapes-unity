@@ -47,132 +47,6 @@ static internal class ShapeEditorUtils
 		return -1;
 	}
 
-	public static void DrawPointEditWindow(EditorWindow editorWindow, Shape shape,int currentPointId)
-	{
-		var shapeData = shape.ShapeData;
-			
-		float paddingLeft = 10;
-		float paddingBottom = 15;
-		float width = 300;
-		float height = 80;
-		if (shapeData.HasVariableStrokeColor)
-			height += 18;
-		if (shapeData.HasVariableStrokeWidth)
-			height += 18;
-
-		var sceneViewRect = editorWindow.position;
-		var windowRect = new Rect(paddingLeft, sceneViewRect.height - height - paddingBottom, width, height);
-		
-		Handles.BeginGUI();
-		GUILayout.Window(0, windowRect, windowId => DrawPointEditWindowContentForShape(shape,currentPointId), $"Selected point ({currentPointId})");
-		Handles.EndGUI();
-
-		if (windowRect.Contains(Event.current.mousePosition))
-		{
-			switch (Event.current.type)
-			{
-				case EventType.MouseDown:
-				case EventType.MouseUp:
-				case EventType.MouseDrag:
-				case EventType.ScrollWheel:
-					Event.current.Use();
-					break;
-			}
-			HandleUtility.AddDefaultControl(GUIUtility.GetControlID(FocusType.Passive, windowRect));
-		}
-	}
-
-	static void DrawPointEditWindowContentForShape(Shape shape, int currentPointId)
-	{
-		var shapeData = shape.ShapeData;
-		
-		Color strokeColor = shapeData.GetPolyStrokeColor(currentPointId);
-		float strokeWidth = shapeData.GetPolyStrokeWidth(currentPointId);
-		Vector3 position = shapeData.GetPolyPosition(currentPointId);
-		ShapePointType pointType = shapeData.GetPolyPointType(currentPointId);
-
-		EditorGUI.BeginChangeCheck();
-
-		EditorGUIUtility.wideMode = true;
-		EditorGUIUtility.labelWidth = 100;
-		if (shapeData.PolyDimension == ShapePolyDimension.TwoDimensional)
-			position = EditorGUILayout.Vector2Field("Position", position);
-		else
-			position = EditorGUILayout.Vector3Field("Position", position);
-
-		if (shapeData.HasVariableStrokeColor)
-			strokeColor = EditorGUILayout.ColorField("Stroke Color", strokeColor);
-		if (shapeData.HasVariableStrokeWidth)
-			strokeWidth = EditorGUILayout.FloatField("Stroke Width", strokeWidth);
-
-		ShapePointType oldType = pointType;
-		pointType = (ShapePointType) EditorGUILayout.EnumPopup("Point Type", pointType);
-		if (oldType == ShapePointType.Corner && pointType == ShapePointType.Bezier)
-		{
-			shapeData.SetPolyInTangent(currentPointId, GetDefaultInTangent(shapeData, currentPointId));
-			shapeData.SetPolyOutTangent(currentPointId, GetDefaultOutTangent(shapeData, currentPointId));
-		}
-
-		EditorGUI.indentLevel--;
-		if (EditorGUI.EndChangeCheck())
-		{
-			Undo.RecordObject(shape.dataContainerObject, "Edit Point");
-			if (shapeData.HasVariableStrokeColor)
-				shapeData.SetPolyStrokeColor(currentPointId, strokeColor);
-			if (shapeData.HasVariableStrokeWidth)
-			{
-				strokeWidth = Mathf.Max(0, strokeWidth);
-				shapeData.SetPolyStrokeWidth(currentPointId, strokeWidth);
-			}
-
-			shapeData.SetPolyPosition(currentPointId, position);
-			shapeData.SetPolyPointType(currentPointId, pointType);
-
-			SetDataDirty(shape);
-		}
-
-		GUILayout.BeginHorizontal();
-		if (GUILayout.Button("Add point"))
-		{
-			Undo.RecordObject(shape.dataContainerObject, "Add point");
-			var nextId = currentPointId + 1;
-			nextId = shapeData.IsPolygonStrokeClosed ? MathUtils.CircularModulo(nextId, shapeData.GetPolyPointCount()) : nextId;
-			var curPos = shapeData.GetPolyPosition(currentPointId);
-			var nextPos = nextId < shapeData.GetPolyPointCount() ? shapeData.GetPolyPosition(nextId) : curPos + Vector3.right;
-			var curOutTangent = shapeData.GetPolyOutTangent(currentPointId);
-			var nextInTangent = nextId < shapeData.GetPolyPointCount() ? shapeData.GetPolyInTangent(nextId) : -curOutTangent;
-			var pos = BezierUtils.GetPointOnBezierCurve(0.5f,curPos, curPos + curOutTangent, nextPos + nextInTangent,nextPos);
-			var tan = BezierUtils.GetTangentOnBezierCurve(0.5f,curPos, curPos + curOutTangent, nextPos + nextInTangent,nextPos);
-
-			shapeData.InsertPolyPoint(nextId);
-			shapeData.SetPolyPosition(nextId, pos);
-			
-			if (shapeData.GetPolyPointType(currentPointId) == ShapePointType.Corner &&
-			    shapeData.GetPolyPointType(nextId) == ShapePointType.Corner)
-			{
-				
-			}
-			else
-			{
-				shapeData.SetPolyPointType(ShapePointType.BezierContinous);
-				shapeData.SetPolyInTangent(nextId, -tan*.2f);
-				shapeData.SetPolyOutTangent(nextId, tan*.2f);
-			}
-			
-			currentPointId = nextId;
-			SetDataDirty(shape);
-		}
-
-		if (currentPointId != -1 && GUILayout.Button("Remove point"))
-		{
-			Undo.RecordObject(shape.dataContainerObject, "Remove point");
-			shapeData.RemovePolyPoint(currentPointId);
-			SetDataDirty(shape);
-		}
-
-		GUILayout.EndHorizontal();
-	}
-
 	static int previewLineCount = 0;
 	static Vector3[] previewLine;
 	static Texture2D tex;
@@ -211,7 +85,6 @@ static internal class ShapeEditorUtils
 		
 		Handles.DrawAAPolyLine(tex, previewLine);
 	}
-
 	public static void DrawTangentLines(Shape shape)
 	{
 		var shapeData = shape.ShapeData;
@@ -250,124 +123,6 @@ static internal class ShapeEditorUtils
 		}
 	}
 
-	public static void DrawTangentHandles(Shape shape, NativeArray<int> outTangentControlIds, NativeArray<int> inTangentControlIds)
-	{
-		var shapeData = shape.ShapeData;
-
-		for (int i = 0; i < shapeData.GetPolyPointCount(); i++)
-		{
-
-			if (shapeData.GetPolyPointType(i) == ShapePointType.Corner)
-				continue;
-			if (shapeData.GetPolyPointType(i) == ShapePointType.Smooth)
-				continue;
-
-			EditorGUI.BeginChangeCheck();
-			var pos = shapeData.GetPolyPosition(i);
-
-			var origT1 = pos + shapeData.GetPolyInTangent(i);
-			var t1 = origT1;
-			float handleSizeMulti = .8f;
-
-			if (shapeData.IsStrokeClosed || i > 0)
-			{
-				float handleSize = GetHandleSize(t1);
-				t1 = Handles.FreeMoveHandle(t1, Quaternion.identity, handleSize * handleSizeMulti, Vector3.zero,
-					(id, vector3, rotation, f, type) =>
-					{
-						inTangentControlIds[i] = id;
-						Handles.SphereHandleCap(id, vector3, rotation, f, type);
-					});
-			}
-
-			var origT2 = pos + shapeData.GetPolyOutTangent(i);
-			var t2 = origT2;
-			if (shapeData.IsStrokeClosed || i < shapeData.GetPolyPointCount() - 1)
-			{
-				float handleSize = GetHandleSize(t2);
-				t2 = Handles.FreeMoveHandle(t2, Quaternion.identity, handleSize * handleSizeMulti, Vector3.zero,
-					(id, vector3, rotation, f, type) =>
-					{
-						outTangentControlIds[i] = id;
-						Handles.SphereHandleCap(id, vector3, rotation, f, type);
-					});
-			}
-
-			if (EditorGUI.EndChangeCheck())
-			{
-				Undo.RecordObject(shape.dataContainerObject, "Move Shape Tangent");
-
-				if (shapeData.PolyDimension == ShapePolyDimension.TwoDimensional)
-				{
-					t1.z = pos.z;
-					t2.z = pos.z;
-				}
-
-				shapeData.SetPolyInTangent(i, t1 - pos);
-				shapeData.SetPolyOutTangent(i, t2 - pos);
-
-				if (shapeData.GetPolyPointType(i) == ShapePointType.BezierContinous)
-				{
-					if ((origT1 - t1).sqrMagnitude > (origT2 - t2).sqrMagnitude)
-						shapeData.SetPolyOutTangent(i, -shapeData.GetPolyInTangent(i));
-					else
-						shapeData.SetPolyInTangent(i, -shapeData.GetPolyOutTangent(i));
-				}
-
-				SetDataDirty(shape);
-			}
-
-		}
-	}
-
-	public static void DrawPositionHandles(Shape shape, NativeArray<int> pointControlIds)
-	{
-		var shapeData = shape.ShapeData;
-		for (int i = 0; i < shapeData.GetPolyPointCount(); i++)
-		{
-			// convert point
-			//not working properly, disabled for now
-			/*
-				if (currentPointId == i &&
-					Event.current.type == EventType.MouseDown &&
-					Event.current.control)
-				{
-					Undo.RecordObject(dataContainerObject, "Convert point type");
-					ConvertPoint(shape,i);
-
-					SetDataDirty();
-					Event.current.Use();
-				}
-				else {
-				*/
-			EditorGUI.BeginChangeCheck();
-			var pos = shapeData.GetPolyPosition(i);
-			float handleSize = GetHandleSize(pos) *  0.5f;
-
-			var p = Handles.FreeMoveHandle(pos, Quaternion.identity, handleSize, Vector3.zero, (id, vector3, rotation, f, type) =>
-			{
-				pointControlIds[i] = (id);
-				Handles.DotHandleCap(id, vector3, rotation, f, type);
-			});
-
-			if (EditorGUI.EndChangeCheck())
-			{
-				Undo.RecordObject(shape.dataContainerObject, "Move Shape Point");
-				if (shapeData.PolyDimension == ShapePolyDimension.TwoDimensional)
-				{
-					p.z = 0;
-				}
-
-				shapeData.SetPolyPosition(i, p);
-				SetDataDirty(shape);
-			}
-			//}
-
-
-		}
-
-	}
-
 	static string PointIdToControlName(int id, string baseName)
 	{
 		return baseName + "-" + id;
@@ -385,7 +140,7 @@ static internal class ShapeEditorUtils
 		return -1;
 	}
 
-	static float GetHandleSize(Vector3 pos)
+	internal static float GetHandleSize(Vector3 pos)
 	{
 		return HandleUtility.GetHandleSize(pos) * 0.1f;
 	}
@@ -422,7 +177,7 @@ static internal class ShapeEditorUtils
 			Undo.RecordObject(shape.dataContainerObject, "Edit Shape");
 
 			shape.CreatePolyCollider = newIsPolyColliderGenerated;
-			ShapeEditorUtils.SetDataDirty(shape);
+			SetDataDirty(shape);
 
 		}
 
@@ -516,7 +271,7 @@ static internal class ShapeEditorUtils
 			shape.ShapeData.ShapeSize = newSize;
 			shape.ShapeData.ShapeOffset = newOffset;
 
-			ShapeEditorUtils.SetDataDirty(shape);
+			SetDataDirty(shape);
 		}
 	}
 
@@ -595,7 +350,7 @@ static internal class ShapeEditorUtils
 				shape.ShapeData.SetStrokeWidth(strokeWidth);
 			}
 
-			ShapeEditorUtils.SetDataDirty(shape);
+			SetDataDirty(shape);
 		}
 	}
 
@@ -632,7 +387,7 @@ static internal class ShapeEditorUtils
 			shapeData.FillTextureTiling = newFillTextureTiling;
 			shapeData.FillTextureMode = newFillTextureMode;
 			//source.shapeData.fillNormal = newFillNormal;
-			ShapeEditorUtils.SetDataDirty(shape);
+			SetDataDirty(shape);
 		}
 	}
 
@@ -653,7 +408,7 @@ static internal class ShapeEditorUtils
 		}
 	}
 
-	static Vector3 GetDefaultInTangent(ShapeData shape, int pointId)
+	internal static Vector3 GetDefaultInTangent(ShapeData shape, int pointId)
 	{
 		//TODO: fix all this
 		if (shape.GetPolyPointCount() < 2)
@@ -675,7 +430,7 @@ static internal class ShapeEditorUtils
 		}
 	}
 
-	static Vector3 GetDefaultOutTangent(ShapeData shape, int pointId)
+	internal static Vector3 GetDefaultOutTangent(ShapeData shape, int pointId)
 	{
 		//TODO: fix all this
 		if (shape.GetPolyPointCount() < 2)
