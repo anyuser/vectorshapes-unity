@@ -342,12 +342,15 @@ namespace VectorShapesInternal
 			if (!pc)
 				pc = transform.gameObject.AddComponent<PolygonCollider2D>();
 
-			var points = shape.GetPolyPointPositions();
+			var points = shape.GetVertexInfoList();
+		//	var points = shape.GetPolyPointPositions();
+		var startOffset = 1;
+		var endOffset = 1;
 
-			Vector2[] vecArray = new Vector2[points.Count];
-			for (int i = 0; i < points.Count; i++)
+			Vector2[] vecArray = new Vector2[points.Count-startOffset-endOffset];
+			for (int i = 0; i < points.Count-startOffset-endOffset; i++)
 			{
-				vecArray[i] = points[i];
+				vecArray[i] = points[i+startOffset].position;
 			}
 			pc.SetPath(0, vecArray);
 		}
