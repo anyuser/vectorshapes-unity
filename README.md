@@ -1,6 +1,6 @@
 # Vector Shapes for Unity
 
-VectorShapes is a simple and easy to use library for drawing vector shapes in Unity. It’s free and open source, licensed under the MIT license.
+VectorShapes is a simple and easy to use library for drawing vector shapes in Unity.
 
 Created by [Mario von Rickenbach](http://mariov.ch)
 
