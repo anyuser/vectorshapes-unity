@@ -4,7 +4,7 @@ VectorShapes is a simple and easy to use library for drawing vector shapes in Un
 
 Created by [Mario von Rickenbach](http://mariov.ch)
 
-![](Docs~/Resources/overview.png)
+![](Docs~/Resources/overview.png#1)
 
 ## Features
 - Draw shapes by hand or from code.
