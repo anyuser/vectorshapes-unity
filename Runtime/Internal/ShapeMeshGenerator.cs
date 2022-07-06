@@ -118,17 +118,21 @@ namespace VectorShapesInternal
 		public static void GenerateFillMesh(ShapeData shape, MeshBuilder meshBuilder)
 		{
 			Profiler.BeginSample("GenerateFillMesh");
-			if (shape.GetVertexInfoList().Count < 3)
+			var shapeVertexInfos = shape.GetVertexInfoList();
+			if (shapeVertexInfos.Count < 3)
 				return;
 
 			Matrix4x4 m = Matrix4x4.TRS(Vector3.zero, Quaternion.LookRotation(shape.FillNormal), Vector3.one).inverse;
 
 			// tesselation
-			ContourVertex[] contour = new ContourVertex[shape.GetVertexInfoList().Count - 2 - (shape.IsStrokeClosed ? 1 : 0)]; // ignore first and last point
+			ContourVertex[] contour = new ContourVertex[shapeVertexInfos.Count - 2 - (shape.IsStrokeClosed ? 1 : 0)]; // ignore first and last point
 
 			for (int i = 0; i < contour.Length; i++)
 			{
-				Vector3 p = m.MultiplyPoint(shape.GetVertexInfoList()[i + 1].position);
+				Vector3 p = m.MultiplyPoint(shapeVertexInfos[i + 1].position);
+				
+				if(float.IsNaN(p.x) ||float.IsNaN(p.y))
+					continue;
 
 				var pos = new Vec3();
 				pos.X = p.x;
@@ -137,7 +141,7 @@ namespace VectorShapesInternal
 
 				var v = new ContourVertex();
 				v.Position = pos;
-				v.Data = shape.GetVertexInfoList()[i + 1].position;
+				v.Data = shapeVertexInfos[i + 1].position;
 				contour[i] = v;
 			}
 
@@ -145,7 +149,7 @@ namespace VectorShapesInternal
 			{
 
 				tesselator = new Tess();
-				//tesselator.UsePooling = true;
+				tesselator.UsePooling = true;
 			}
 			tesselator.AddContour(contour, ContourOrientation.CounterClockwise);
 			tesselator.Tessellate(WindingRule.EvenOdd, ElementType.Polygons, 3, delegate (Vec3 position, object[] data, float[] weights)

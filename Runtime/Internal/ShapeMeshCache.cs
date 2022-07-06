@@ -1,9 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
+using UnityEngine.Rendering;
 #if UNITY_5_5_OR_NEWER
 using UnityEngine.Profiling;
 #endif
 using VectorShapes;
+using Object = UnityEngine.Object;
 
 namespace VectorShapesInternal
 {
@@ -46,7 +50,6 @@ namespace VectorShapesInternal
 			}
 		}
 
-		public bool CreatePolyCollider = false;
 
 		bool _useShader;
 		public bool useShader
@@ -214,7 +217,6 @@ namespace VectorShapesInternal
 		public void Refresh()
 		{
 			RefreshMesh();
-			RefreshPolyCollider();
 			RefreshMaterials();
 		}
 
@@ -332,29 +334,6 @@ namespace VectorShapesInternal
 			return true;
 		}
 
-		void RefreshPolyCollider()
-		{
-
-			if (!CreatePolyCollider)
-				return;
-
-			var pc = transform.GetComponent<PolygonCollider2D>();
-			if (!pc)
-				pc = transform.gameObject.AddComponent<PolygonCollider2D>();
-
-			var points = shape.GetVertexInfoList();
-		//	var points = shape.GetPolyPointPositions();
-		var startOffset = 1;
-		var endOffset = 1;
-
-			Vector2[] vecArray = new Vector2[points.Count-startOffset-endOffset];
-			for (int i = 0; i < points.Count-startOffset-endOffset; i++)
-			{
-				vecArray[i] = points[i+startOffset].position;
-			}
-			pc.SetPath(0, vecArray);
-		}
-
 		public void ClearKeywords()
 		{
 			instanceKeywords = null;
@@ -370,20 +349,10 @@ namespace VectorShapesInternal
 			if (strokeMaterial)
 			{
 				Profiler.BeginSample("Set stroke shader keywords");
-				bool keywordsChanged = false;
 
-				if (instanceKeywords == null)
-				{
-					SetBaseInstanceKeywords();
-					keywordsChanged = true;
-				}
-
-				if (UpdateInstanceKeywords())
-					keywordsChanged = true;
-
-				if (keywordsChanged)
-					strokeMaterial.shaderKeywords = instanceKeywords;
-
+				SetCornerRenderKeywords(strokeMaterial,shape.StrokeCornerType);
+				SetStrokeRenderKeywords(strokeMaterial,shape.StrokeRenderType);
+				
 				Profiler.EndSample();
 				                       
 				strokeMaterial.SetFloat("_StrokeMiterLimit", shape.StrokeMiterLimit);
@@ -450,7 +419,6 @@ namespace VectorShapesInternal
 				if (sourceStrokeMaterial != null)
 				{
 					strokeMaterial = new Material(sourceStrokeMaterial);
-					ResetAllKeywords(sourceStrokeMaterial);
 					instanceKeywords = null;
 				}
 				else
@@ -517,28 +485,15 @@ namespace VectorShapesInternal
 		{
 			bool changed = false;
 
-			string cornerTypeKeyword = GetCornerTypeKeyword();
-			if (instanceKeywords[instanceKeywords.Length - 2] != cornerTypeKeyword)
-			{
-				instanceKeywords[instanceKeywords.Length - 2] = cornerTypeKeyword;
-				changed = true;
-			}
-
-			string renderTypeKeyword = GetRenderTypeKeyword();
-			if (instanceKeywords[instanceKeywords.Length - 1] != renderTypeKeyword)
-			{
-				instanceKeywords[instanceKeywords.Length - 1] = renderTypeKeyword;
-				changed = true;
-			}
 
 			return changed;
 		}
 
 		#endregion
 
-		string GetCornerTypeKeyword()
+		static string GetCornerTypeKeyword(StrokeCornerType strokeCornerType)
 		{
-			switch (shape.StrokeCornerType)
+			switch (strokeCornerType)
 			{
 				case StrokeCornerType.Bevel:
 					return STROKE_CORNER_BEVEL;
@@ -553,9 +508,9 @@ namespace VectorShapesInternal
 			return null;
 		}
 
-		string GetRenderTypeKeyword()
+		static string GetRenderTypeKeyword(StrokeRenderType strokeRenderType)
 		{
-			switch (shape.StrokeRenderType)
+			switch (strokeRenderType)
 			{
 				case StrokeRenderType.ShapeSpace:
 					return STROKE_RENDER_SHAPE_SPACE;
@@ -570,6 +525,41 @@ namespace VectorShapesInternal
 					return STROKE_RENDER_SHAPE_SPACE_FACING_CAMERA;
 			}
 			return null;
+		}
+		
+		
+		static StrokeRenderType[] allRenderTypes = new []
+		{
+			StrokeRenderType.ShapeSpace,
+			StrokeRenderType.ScreenSpacePixels,
+			StrokeRenderType.ScreenSpaceRelativeToScreenHeight,
+			StrokeRenderType.ShapeSpaceFacingCamera
+		};
+
+		void SetStrokeRenderKeywords(Material mat, StrokeRenderType renderType)
+		{
+			
+			for (int i = 0; i < allRenderTypes.Length; i++)
+			{
+				var localKeyword = mat.shader.keywordSpace.FindKeyword(GetRenderTypeKeyword(allRenderTypes[i]));
+				mat.SetKeyword( localKeyword,allRenderTypes[i] == renderType);
+			}
+		}
+
+		static StrokeCornerType[] allCornerTypes = new []
+		{
+			StrokeCornerType.Bevel,
+			StrokeCornerType.ExtendOrCut,
+			StrokeCornerType.ExtendOrMiter,
+		};
+		void SetCornerRenderKeywords(Material mat, StrokeCornerType cornerType)
+		{
+			
+			for (int i = 0; i < allCornerTypes.Length; i++)
+			{
+				var localKeyword = mat.shader.keywordSpace.FindKeyword(GetCornerTypeKeyword(allCornerTypes[i]));
+				mat.SetKeyword( localKeyword,allCornerTypes[i] == cornerType);
+			}
 		}
 	}
 }

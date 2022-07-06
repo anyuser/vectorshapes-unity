@@ -64,7 +64,6 @@ namespace VectorShapes
 			}
 		}
 
-		public bool CreatePolyCollider = false;
 
 		#endregion
 
@@ -140,6 +139,7 @@ namespace VectorShapes
 		#endregion
 
 		#region MonoBehaviour callbacks
+
 		void OnEnable()
 		{
 			UpdateShapeRenderer();

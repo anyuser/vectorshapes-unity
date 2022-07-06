@@ -9,6 +9,7 @@ using VectorShapesInternal;
 namespace VectorShapes
 {
 	[ExecuteInEditMode]
+	[DefaultExecutionOrder(9999)]
 	public class ShapeRenderer : MonoBehaviour
 	{
 		#region public properties
@@ -189,7 +190,6 @@ namespace VectorShapes
 				shapeMeshCaches[i].transform = shapes[i].transform;
 				shapeMeshCaches[i].camera = Camera;
 				shapeMeshCaches[i].useShader = useShader;
-				shapeMeshCaches[i].CreatePolyCollider = shapes[i].CreatePolyCollider;
 				shapeMeshCaches[i].sourceFillMaterial = fillMaterial;
 
 				if(strokeMaterialHasChanged)

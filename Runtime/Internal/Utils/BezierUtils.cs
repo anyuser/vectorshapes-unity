@@ -1,6 +1,8 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.Assertions;
 
 namespace VectorShapes
 {
@@ -57,24 +59,48 @@ namespace VectorShapes
 			return ((3.0f * C1 * t * t) + (2.0f * C2 * t) + C3);
 		}
 
+		const int maxRecursion = 8;
 		public static void SubdivideBezier (Vector3 p0, Vector3 p1, Vector3 p2, Vector3 p3, List<float> subdivisionLerp, List<Vector3> subdivisionPoints, float maxAngle = 1.0f, float minDist = 0.01f, float minTangentAddDist = 1f)
 		{ 
 			subdivisionLerp.Clear ();
 			subdivisionPoints.Clear ();
 
+			Assert.IsFalse(Single.IsNaN(p0.x));
+			Assert.IsFalse(Single.IsNaN(p0.y));
+			Assert.IsFalse(Single.IsNaN(p0.z));
+
+			Assert.IsFalse(Single.IsNaN(p1.x));
+			Assert.IsFalse(Single.IsNaN(p1.y));
+			Assert.IsFalse(Single.IsNaN(p1.z));
+
+			Assert.IsFalse(Single.IsNaN(p2.x));
+			Assert.IsFalse(Single.IsNaN(p2.y));
+			Assert.IsFalse(Single.IsNaN(p2.z));
+
+			Assert.IsFalse(Single.IsNaN(p3.x));
+			Assert.IsFalse(Single.IsNaN(p3.y));
+			Assert.IsFalse(Single.IsNaN(p3.z));
+
 			float angleThreshold = Mathf.Cos ((180 - maxAngle) * Mathf.Deg2Rad);
 			float minDistSqr = minDist * minDist;
 
 			int insertionIndex = 0;
-			if (Vector3.Angle (p0 - p1, p1 - p2) > maxAngle)
+			var tangentIn = p1 - p0;
+			var tangentOut = p2 - p3;
+			var startToEnd = p3 - p1;
+			if (Vector3.Angle (tangentIn, startToEnd) > maxAngle || Vector3.Angle (tangentOut, -startToEnd) > maxAngle)
 				insertionIndex = -1; // force subdivide
-
-
-			FindPointsOnBezierRecursive (p0, p1, p2, p3, 0, 1, insertionIndex, subdivisionLerp, subdivisionPoints, angleThreshold, minDistSqr);
+			FindPointsOnBezierRecursive (0,p0, p1, p2, p3, 0, 1, insertionIndex, subdivisionLerp, subdivisionPoints, angleThreshold, minDistSqr);
 		}
 
-		public static int FindPointsOnBezierRecursive (Vector3 p0, Vector3 p1, Vector3 p2, Vector3 p3, float t0, float t1, int insertionIndex, List<float> subdivisionLerpList, List<Vector3> subdivisionPointsList, float angleThreshold, float minDistSqr)
+		public static int FindPointsOnBezierRecursive (int level,Vector3 p0, Vector3 p1, Vector3 p2, Vector3 p3, float t0, float t1, int insertionIndex, List<float> subdivisionLerpList, List<Vector3> subdivisionPointsList, float angleThreshold, float minDistSqr)
 		{
+			level++;
+			if(level > maxRecursion)
+			{
+				//Debug.Log($"Max bezier subdiv recursion {maxRecursion} level reached");
+				return 0;
+			}
 
 			Vector3 x0 = GetPointOnBezierCurve (t0, p0, p1, p2, p3);
 			Vector3 x1 = GetPointOnBezierCurve (t1, p0, p1, p2, p3);
@@ -97,18 +123,32 @@ namespace VectorShapes
 			if (forceSubdivide ||
 			  Vector3.Dot ((x0 - xMid).normalized, (x1 - xMid).normalized) > angleThreshold) {
 				// subdivide between m0 and mid
-				int pointsAddedCount = FindPointsOnBezierRecursive (p0, p1, p2, p3, t0, tMid, insertionIndex, subdivisionLerpList, subdivisionPointsList, angleThreshold, minDistSqr);
+				int pointsAddedCount = FindPointsOnBezierRecursive (level,p0, p1, p2, p3, t0, tMid, insertionIndex, subdivisionLerpList, subdivisionPointsList, angleThreshold, minDistSqr);
 
 				subdivisionLerpList.Insert (insertionIndex + pointsAddedCount, tMid);
 				subdivisionPointsList.Insert (insertionIndex + pointsAddedCount, xMid);
 				pointsAddedCount++;
 
 				// subdivide between mid and t1
-				pointsAddedCount += FindPointsOnBezierRecursive (p0, p1, p2, p3, tMid, t1, insertionIndex + pointsAddedCount, subdivisionLerpList, subdivisionPointsList, angleThreshold, minDistSqr);
+				pointsAddedCount += FindPointsOnBezierRecursive (level,p0, p1, p2, p3, tMid, t1, insertionIndex + pointsAddedCount, subdivisionLerpList, subdivisionPointsList, angleThreshold, minDistSqr);
 
 				return pointsAddedCount;
 			}
 			return 0;
+		}
+
+		public static BezierSegment2D GetArcApproximation(float angleDeg)
+		{
+			if(angleDeg < Mathf.Epsilon)
+				return new BezierSegment2D(new Vector2(1,0),new Vector2(1,Mathf.Epsilon),new Vector2(1,-Mathf.Epsilon),new Vector2(1,0) );
+		
+			var angle = angleDeg * Mathf.Deg2Rad;
+			var p0 = new Vector2(Mathf.Cos(angle /2f),Mathf.Sin(angle /2f));
+			var p1 = new Vector2((4-p0.x)/3f,((1-p0.x)*(3-p0.x))/ (3*p0.y));
+			var p2 = new Vector2(p1.x,-p1.y);
+			var p3 = new Vector2(p0.x, -p0.y) + Vector2.zero;
+
+			return new BezierSegment2D(p0, p1, p2, p3);
 		}
 	}
 

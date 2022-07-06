@@ -311,6 +311,19 @@ namespace VectorShapesInternal
 			}*/
 		}
 
+		public static void GetPolyPoints(ShapeData shapeData, List<Vector2> target)
+		{
+			target.Clear();
+			var points = shapeData.GetVertexInfoList();
+			var startOffset = 1;
+			var endOffset = 1;
+			
+			for (int i = 0; i < points.Count-startOffset-endOffset; i++)
+			{
+				target.Add( points[i+startOffset].position);
+			}
+
+		}
 	}
 }
 
