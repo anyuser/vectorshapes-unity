@@ -34,10 +34,10 @@ Shader "Vector Shapes/Stroke Alpha Blend"
 			#pragma fragment frag
 			//#pragma multi_compile _ PIXELSNAP_ON
 			#pragma shader_feature ETC1_EXTERNAL_ALPHA
-			#pragma multi_compile _ DEBUG_ON
-			#pragma multi_compile _ ANTIALIASING_ON
-			#pragma multi_compile STROKE_CORNER_BEVEL STROKE_CORNER_EXTEND_OR_CUT STROKE_CORNER_EXTEND_OR_MITER
-			#pragma multi_compile STROKE_RENDER_SCREEN_SPACE_PIXELS STROKE_RENDER_SCREEN_SPACE_RELATIVE_TO_SCREEN_HEIGHT STROKE_RENDER_SHAPE_SPACE STROKE_RENDER_SHAPE_SPACE_FACING_CAMERA
+			#pragma multi_compile_local _ DEBUG_ON
+			#pragma multi_compile_local _ ANTIALIASING_ON
+			#pragma multi_compile_local STROKE_CORNER_BEVEL STROKE_CORNER_EXTEND_OR_CUT STROKE_CORNER_EXTEND_OR_MITER
+			#pragma multi_compile_local STROKE_RENDER_SCREEN_SPACE_PIXELS STROKE_RENDER_SCREEN_SPACE_RELATIVE_TO_SCREEN_HEIGHT STROKE_RENDER_SHAPE_SPACE STROKE_RENDER_SHAPE_SPACE_FACING_CAMERA
 
 			#include "UnityCG.cginc"
 			#include "VectorShapes.cginc"
@@ -136,7 +136,12 @@ Shader "Vector Shapes/Stroke Alpha Blend"
 			fixed4 frag(v2f IN) : SV_Target
 			{
 				
-				fixed4 c = SampleSpriteTexture (IN.texcoord) * IN.color;
+                #ifdef UNITY_COLORSPACE_GAMMA
+                fixed4 color = IN.color;
+                #else
+                fixed4 color = fixed4(GammaToLinearSpace(IN.color.rgb), IN.color.a);
+                #endif
+				fixed4 c = SampleSpriteTexture (IN.texcoord) * color;
 
 				#if ANTIALIASING_ON
 				float a = saturate( ( 1 - IN.texcoord.y ) / IN.pixelSizeInUV) * saturate( IN.texcoord.y / IN.pixelSizeInUV) ;
