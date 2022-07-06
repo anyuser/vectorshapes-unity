@@ -246,7 +246,11 @@ namespace VectorShapesEditor
 				if (shapeData.IsStrokeClosed || i > 0)
 				{
 					float handleSize = ShapeEditorUtils.GetHandleSize(t1);
-					t1 = Handles.FreeMoveHandle(t1, Quaternion.identity, handleSize * handleSizeMulti, Vector3.zero,
+					t1 = Handles.FreeMoveHandle(t1,
+					#if !UNITY_2022_OR_NEWER
+					Quaternion.identity,
+					#endif
+					 handleSize * handleSizeMulti, Vector3.zero,
 						(id, vector3, rotation, f, type) =>
 						{
 							inTangentControlIds[i] = id;
@@ -259,7 +263,11 @@ namespace VectorShapesEditor
 				if (shapeData.IsStrokeClosed || i < shapeData.GetPolyPointCount() - 1)
 				{
 					float handleSize = ShapeEditorUtils.GetHandleSize(t2);
-					t2 = Handles.FreeMoveHandle(t2, Quaternion.identity, handleSize * handleSizeMulti, Vector3.zero,
+					t2 = Handles.FreeMoveHandle(t2,
+					#if !UNITY_2022_OR_NEWER
+					Quaternion.identity,
+					#endif
+					handleSize * handleSizeMulti, Vector3.zero,
 						(id, vector3, rotation, f, type) =>
 						{
 							outTangentControlIds[i] = id;
@@ -319,7 +327,11 @@ namespace VectorShapesEditor
 				var pos = shapeData.GetPolyPosition(i);
 				float handleSize = ShapeEditorUtils.GetHandleSize(pos) * 0.5f;
 
-				var p = Handles.FreeMoveHandle(pos, Quaternion.identity, handleSize, Vector3.zero, (id, vector3, rotation, f, type) =>
+				var p = Handles.FreeMoveHandle(pos, 
+					#if !UNITY_2022_OR_NEWER
+					Quaternion.identity,
+					#endif
+					handleSize, Vector3.zero, (id, vector3, rotation, f, type) =>
 				{
 					pointControlIds[i] = (id);
 					Handles.DotHandleCap(id, vector3, rotation, f, type);
