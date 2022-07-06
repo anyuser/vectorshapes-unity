@@ -27,20 +27,20 @@ static internal class ShapeEditorUtils
 	public static int GetCurrentSelectedPoint(NativeArray<int> pointControlIds, NativeArray<int> inTangentControlIds, NativeArray<int> outTangentControlIds)
 	{
 		var hotControl = GUIUtility.hotControl;
-		int newPointId = pointControlIds.IndexOf<int>(hotControl);
+		int newPointId = pointControlIds.IndexOf(hotControl);
 		if (newPointId != -1)
 		{
 			return newPointId;
 		}
 
 
-		newPointId = outTangentControlIds.IndexOf<int>(hotControl);
+		newPointId = outTangentControlIds.IndexOf(hotControl);
 		if (newPointId != -1)
 		{
 			return newPointId;
 		}
 
-		newPointId = inTangentControlIds.IndexOf<int>(hotControl);
+		newPointId = inTangentControlIds.IndexOf(hotControl);
 		if (newPointId != -1)
 			return newPointId;
 
@@ -169,17 +169,6 @@ static internal class ShapeEditorUtils
 
 	public static void DrawShapeEditor(Shape shape)
 	{
-		bool newIsPolyColliderGenerated = shape.CreatePolyCollider;
-		EditorGUI.BeginChangeCheck();
-		newIsPolyColliderGenerated = EditorGUILayout.Toggle("Create Poly Collider", newIsPolyColliderGenerated);
-		if (EditorGUI.EndChangeCheck())
-		{
-			Undo.RecordObject(shape.dataContainerObject, "Edit Shape");
-
-			shape.CreatePolyCollider = newIsPolyColliderGenerated;
-			SetDataDirty(shape);
-
-		}
 
 		ShapePolyDimension newPolyDimension = shape.ShapeData.PolyDimension;
 		ShapeType newType = shape.ShapeData.ShapeType;

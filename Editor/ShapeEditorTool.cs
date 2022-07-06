@@ -1,18 +1,18 @@
-using System;
 using Unity.Collections;
 using UnityEditor;
 using UnityEditor.EditorTools;
 using UnityEngine;
 using VectorShapes;
+using MathUtils = VectorShapesInternal.MathUtils;
 
 namespace VectorShapesEditor
 {
-	[EditorTool("Edit Shape Tool",typeof(Shape))]
+	[EditorTool("Edit Shape Tool", typeof(Shape))]
 	public class ShapeEditorTool : EditorTool
 	{
 		static Color selectedColor = new Color(1f, 1f, 0f, 1f);
 		static Color baseColor = new Color(0.0f, 0.5f, 1f, 1f);
-		
+
 		public Texture2D m_ToolIcon;
 
 		GUIContent m_IconContent;
@@ -34,7 +34,7 @@ namespace VectorShapesEditor
 		public override GUIContent toolbarIcon => m_IconContent;
 
 		internal int currentPointId;
-		
+
 		void OnValidate()
 		{
 			var shape = target as Shape;
@@ -55,11 +55,148 @@ namespace VectorShapesEditor
 
 		public override void OnToolGUI(EditorWindow window)
 		{
+			if (!(window is SceneView sceneView))
+				return;
+			
 			base.OnToolGUI(window);
-		
+
 			var shape = target as Shape;
 			if (shape && shape.ShapeData != null)
 			{
+				var tool = this;
+
+				Handles.BeginGUI();
+				using (new GUILayout.HorizontalScope())
+				{
+					GUILayout.FlexibleSpace();
+					using (new GUILayout.VerticalScope())
+					{
+						GUILayout.FlexibleSpace();
+						using (new GUILayout.VerticalScope(EditorStyles.helpBox,GUILayout.MinWidth(300)))
+						{
+							EditorGUIUtility.wideMode = true;
+							EditorGUIUtility.labelWidth = 100;
+
+							EditorGUILayout.LabelField($"Selected point", $"{tool.currentPointId}");
+
+							int currentPointId = tool.currentPointId;
+							if (shape == null || shape.ShapeData == null)
+								return;
+							var shapeData = shape.ShapeData;
+
+							if (currentPointId >= 0 && currentPointId < shapeData.GetPolyPointCount())
+							{
+								Color strokeColor = shapeData.GetPolyStrokeColor(currentPointId);
+								float strokeWidth = shapeData.GetPolyStrokeWidth(currentPointId);
+								Vector3 position = shapeData.GetPolyPosition(currentPointId);
+								Vector3 tangentIn = shapeData.GetPolyInTangent(currentPointId);
+								Vector3 tangentOut = shapeData.GetPolyOutTangent(currentPointId);
+								ShapePointType pointType = shapeData.GetPolyPointType(currentPointId);
+
+								EditorGUI.BeginChangeCheck();
+
+
+								ShapePointType oldType = pointType;
+								pointType = (ShapePointType)EditorGUILayout.EnumPopup("Point Type", pointType);
+								if (oldType == ShapePointType.Corner && pointType == ShapePointType.Bezier)
+								{
+									shapeData.SetPolyInTangent(currentPointId, ShapeEditorUtils.GetDefaultInTangent(shapeData, currentPointId));
+									shapeData.SetPolyOutTangent(currentPointId, ShapeEditorUtils.GetDefaultOutTangent(shapeData, currentPointId));
+								}
+
+								if (shapeData.PolyDimension == ShapePolyDimension.TwoDimensional)
+									position = EditorGUILayout.Vector2Field("Position", position);
+								else
+									position = EditorGUILayout.Vector3Field("Position", position);
+
+
+								if (pointType == ShapePointType.Bezier || pointType == ShapePointType.BezierContinous)
+								{
+									if (shapeData.PolyDimension == ShapePolyDimension.TwoDimensional)
+									{
+										tangentIn = EditorGUILayout.Vector2Field("In Tangent", tangentIn);
+										tangentOut = EditorGUILayout.Vector2Field("Out Tangent", tangentOut);
+									}
+									else
+									{
+										tangentIn = EditorGUILayout.Vector3Field("In Tangent", tangentIn);
+										tangentOut = EditorGUILayout.Vector3Field("Out Tangent", tangentOut);
+									}
+								}
+
+								if (shapeData.HasVariableStrokeColor)
+									strokeColor = EditorGUILayout.ColorField("Stroke Color", strokeColor);
+								if (shapeData.HasVariableStrokeWidth)
+									strokeWidth = EditorGUILayout.FloatField("Stroke Width", strokeWidth);
+
+
+								EditorGUI.indentLevel--;
+								if (EditorGUI.EndChangeCheck())
+								{
+									Undo.RecordObject(shape.dataContainerObject, "Edit Point");
+									if (shapeData.HasVariableStrokeColor)
+										shapeData.SetPolyStrokeColor(currentPointId, strokeColor);
+									if (shapeData.HasVariableStrokeWidth)
+									{
+										strokeWidth = Mathf.Max(0, strokeWidth);
+										shapeData.SetPolyStrokeWidth(currentPointId, strokeWidth);
+									}
+
+									shapeData.SetPolyPosition(currentPointId, position);
+									shapeData.SetPolyPointType(currentPointId, pointType);
+									shapeData.SetPolyInTangent(currentPointId, tangentIn);
+									shapeData.SetPolyOutTangent(currentPointId, tangentOut);
+
+									ShapeEditorUtils.SetDataDirty(shape);
+								}
+
+								GUILayout.BeginHorizontal();
+								if (GUILayout.Button("Add point"))
+								{
+									Undo.RecordObject(shape.dataContainerObject, "Add point");
+									Debug.Log("add point");
+									var nextId = currentPointId + 1;
+									nextId = shapeData.IsPolygonStrokeClosed ? MathUtils.CircularModulo(nextId, shapeData.GetPolyPointCount()) : nextId;
+									var curPos = shapeData.GetPolyPosition(currentPointId);
+									var nextPos = nextId < shapeData.GetPolyPointCount() ? shapeData.GetPolyPosition(nextId) : curPos + Vector3.right;
+									var curOutTangent = shapeData.GetPolyOutTangent(currentPointId);
+									var nextInTangent = nextId < shapeData.GetPolyPointCount() ? shapeData.GetPolyInTangent(nextId) : -curOutTangent;
+									var pos = BezierUtils.GetPointOnBezierCurve(0.5f, curPos, curPos + curOutTangent, nextPos + nextInTangent, nextPos);
+									var tan = BezierUtils.GetTangentOnBezierCurve(0.5f, curPos, curPos + curOutTangent, nextPos + nextInTangent, nextPos);
+
+									shapeData.InsertPolyPoint(nextId);
+									shapeData.SetPolyPosition(nextId, pos);
+
+									if (shapeData.GetPolyPointType(currentPointId) == ShapePointType.Corner &&
+									    shapeData.GetPolyPointType(nextId) == ShapePointType.Corner)
+									{
+									}
+									else
+									{
+										shapeData.SetPolyPointType(ShapePointType.BezierContinous);
+										shapeData.SetPolyInTangent(nextId, -tan * .2f);
+										shapeData.SetPolyOutTangent(nextId, tan * .2f);
+									}
+
+									currentPointId = nextId;
+									ShapeEditorUtils.SetDataDirty(shape);
+								}
+
+								if (currentPointId != -1 && GUILayout.Button("Remove point"))
+								{
+									Undo.RecordObject(shape.dataContainerObject, "Remove point");
+									shapeData.RemovePolyPoint(currentPointId);
+									ShapeEditorUtils.SetDataDirty(shape);
+								}
+
+								GUILayout.EndHorizontal();
+							}
+						}
+					}
+				}
+
+				Handles.EndGUI();
+
 				Handles.color = baseColor;
 				Handles.matrix = shape.transform.localToWorldMatrix;
 
@@ -71,7 +208,7 @@ namespace VectorShapesEditor
 				ShapeEditorUtils.Fill(pointControlIds, -1);
 
 				ShapeEditorUtils.DrawTangentLines(shape);
-				DrawPositionHandles(shape, pointControlIds,currentPointId);
+				DrawPositionHandles(shape, pointControlIds, currentPointId);
 				DrawTangentHandles(shape, inTangentControlIds, outTangentControlIds, currentPointId);
 
 				var newPoint = ShapeEditorUtils.GetCurrentSelectedPoint(pointControlIds, inTangentControlIds, outTangentControlIds);
@@ -93,7 +230,6 @@ namespace VectorShapesEditor
 
 			for (int i = 0; i < shapeData.GetPolyPointCount(); i++)
 			{
-
 				if (shapeData.GetPolyPointType(i) == ShapePointType.Corner)
 					continue;
 				if (shapeData.GetPolyPointType(i) == ShapePointType.Smooth)
@@ -154,7 +290,6 @@ namespace VectorShapesEditor
 
 					ShapeEditorUtils.SetDataDirty(shape);
 				}
-
 			}
 		}
 
@@ -180,9 +315,9 @@ namespace VectorShapesEditor
 				*/
 				EditorGUI.BeginChangeCheck();
 				Handles.color = i == selectedPointId ? selectedColor : baseColor;
-			
+
 				var pos = shapeData.GetPolyPosition(i);
-				float handleSize = ShapeEditorUtils.GetHandleSize(pos) *  0.5f;
+				float handleSize = ShapeEditorUtils.GetHandleSize(pos) * 0.5f;
 
 				var p = Handles.FreeMoveHandle(pos, Quaternion.identity, handleSize, Vector3.zero, (id, vector3, rotation, f, type) =>
 				{
@@ -202,10 +337,7 @@ namespace VectorShapesEditor
 					ShapeEditorUtils.SetDataDirty(shape);
 				}
 				//}
-
-
 			}
-
 		}
 	}
 }
