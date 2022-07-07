@@ -3,13 +3,10 @@ Shader "Vector Shapes/Fill Alpha Blend"
 {
     Properties
     {
-        [PerRendererData] _MainTex ("Sprite Texture", 2D) = "white" {}
+        _MainTex ("Sprite Texture", 2D) = "white" {}
         _Color ("Tint", Color) = (1,1,1,1)
         [MaterialToggle] PixelSnap ("Pixel snap", Float) = 0
-        [HideInInspector] _RendererColor ("RendererColor", Color) = (1,1,1,1)
-        [HideInInspector] _Flip ("Flip", Vector) = (1,1,1,1)
-        [PerRendererData] _AlphaTex ("External Alpha", 2D) = "white" {}
-        [PerRendererData] _EnableExternalAlpha ("Enable External Alpha", Float) = 0
+        [HideInInspector] _Color ("Color", Color) = (1,1,1,1)
     }
 
     SubShader
@@ -20,7 +17,6 @@ Shader "Vector Shapes/Fill Alpha Blend"
             "IgnoreProjector"="True"
             "RenderType"="Transparent"
             "PreviewType"="Plane"
-            "CanUseSpriteAtlas"="True"
         }
 
         Cull Off
@@ -32,13 +28,32 @@ Shader "Vector Shapes/Fill Alpha Blend"
         {
         CGPROGRAM
             #pragma vertex VectorVert
-            #pragma fragment SpriteFrag
+            #pragma fragment VectorFrag
             #pragma target 2.0
             #pragma multi_compile_instancing
             #pragma multi_compile _ PIXELSNAP_ON
             #pragma multi_compile _ ETC1_EXTERNAL_ALPHA
-            #include "UnitySprites.cginc"
+            #include "UnityCG.cginc"
 
+            sampler2D _MainTex;
+            float4 _MainTex_ST;
+        float4 _Color;
+        
+            struct appdata_t {
+                float4 vertex : POSITION;
+                float4 color : COLOR;
+                float2 texcoord : TEXCOORD0;
+                UNITY_VERTEX_INPUT_INSTANCE_ID
+            };
+
+            struct v2f {
+                float4 vertex : SV_POSITION;
+                float4 color : COLOR;
+                float2 texcoord : TEXCOORD0;
+                UNITY_FOG_COORDS(1)
+                UNITY_VERTEX_OUTPUT_STEREO
+            };
+        
             v2f VectorVert(appdata_t IN)
             {
                 v2f OUT;
@@ -46,9 +61,9 @@ Shader "Vector Shapes/Fill Alpha Blend"
                 UNITY_SETUP_INSTANCE_ID (IN);
                 UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(OUT);
 
-                OUT.vertex = UnityFlipSprite(IN.vertex, _Flip);
-                OUT.vertex = UnityObjectToClipPos(OUT.vertex);
-                OUT.texcoord = IN.texcoord;
+                OUT.vertex = UnityObjectToClipPos(IN.vertex);
+                OUT.texcoord = TRANSFORM_TEX(IN.texcoord, _MainTex);
+                OUT.color = IN.color;
 
                 #ifdef UNITY_COLORSPACE_GAMMA
                 fixed4 color = IN.color;
@@ -56,13 +71,22 @@ Shader "Vector Shapes/Fill Alpha Blend"
                 fixed4 color = fixed4(GammaToLinearSpace(IN.color.rgb), IN.color.a);
                 #endif
 
-                OUT.color = color * _Color * _RendererColor;
+                OUT.color = color * _Color;
 
                 #ifdef PIXELSNAP_ON
                 OUT.vertex = UnityPixelSnap (OUT.vertex);
                 #endif
+                UNITY_TRANSFER_FOG(o,o.vertex);
 
                 return OUT;
+            }
+
+            fixed4 VectorFrag(v2f IN) : SV_Target
+            {
+               fixed4 col = tex2D(_MainTex, IN.texcoord) * IN.color;
+               UNITY_APPLY_FOG(IN.fogCoord, col);
+                col.rgb *= col.a;
+                return col;
             }
         ENDCG
         }
