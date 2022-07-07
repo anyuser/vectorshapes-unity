@@ -251,7 +251,7 @@ namespace VectorShapesEditor
 							inTangentControlIds[i] = id;
 							Handles.SphereHandleCap(id, vector3, rotation, f, type);
 						};
-					#if UNITY_2021_3_OR_NEWER
+					#if UNITY_2022_1_OR_NEWER
 					t1 = Handles.FreeMoveHandle(t1, size, Vector3.zero, func);
 					#else
 					t1 = Handles.FreeMoveHandle(t1,  Quaternion.identity, size, Vector3.zero, func);
@@ -268,7 +268,7 @@ namespace VectorShapesEditor
 							outTangentControlIds[i] = id;
 							Handles.SphereHandleCap(id, vector3, rotation, f, type);
 						};
-					#if UNITY_2021_3_OR_NEWER
+					#if UNITY_2022_1_OR_NEWER
 					t2 = Handles.FreeMoveHandle(t2, size, Vector3.zero, func);
 					#else
 					t2 = Handles.FreeMoveHandle(t2,Quaternion.identity, size, Vector3.zero, func);
@@ -332,7 +332,7 @@ namespace VectorShapesEditor
 					Handles.DotHandleCap(id, vector3, rotation, f, type);
 				};
 			
-				#if UNITY_2021_3_OR_NEWER
+				#if UNITY_2022_1_OR_NEWER
 				var p = Handles.FreeMoveHandle(pos, size, Vector3.zero, func);
 				#else
 				var p = Handles.FreeMoveHandle(pos, Quaternion.identity,size, Vector3.zero, func);
