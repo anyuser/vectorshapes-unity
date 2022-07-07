@@ -2,7 +2,7 @@
   "name": "ch.mariov.vectorshapes",
   "displayName": "Vector Shapes",
   "version": "0.1.0-preview.1",
-  "unity": "2019.1",
+  "unity": "2021.3",
   "description": "Vector Shapes",
   "keywords": [],
   "category": "",
@@ -14,6 +14,6 @@
     }
   ],
   "dependencies": {
-    "com.unity.collections": "0.0.9-preview.20"
+    "com.unity.collections": "1.3.1"
   }
 }
