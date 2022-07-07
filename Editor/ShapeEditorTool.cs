@@ -245,34 +245,34 @@ namespace VectorShapesEditor
 
 				if (shapeData.IsStrokeClosed || i > 0)
 				{
-					float handleSize = ShapeEditorUtils.GetHandleSize(t1);
-					t1 = Handles.FreeMoveHandle(t1,
-					#if !UNITY_2022_OR_NEWER
-					Quaternion.identity,
-					#endif
-					 handleSize * handleSizeMulti, Vector3.zero,
-						(id, vector3, rotation, f, type) =>
+					var size = ShapeEditorUtils.GetHandleSize(t1) * handleSizeMulti;
+					Handles.CapFunction func = (id, vector3, rotation, f, type) =>
 						{
 							inTangentControlIds[i] = id;
 							Handles.SphereHandleCap(id, vector3, rotation, f, type);
-						});
+						};
+					#if UNITY_2021_3_OR_NEWER
+					t1 = Handles.FreeMoveHandle(t1, size, Vector3.zero, func);
+					#else
+					t1 = Handles.FreeMoveHandle(t1,  Quaternion.identity, size, Vector3.zero, func);
+					#endif
 				}
 
 				var origT2 = pos + shapeData.GetPolyOutTangent(i);
 				var t2 = origT2;
 				if (shapeData.IsStrokeClosed || i < shapeData.GetPolyPointCount() - 1)
 				{
-					float handleSize = ShapeEditorUtils.GetHandleSize(t2);
-					t2 = Handles.FreeMoveHandle(t2,
-					#if !UNITY_2022_OR_NEWER
-					Quaternion.identity,
-					#endif
-					handleSize * handleSizeMulti, Vector3.zero,
-						(id, vector3, rotation, f, type) =>
+					var size = ShapeEditorUtils.GetHandleSize(t2) * handleSizeMulti;
+					Handles.CapFunction func = (id, vector3, rotation, f, type) =>
 						{
 							outTangentControlIds[i] = id;
 							Handles.SphereHandleCap(id, vector3, rotation, f, type);
-						});
+						};
+					#if UNITY_2021_3_OR_NEWER
+					t2 = Handles.FreeMoveHandle(t2, size, Vector3.zero, func);
+					#else
+					t2 = Handles.FreeMoveHandle(t2,Quaternion.identity, size, Vector3.zero, func);
+					#endif
 				}
 
 				if (EditorGUI.EndChangeCheck())
@@ -325,17 +325,18 @@ namespace VectorShapesEditor
 				Handles.color = i == selectedPointId ? selectedColor : baseColor;
 
 				var pos = shapeData.GetPolyPosition(i);
-				float handleSize = ShapeEditorUtils.GetHandleSize(pos) * 0.5f;
-
-				var p = Handles.FreeMoveHandle(pos, 
-					#if !UNITY_2022_OR_NEWER
-					Quaternion.identity,
-					#endif
-					handleSize, Vector3.zero, (id, vector3, rotation, f, type) =>
+				float size = ShapeEditorUtils.GetHandleSize(pos) * 0.5f;
+				Handles.CapFunction func = (id, vector3, rotation, f, type) =>
 				{
 					pointControlIds[i] = (id);
 					Handles.DotHandleCap(id, vector3, rotation, f, type);
-				});
+				};
+			
+				#if UNITY_2021_3_OR_NEWER
+				var p = Handles.FreeMoveHandle(pos, size, Vector3.zero, func);
+				#else
+				var p = Handles.FreeMoveHandle(pos, Quaternion.identity,size, Vector3.zero, func);
+				#endif
 
 				if (EditorGUI.EndChangeCheck())
 				{
