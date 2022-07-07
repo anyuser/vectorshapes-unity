@@ -13,7 +13,7 @@ Shader "Vector Shapes/Fill Alpha Blend"
     {
         Tags
         {
-            "Queue"="Transparent"
+            "Queue"="Transparent-1"
             "IgnoreProjector"="True"
             "RenderType"="Transparent"
             "PreviewType"="Plane"
